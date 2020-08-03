@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../styles/Layout.css'
 import FilterData, { LoadData } from './filterData'
 
 export default function Layout() {
-  
-  
+const [state,setState] = useState({followers:'50000',language:'javascript'})
+
     return (
       
         <main id='main'>
@@ -31,13 +31,26 @@ export default function Layout() {
 
               <nav id='left-nav-bar'>  
               <p>test nav left</p>
-              <FilterData/>
+              <FilterData 
               
+              filter={e=>setState(prevState => ({
+                ...prevState,
+                language: e
+              }))}
+
+              filterFollowers={e=>setState(prevState => ({
+                ...prevState,
+                followers: e
+              }))}
+              
+              />
+              {console.log('filterData',state)}
+
               </nav>
 
               <section id='center-section'>
               <h3>Top 30 Chart</h3>
-              <LoadData/>
+              <LoadData filters={state}/>
               </section>
 
               <nav id='right-nav-bar'>

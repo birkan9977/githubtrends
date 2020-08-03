@@ -8,9 +8,9 @@ export default function DataLoader (props){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-
+  
   console.log('filter',props.filterlanguage)
-  let url = `https://api.github.com/search/repositories?q=followers:>10000 language:${props.filterlanguage} sort:stars`
+  let url = `https://api.github.com/search/repositories?q=followers:>${props.filterFollowers} language:${props.filterlanguage} sort:stars`
   console.log(url)
 
   //"https://api.github.com/search/repositories?q=followers:>10000 language:javascript+sort:stars"
@@ -61,6 +61,7 @@ export default function DataLoader (props){
 }
 
 function textminimize(text){
+  if(text==null)return text
   let len = text.length;
   let maxlen = 150;
   if(len>maxlen){
