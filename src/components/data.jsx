@@ -36,12 +36,10 @@ export default function DataLoader (props){
   },[url]); 
   
   
-  let keyIndex = 100;
-  function keyIndexIncrement(){
-    keyIndex ++
-    return keyIndex
-  };
-  
+  let keyIndex = (function () {
+    let counter = 0;
+    return function () {counter += 1; return counter}
+  })();//closure:)
 
   let noItem = ''
   function noItemIncrement(){
@@ -82,26 +80,32 @@ function textminimize(text){
         <p>{loading?'Loading Data':null}</p>
         <p>{error?`Error:$(error)`:null}</p>
           <ul>
-            {data?data.map((item,index) =>
+            {data?data.map((item) =>
             <>
             <div id='repo-items'>
                 <div id='repo-list-items'>
                 <div id='order-number'>
                 {noItemIncrement()}
                 </div>
-                <li id='repo-list-items-name' key = {index+keyIndexIncrement()+'id'+item.id}>{item.name}</li>
-                {/*console.log(keyIndex)*/}
-                <li id='repo-list-items-description' key = {index+keyIndexIncrement()+'des' + item.id}>{textminimize(item.description)}</li>
-                {/*console.log(keyIndex)*/}
-                <li id='repo-list-items-url' key = {index+keyIndexIncrement()+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener">{item.html_url}</a></li>
-                {/*console.log(keyIndex)*/}
-                <li id='repo-list-items-stars' key = {index+keyIndexIncrement()+'star' + item.id}>{item.stargazers_count} Stars</li>
-                {/*console.log(keyIndex)*/}
+
+                <li id='repo-list-items-name' 
+                key = {keyIndex()+'id'+item.id}>{item.name}</li>
+
+                <li id='repo-list-items-description' 
+                key = {keyIndex()+'des' + item.id}>{textminimize(item.description)}</li>
+                
+                <li id='repo-list-items-url' 
+                key = {keyIndex()+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener noreferrer">{item.html_url}</a></li>
+                
+                <li id='repo-list-items-stars' 
+                key = {keyIndex()+'star' + item.id}>{item.stargazers_count} Stars</li>
+                
                 </div>
+                
             <div id= 'repo-user-items'>
               <div id = 'repo-list-items-img'>
                 <li id='repo-list-items-img-list' 
-                key = {index+keyIndexIncrement()+'lan' + item.id}>
+                key = {keyIndex()+'lan' + item.id}>
                 {language(item.language)}
                 
                 

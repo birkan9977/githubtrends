@@ -5,7 +5,7 @@ const FilterQuery = (props) => {
 
   return(
     <div id='filter-queries'>
-      <label for='language'>Language</label>
+      <label id='language'>Language</label>
       <select id='dropdown-language' defaultValue='javascript'
         onChange={(e) => props.filter(e.target.value)}>
         <option value='javascript'>Java Script</option>
@@ -14,7 +14,7 @@ const FilterQuery = (props) => {
         <option value='c++'>C++</option>
       </select>
 
-      <label for='followers'>Followers greater than:</label>
+      <label id='followers'>Followers greater than:</label>
       <select id='dropdown-followers' defaultValue='50000'
         onChange={(e) => props.filterFollowers(e.target.value)}>
         <option value='10000'>10000</option>
