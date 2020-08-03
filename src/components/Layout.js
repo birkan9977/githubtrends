@@ -1,9 +1,13 @@
 import React, {useState} from 'react';
 import '../styles/Layout.css'
-import FilterData, { LoadData } from './filterData'
+import LoadData from './filterData'
+import FilterQuery from './filter'
 
 export default function Layout() {
-const [state,setState] = useState({followers:'50000',language:'javascript'})
+const [state,setState] = useState({
+  followers:'50000',
+  language:'javascript'
+})
 
     return (
       
@@ -30,8 +34,8 @@ const [state,setState] = useState({followers:'50000',language:'javascript'})
             <section id='middle-section'>
 
               <nav id='left-nav-bar'>  
-              <p>test nav left</p>
-              <FilterData 
+              <h3>Search Filters:</h3>
+              <FilterQuery 
               
               filter={e=>setState(prevState => ({
                 ...prevState,

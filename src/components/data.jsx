@@ -9,12 +9,12 @@ export default function DataLoader (props){
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
   
-  console.log('filter',props.filterlanguage)
+  console.log('DataLoader/filterLanguage: ',props.filterlanguage)
+  console.log('DataLoader/filterFollowers>: ',props.filterFollowers)
+  
   let url = `https://api.github.com/search/repositories?q=followers:>${props.filterFollowers} language:${props.filterlanguage} sort:stars`
   console.log(url)
 
-  //"https://api.github.com/search/repositories?q=followers:>10000 language:javascript+sort:stars"
-  //https://api.github.com/search/repositories?q=language:swift+sort:stars
   useEffect(() => {
 
       fetch(url, {
@@ -33,7 +33,7 @@ export default function DataLoader (props){
             setLoading(false);
             console.log('error',err)
           })
-  },[url]); //empty array to disable loop
+  },[url]); 
   
   
   let keyIndex = 100;
