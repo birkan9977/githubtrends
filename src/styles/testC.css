@@ -73,12 +73,12 @@ body {
   padding: 0.5rem 1rem 0.1rem 1rem;
 }
 #main nav a {
-  color: #dbd8d8;
+  color: #333;
   text-decoration: none;
 }
 #main nav a:hover {
-  background: #c7c4c4;
-  color: #272020;
+  background: rgba(112, 87, 87, 0.5);
+  color: #dbd8d8;
   text-decoration: none;
 }
 #main #middle-section {
@@ -203,7 +203,21 @@ body {
   margin-bottom: 10px;
 }
 
+#right-nav-bar {
+  display: block;
+  padding-bottom: 5px;
+  padding-top: 15px;
+  font-size: 0.8rem;
+}
+
 #filter-queries label {
+  display: block;
+  padding-bottom: 5px;
+  padding-top: 15px;
+  font-size: 0.8rem;
+}
+
+#left-nav-bar {
   display: block;
   padding-bottom: 5px;
   padding-top: 15px;
@@ -250,15 +264,14 @@ button {
   position: relative;
   height: 1.2rem;
   border: 1px solid;
-  border-color: #4f39ce;
+  border-color: #7d70c9;
   border-radius: 5px;
-  vertical-align: middle;
   margin: 10px 0;
   font-size: 0.7rem;
 }
 button:hover {
   cursor: pointer;
-  color: #77629e;
+  color: #3f0aa1;
   background: #b4ebb4;
 }
 button:disabled {

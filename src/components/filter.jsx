@@ -17,6 +17,7 @@ const handleTextKeyChange = (e) => {
       <label id='label-language'>Language</label>
       <select id='dropdown-language' defaultValue='javascript'
         onChange={(e) => props.filterLanguage(e.target.value)}>
+        <option value=''>Not Selected</option>
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
         <option value='java'>Java</option>
@@ -24,9 +25,12 @@ const handleTextKeyChange = (e) => {
       </select>
 
       <label id='label-followers'>Stars greater than:</label>
-      <select id='dropdown-followers' defaultValue='0'
-        onChange={(e) => props.filterFollowers(e.target.value)}>
-        <option value='0'>0</option>
+      <select id='dropdown-followers' defaultValue='10000'
+        onChange={(e) => props.filterStars(e.target.value)}>
+        <option value='1'>1</option>
+        <option value='500'>500</option>
+        <option value='1000'>1000</option>
+        <option value='5000'>5000</option>
         <option value='10000'>10000</option>
         <option value='20000'>20000</option>
         <option value='30000'>30000</option>

@@ -6,7 +6,7 @@ export default function LoadData(props){
 
       <DataLoader 
           filterLanguage={props.filters.language} 
-          filterFollowers={props.filters.followers}
+          filterStars={props.filters.stars}
           filterKeyword={props.filters.keyword}
       />
   

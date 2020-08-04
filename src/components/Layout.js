@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-//import '../styles/Layout.css'
 import LoadData from './filterData'
 import FilterQuery from './filter'
 import '../styles/testC.css'
-import logo from '../resources/Software-Development.jpg'
 
 export default function Layout() {
 const [state,setState] = useState({
-  followers:'0',
+  stars:'10000',
   language:'javascript',
   keyword:''
 })
@@ -37,7 +35,8 @@ const [state,setState] = useState({
             <section id='middle-section'>
 
               <nav id='left-nav-bar'>  
-              <h3>Search Filters:</h3>
+              <h3>Search:</h3>
+
               <FilterQuery 
               
               filterLanguage={e=>setState(prevState => ({
@@ -45,9 +44,9 @@ const [state,setState] = useState({
                 language: e
               }))}
 
-              filterFollowers={e=>setState(prevState => ({
+              filterStars={e=>setState(prevState => ({
                 ...prevState,
-                followers: e
+                stars: e
               }))}
 
               filterKeyword={e=>setState(prevState => ({
@@ -67,7 +66,10 @@ const [state,setState] = useState({
               </section>
 
               <nav id='right-nav-bar'>
-              <p>test nav right</p>
+              <h3>Filters:</h3>
+              <p>Language: {state.language}</p>
+              <p>Stars: {state.stars}</p>
+              <p>Keyword: {state.keyword}</p>
               </nav>
 
             </section>

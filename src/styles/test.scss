@@ -62,14 +62,14 @@
 
         ul{@include horizontal-list;}
   
-        a {
-          color: base.$light-gray;
+        a {         
+          color:base.$primary-color;
           text-decoration: none;
         }
   
         a:hover{
-          background:base.$header-gray;
-          color: rgb(39, 32, 32);
+          background:base.$topnavbar-color-transparent;
+          color: base.$light-gray;
           text-decoration: none;
         }
     }
@@ -250,11 +250,24 @@
   margin-bottom: 10px;
 }
 
-#filter-queries label{
+@mixin side-labels(){
   display:block;
   padding-bottom: 5px;
   padding-top: 15px;
   font-size: 0.8rem;
+}
+
+#right-nav-bar{
+  @include side-labels
+}
+
+#filter-queries label{
+  @include side-labels
+
+}
+
+#left-nav-bar{
+  @include side-labels
 }
 
 @mixin triangle($size, $color, $direction) {
@@ -300,22 +313,21 @@ $sizes: 40px, 50px, 80px;
 }
 
 $button-height:1.2rem;
-$mdc-button-disabled-ink-color:rgb(119, 98, 158);
+$button-ink-color:rgb(63, 10, 161);
 @mixin button-base() {
 
   display: block;
   position: relative;
   height: $button-height;
   border: 1px solid;
-  border-color: rgb(79, 57, 206);
+  border-color: rgb(125, 112, 201);
   border-radius: 5px;;
-  vertical-align: middle;
   margin: 10px 0;
   font-size: 0.7rem;
 
   &:hover { 
     cursor: pointer; 
-    color: $mdc-button-disabled-ink-color;
+    color: $button-ink-color;
 
     background: rgb(180, 235, 180);
 

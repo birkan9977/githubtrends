@@ -10,12 +10,14 @@ export default function DataLoader (props){
   const[error,setError] = useState(null)
   
   console.log('Data/filterLanguage: ',props.filterLanguage)
-  console.log('Data/filterFollowers>: ',props.filterFollowers)
+  console.log('Data/filterStars>: ',props.filterStars)
   console.log('Data/filterKeyword>: ',props.filterKeyword)
-  
-  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword}followers:>=${props.filterFollowers} language:${props.filterLanguage} sort:stars`
-  console.log(url)
 
+  let filterLanguage = props.filterLanguage?`language:${props.filterLanguage}`:''
+
+  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>${props.filterStars} ${filterLanguage} sort:stars`
+  console.log(url)
+  
   useEffect(() => {
 
       fetch(url, {
