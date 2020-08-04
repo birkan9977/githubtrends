@@ -40,14 +40,25 @@ body {
   display: flex;
   flex-direction: column;
   font-size: 62.5%;
+  background-image: url("../resources/Software-Development.jpg");
+  background-repeat: repeat-y;
+  background-size: 100%;
+}
+#main #back-image {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  margin-left: 10px;
+  z-index: -1;
+  background-repeat: repeat-y;
 }
 #main header {
-  background: #c7c4c4;
+  background: rgba(199, 196, 196, 0.7);
   padding: 20px;
   text-align: left;
 }
 #main nav ul {
-  background: #705757;
+  background: rgba(112, 87, 87, 0.5);
   list-style: none;
   font-size: 1rem;
   display: flex;
@@ -71,7 +82,7 @@ body {
   text-decoration: none;
 }
 #main #middle-section {
-  background: #d3afaf;
+  background: radial-gradient(circle at 20% 0, rgba(143, 107, 107, 0.5), rgba(77, 37, 37, 0.5) 70.71%), radial-gradient(circle at 6.7% 75%, rgba(219, 213, 193, 0.5), rgba(191, 191, 223, 0.5) 70.71%), radial-gradient(circle at 93.3% 75%, rgba(182, 180, 202, 0.5), rgba(247, 242, 242, 0.5) 10.71%) rgba(233, 233, 206, 0.5);
   font-size: 1rem;
   color: #333;
 }
@@ -79,7 +90,7 @@ body {
   flex: 1;
   width: 31.25%;
   margin: 10px;
-  background: #dbd8d8;
+  background: rgba(219, 216, 216, 0.3);
   padding: 1rem;
 }
 #main #middle-section section {
@@ -92,11 +103,7 @@ body {
   margin: 0;
   padding: 10px;
   list-style: none;
-}
-#main #middle-section section a {
-  display: block;
-  padding: 6px 12px;
-  text-decoration: none;
+  box-shadow: -10px 20px 10px 5px rgba(112, 87, 87, 0.5);
 }
 @media (max-width: 700px) {
   #main #middle-section section #repo-items {
@@ -104,7 +111,7 @@ body {
   }
 }
 #main #middle-section section #repo-items {
-  background: #c7c4c4;
+  background: rgba(211, 175, 175, 0.2);
   color: #333;
   border: 1px solid;
   border-color: #dbd8d8;
@@ -121,37 +128,47 @@ body {
 }
 #main #middle-section section #repo-items a:link {
   text-decoration: none;
-  color: #bea0a0;
+  color: #705757;
   font-size: 0.9rem;
 }
 #main #middle-section section #repo-items a:visited {
-  color: #4d1a1a;
+  color: rgba(211, 175, 175, 0.2);
 }
 #main #middle-section section #repo-items a:hover {
   text-decoration: none;
   color: #1f0909;
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 #main #middle-section section #repo-items #repo-list-items {
   flex: 3;
   padding-left: 10px;
-  max-width: 600px;
-  line-height: 2;
+  max-width: 800px;
+  line-height: 1.5;
 }
 #main #middle-section section #repo-items #repo-list-items #order-number {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 #main #middle-section section #repo-items #repo-list-items li {
   font-size: 0.9rem;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  text-align: left;
 }
 #main #middle-section section #repo-items #repo-list-items #repo-list-items-name {
   font-size: 1.2rem;
   color: #664444;
-  background: #d3afaf;
-  padding: 15px;
+  background: rgba(211, 175, 175, 0.2);
+  padding: 10px;
   border-radius: 5px;
-  width: 60%;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 15px;
+}
+#main #middle-section section #repo-items #repo-list-items #repo-list-items-description {
+  text-align: left;
+}
+#main #middle-section section #repo-items #repo-list-items #repo-list-items-url {
+  margin: 0;
+  text-align: left;
 }
 #main #middle-section section #repo-items #repo-user-items {
   flex: 1;
@@ -165,7 +182,7 @@ body {
 #main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-list-items-img-list {
   flex: 3;
   text-align: right;
-  margin-top: 30px;
+  margin-top: 0;
   margin-right: 15px;
 }
 #main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-list-items-img-list p {
@@ -189,7 +206,7 @@ body {
 #filter-queries label {
   display: block;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 15px;
   font-size: 0.8rem;
 }
 
@@ -203,15 +220,11 @@ body {
 }
 
 ul:nth-child(3n+1) {
-  background-color: #846767;
+  background-color: rgba(231, 229, 229, 0.3);
 }
 
 ul:nth-child(3n+2) {
-  background-color: #967878;
-}
-
-ul:nth-child(3n+3) {
-  background-color: #a68c8c;
+  background-color: rgba(243, 243, 243, 0.3);
 }
 
 .icon-40px {

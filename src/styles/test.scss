@@ -6,7 +6,7 @@
 @use 'messages';
 
 @mixin list {
-  background: base.$topnavbar-color;
+  background: base.$topnavbar-color-transparent;
           list-style: none;
           font-size: 1rem;
           display: flex;
@@ -36,11 +36,25 @@
   display:flex;
   flex-direction:column;
   font-size:62.5%;
+  background-image: url('../resources/Software-Development.jpg');
+  background-repeat: repeat-y;
+  background-size: 100%;
+
+  #back-image {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    margin-left: 10px;
+    z-index: -1;
+    background-repeat: repeat-y;  
   
+  }
+
   header{
-    background: base.$header-gray;
+    background: base.$header-gray-transparent;
     padding:20px;
     text-align: left;
+
   
   }
 
@@ -63,16 +77,17 @@
     //layout.js
     #middle-section {
       @extend %equal-heights;
-      background:base.$mid-section-color;
+      background:base.$stacked-radial; //base.$mid-section-color;
       font-size:1rem;
       color:base.$primary-color;
+      
       
       
             nav{
               flex:1;
               width: 300px / 960px * 100%;
               margin:10px;
-              background: base.$light-gray;
+              background: base.$light-gray-transparent;
               padding: 1rem;
             }
             
@@ -83,19 +98,18 @@
               padding: 10px;
               margin:0 10px;
 
+              
+
                       ul {
                         margin: 0;
                         padding: 10px;
                         list-style: none;
+                        box-shadow: -10px 20px 10px 5px base.$topnavbar-color-transparent;
+
                       }
                     
                     
                     
-                      a {
-                        display: block;
-                        padding: 6px 12px;
-                        text-decoration: none;
-                      }
                       @media (max-width:700px){
                         #repo-items{  
                           flex-wrap:wrap;
@@ -104,7 +118,7 @@
 
                       //data.jsx
                       #repo-items{
-                        background: base.$header-gray;
+                        background: base.$mid-section-color-transparent;
                         color:base.$primary-color;
                         border:1px solid;
                         border-color: base.$light-gray;
@@ -124,43 +138,58 @@
 
                         a:link{
                           text-decoration: none;
-                          color:rgb(190, 160, 160);
+                          color:base.$topnavbar-color;
                           font-size: 0.9rem;
                         }
                         
                         a:visited{
                         
-                          color:rgb(77, 26, 26);
+                          color:base.$mid-section-color-transparent;
                         }
                         
                         a:hover{
                           text-decoration: none;
                           color:rgb(31, 9, 9);
-                          font-size: 0.9rem;
+                          font-size: 1rem;
                         }
+
+                        
 
                             #repo-list-items{
                               flex:3;
                               padding-left:10px;
-                              max-width:600px;
-                              line-height: 2;
+                              max-width:800px;
+                              line-height: 1.5;
 
                                     #order-number{
-                                      margin-bottom: 10px;
+                                      margin-bottom: 5px;
                                     }
 
                                     li{
                                       font-size:0.9rem;
-                                      margin-bottom: 10px;
+                                      margin-bottom: 5px;
+                                      text-align: left;
                                     }
 
                                     #repo-list-items-name{
                                       font-size:1.2rem;
-                                      color:rgb(102, 68, 68);
-                                      background:rgb(211, 175, 175);
-                                      padding: 15px;
+                                      color:base.$repo-items-color;
+                                      background:base.$mid-section-color-transparent;
+                                      padding: 10px;
                                       border-radius: 5px;
-                                      width: 60%;
+                                      width: 100%;
+                                      text-align: center;
+                                      margin-bottom: 15px;
+                                    }
+
+                                    #repo-list-items-description{
+                                      text-align:left;
+                                    }
+
+                                    #repo-list-items-url{
+                                      margin: 0;
+                                      
+                                      text-align:left;
                                     }
                                     
                                     
@@ -180,7 +209,7 @@
                                   #repo-list-items-img-list{
                                     flex:3;
                                     text-align:right;
-                                    margin-top: 30px;
+                                    margin-top: 0;
                                     margin-right:15px;
 
                                     p {
@@ -224,7 +253,7 @@
 #filter-queries label{
   display:block;
   padding-bottom: 5px;
-  padding-top: 5px;
+  padding-top: 15px;
   font-size: 0.8rem;
 }
 
@@ -253,11 +282,10 @@
   @include triangle(5px, black, right);
 }
 
-$base-color: rgb(129, 180, 231);
 
-@for $i from 1 through 3 {
+@for $i from 1 through 2 {
   ul:nth-child(3n + #{$i}) {
-    background-color: lighten(base.$topnavbar-color, $i * 7%);
+    background-color: lighten(base.$light-gray-transparent, $i * 5%);
   }
 }
 

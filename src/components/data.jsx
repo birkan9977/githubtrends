@@ -9,11 +9,11 @@ export default function DataLoader (props){
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
   
-  console.log('Data/filterLanguage: ',props.filterlanguage)
+  console.log('Data/filterLanguage: ',props.filterLanguage)
   console.log('Data/filterFollowers>: ',props.filterFollowers)
   console.log('Data/filterKeyword>: ',props.filterKeyword)
   
-  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword}followers:>=${props.filterFollowers} language:${props.filterlanguage} sort:stars`
+  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword}followers:>=${props.filterFollowers} language:${props.filterLanguage} sort:stars`
   console.log(url)
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function DataLoader (props){
   if (codeLanguage!=null){
      return (
         <>
-        <span>Language</span>
+        {/*<span>Language</span>*/}
         <p>{codeLanguage}</p>
         </>
        )
@@ -62,7 +62,7 @@ export default function DataLoader (props){
 function textminimize(text){
   if(text==null)return text
   let len = text.length;
-  let maxlen = 150;
+  let maxlen = 100;
   if(len>maxlen){
     let finaltext = text.substr(0,maxlen) + ' ...more'
     return finaltext
@@ -95,8 +95,10 @@ function textminimize(text){
                 <li id='repo-list-items-description' 
                 key = {keyIndex()+'des' + item.id}>{textminimize(item.description)}</li>
                 
+                
                 <li id='repo-list-items-url' 
-                key = {keyIndex()+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener noreferrer">{item.html_url}</a></li>
+                key = {keyIndex()+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener">GitHub Link</a></li>
+                
                 
                 <li id='repo-list-items-stars' 
                 key = {keyIndex()+'star' + item.id}>{item.stargazers_count} Stars</li>

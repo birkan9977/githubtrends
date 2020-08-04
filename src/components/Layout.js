@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import LoadData from './filterData'
 import FilterQuery from './filter'
 import '../styles/testC.css'
-
+import logo from '../resources/Software-Development.jpg'
 
 export default function Layout() {
 const [state,setState] = useState({
@@ -30,7 +30,7 @@ const [state,setState] = useState({
                 <a href='#ref'><li>References</li></a>
               </ul>
             </nav>
-            
+
 
             
 
@@ -40,7 +40,7 @@ const [state,setState] = useState({
               <h3>Search Filters:</h3>
               <FilterQuery 
               
-              filter={e=>setState(prevState => ({
+              filterLanguage={e=>setState(prevState => ({
                 ...prevState,
                 language: e
               }))}
@@ -61,6 +61,7 @@ const [state,setState] = useState({
               </nav>
 
               <section id='center-section'>
+              
               <h3>Top 30 Chart</h3>
               <LoadData filters={state}/>
               </section>

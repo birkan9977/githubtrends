@@ -16,14 +16,14 @@ const handleTextKeyChange = (e) => {
     <div id='filter-queries'>
       <label id='label-language'>Language</label>
       <select id='dropdown-language' defaultValue='javascript'
-        onChange={(e) => props.filter(e.target.value)}>
+        onChange={(e) => props.filterLanguage(e.target.value)}>
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
         <option value='java'>Java</option>
         <option value='c++'>C++</option>
       </select>
 
-      <label id='label-followers'>Followers greater than:</label>
+      <label id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='0'
         onChange={(e) => props.filterFollowers(e.target.value)}>
         <option value='0'>0</option>
