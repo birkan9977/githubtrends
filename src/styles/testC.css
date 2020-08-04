@@ -1,0 +1,260 @@
+body {
+  font: 100% Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+.box {
+  -webkit-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  transform: rotate(30deg);
+}
+
+#main #middle-section {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+/* This CSS will print because %message-shared is extended. */
+.warning, .error, .success, .message {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+}
+
+.success {
+  border-color: green;
+}
+
+.error {
+  border-color: red;
+}
+
+.warning {
+  border-color: yellow;
+}
+
+#main {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  font-size: 62.5%;
+}
+#main header {
+  background: #c7c4c4;
+  padding: 20px;
+  text-align: left;
+}
+#main nav ul {
+  background: #705757;
+  list-style: none;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-right: 2rem;
+  margin: 0;
+}
+#main nav ul li {
+  margin: 0;
+  height: 2rem;
+  padding: 0.5rem 1rem 0.1rem 1rem;
+}
+#main nav a {
+  color: #dbd8d8;
+  text-decoration: none;
+}
+#main nav a:hover {
+  background: #c7c4c4;
+  color: #272020;
+  text-decoration: none;
+}
+#main #middle-section {
+  background: #d3afaf;
+  font-size: 1rem;
+  color: #333;
+}
+#main #middle-section nav {
+  flex: 1;
+  width: 31.25%;
+  margin: 10px;
+  background: #dbd8d8;
+  padding: 1rem;
+}
+#main #middle-section section {
+  flex: 2;
+  width: 62.5%;
+  padding: 10px;
+  margin: 0 10px;
+}
+#main #middle-section section ul {
+  margin: 0;
+  padding: 10px;
+  list-style: none;
+}
+#main #middle-section section a {
+  display: block;
+  padding: 6px 12px;
+  text-decoration: none;
+}
+@media (max-width: 700px) {
+  #main #middle-section section #repo-items {
+    flex-wrap: wrap;
+  }
+}
+#main #middle-section section #repo-items {
+  background: #c7c4c4;
+  color: #333;
+  border: 1px solid;
+  border-color: #dbd8d8;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-left: 0;
+  display: flex;
+  flex-direction: row;
+}
+#main #middle-section section #repo-items img {
+  width: 30px;
+  margin-bottom: 10px;
+}
+#main #middle-section section #repo-items a:link {
+  text-decoration: none;
+  color: #bea0a0;
+  font-size: 0.9rem;
+}
+#main #middle-section section #repo-items a:visited {
+  color: #4d1a1a;
+}
+#main #middle-section section #repo-items a:hover {
+  text-decoration: none;
+  color: #1f0909;
+  font-size: 0.9rem;
+}
+#main #middle-section section #repo-items #repo-list-items {
+  flex: 3;
+  padding-left: 10px;
+  max-width: 600px;
+  line-height: 2;
+}
+#main #middle-section section #repo-items #repo-list-items #order-number {
+  margin-bottom: 10px;
+}
+#main #middle-section section #repo-items #repo-list-items li {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+#main #middle-section section #repo-items #repo-list-items #repo-list-items-name {
+  font-size: 1.2rem;
+  color: #664444;
+  background: #d3afaf;
+  padding: 15px;
+  border-radius: 5px;
+  width: 60%;
+}
+#main #middle-section section #repo-items #repo-user-items {
+  flex: 1;
+}
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  height: 100%;
+}
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-list-items-img-list {
+  flex: 3;
+  text-align: right;
+  margin-top: 30px;
+  margin-right: 15px;
+}
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-list-items-img-list p {
+  line-height: 1rem;
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-img-figure {
+  flex: 1;
+  text-align: right;
+  margin: 10px;
+}
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-img-figure #repo-img-caption {
+  font-size: 0.7rem;
+}
+
+#dropdown-language {
+  margin-bottom: 10px;
+}
+
+#filter-queries label {
+  display: block;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  font-size: 0.8rem;
+}
+
+.next {
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 2.5px;
+  border-left-color: black;
+}
+
+ul:nth-child(3n+1) {
+  background-color: #846767;
+}
+
+ul:nth-child(3n+2) {
+  background-color: #967878;
+}
+
+ul:nth-child(3n+3) {
+  background-color: #a68c8c;
+}
+
+.icon-40px {
+  font-size: 40px;
+  height: 40px;
+  width: 40px;
+}
+
+.icon-50px {
+  font-size: 50px;
+  height: 50px;
+  width: 50px;
+}
+
+.icon-80px {
+  font-size: 80px;
+  height: 80px;
+  width: 80px;
+}
+
+button {
+  display: block;
+  position: relative;
+  height: 1.2rem;
+  border: 1px solid;
+  border-color: #4f39ce;
+  border-radius: 5px;
+  vertical-align: middle;
+  margin: 10px 0;
+  font-size: 0.7rem;
+}
+button:hover {
+  cursor: pointer;
+  color: #77629e;
+  background: #b4ebb4;
+}
+button:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+#label-keyword, #input-keyword {
+  width: 100px;
+}
+
+/*# sourceMappingURL=testC.css.map */

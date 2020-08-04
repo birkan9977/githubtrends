@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
-import '../styles/Layout.css'
+//import '../styles/Layout.css'
 import LoadData from './filterData'
 import FilterQuery from './filter'
+import '../styles/testC.css'
+
 
 export default function Layout() {
 const [state,setState] = useState({
-  followers:'50000',
-  language:'javascript'
+  followers:'0',
+  language:'javascript',
+  keyword:''
 })
 
     return (
@@ -45,6 +48,11 @@ const [state,setState] = useState({
               filterFollowers={e=>setState(prevState => ({
                 ...prevState,
                 followers: e
+              }))}
+
+              filterKeyword={e=>setState(prevState => ({
+                ...prevState,
+                keyword: e
               }))}
               
               />

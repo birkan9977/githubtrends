@@ -1,0 +1,308 @@
+
+
+
+// _base.scss
+@use 'base';
+@use 'messages';
+
+@mixin list {
+  background: base.$topnavbar-color;
+          list-style: none;
+          font-size: 1rem;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+          padding-right: 2rem;
+          margin: 0;
+}
+
+@mixin horizontal-list {
+  @include list;
+
+  li {
+    margin: 0;
+    height: 2rem;
+    padding: 0.5rem 1rem 0.1rem 1rem;
+    
+  }
+}
+
+
+
+//layout.js
+#main {
+  width: 100%;
+  margin: 0 auto;
+  display:flex;
+  flex-direction:column;
+  font-size:62.5%;
+  
+  header{
+    background: base.$header-gray;
+    padding:20px;
+    text-align: left;
+  
+  }
+
+  nav{ 
+
+        ul{@include horizontal-list;}
+  
+        a {
+          color: base.$light-gray;
+          text-decoration: none;
+        }
+  
+        a:hover{
+          background:base.$header-gray;
+          color: rgb(39, 32, 32);
+          text-decoration: none;
+        }
+    }
+
+    //layout.js
+    #middle-section {
+      @extend %equal-heights;
+      background:base.$mid-section-color;
+      font-size:1rem;
+      color:base.$primary-color;
+      
+      
+            nav{
+              flex:1;
+              width: 300px / 960px * 100%;
+              margin:10px;
+              background: base.$light-gray;
+              padding: 1rem;
+            }
+            
+            //layout.js
+            section {
+              flex:2;
+              width: 600px / 960px * 100%;
+              padding: 10px;
+              margin:0 10px;
+
+                      ul {
+                        margin: 0;
+                        padding: 10px;
+                        list-style: none;
+                      }
+                    
+                    
+                    
+                      a {
+                        display: block;
+                        padding: 6px 12px;
+                        text-decoration: none;
+                      }
+                      @media (max-width:700px){
+                        #repo-items{  
+                          flex-wrap:wrap;
+                        }
+                      }
+
+                      //data.jsx
+                      #repo-items{
+                        background: base.$header-gray;
+                        color:base.$primary-color;
+                        border:1px solid;
+                        border-color: base.$light-gray;
+                        border-radius:5px;
+                        padding:10px;
+                        margin-bottom:10px;
+                        margin-left:0;
+                        display:flex;
+                        flex-direction:row;
+                        
+                        img{
+  
+                          width:30px;
+                          margin-bottom: 10px;
+                          
+                        }
+
+                        a:link{
+                          text-decoration: none;
+                          color:rgb(190, 160, 160);
+                          font-size: 0.9rem;
+                        }
+                        
+                        a:visited{
+                        
+                          color:rgb(77, 26, 26);
+                        }
+                        
+                        a:hover{
+                          text-decoration: none;
+                          color:rgb(31, 9, 9);
+                          font-size: 0.9rem;
+                        }
+
+                            #repo-list-items{
+                              flex:3;
+                              padding-left:10px;
+                              max-width:600px;
+                              line-height: 2;
+
+                                    #order-number{
+                                      margin-bottom: 10px;
+                                    }
+
+                                    li{
+                                      font-size:0.9rem;
+                                      margin-bottom: 10px;
+                                    }
+
+                                    #repo-list-items-name{
+                                      font-size:1.2rem;
+                                      color:rgb(102, 68, 68);
+                                      background:rgb(211, 175, 175);
+                                      padding: 15px;
+                                      border-radius: 5px;
+                                      width: 60%;
+                                    }
+                                    
+                                    
+                            }
+                      
+
+                            #repo-user-items{
+                              flex:1;
+
+
+                                #repo-list-items-img{
+                                  display:flex;
+                                  flex-direction:column;
+                                  align-content: flex-end;
+                                  height:100%;
+
+                                  #repo-list-items-img-list{
+                                    flex:3;
+                                    text-align:right;
+                                    margin-top: 30px;
+                                    margin-right:15px;
+
+                                    p {
+                                      line-height:1rem;
+                                      margin-top: 10px;
+                                      font-size:  0.8rem;
+                                    }
+                          
+                                  }
+
+                                  #repo-img-figure{
+                                    flex:1;
+                                    text-align:right;
+                                    margin: 10px;
+
+                                    #repo-img-caption{
+                                      font-size:0.7rem;
+                          
+                                  }
+                          
+                                  }
+                                }
+                                
+                              
+                            }
+                      }
+            }
+    }
+}
+
+
+
+
+
+
+
+#dropdown-language{
+  margin-bottom: 10px;
+}
+
+#filter-queries label{
+  display:block;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  font-size: 0.8rem;
+}
+
+@mixin triangle($size, $color, $direction) {
+  height: 0;
+  width: 0;
+
+  border-color: transparent;
+  border-style: solid;
+  border-width: $size / 2;
+
+  @if $direction == up {
+    border-bottom-color: $color;
+  } @else if $direction == right {
+    border-left-color: $color;
+  } @else if $direction == down {
+    border-top-color: $color;
+  } @else if $direction == left {
+    border-right-color: $color;
+  } @else {
+    @error "Unknown direction #{$direction}.";
+  }
+}
+
+.next {
+  @include triangle(5px, black, right);
+}
+
+$base-color: rgb(129, 180, 231);
+
+@for $i from 1 through 3 {
+  ul:nth-child(3n + #{$i}) {
+    background-color: lighten(base.$topnavbar-color, $i * 7%);
+  }
+}
+
+$sizes: 40px, 50px, 80px;
+
+@each $size in $sizes {
+  .icon-#{$size} {
+    font-size: $size;
+    height: $size;
+    width: $size;
+  }
+}
+
+$button-height:1.2rem;
+$mdc-button-disabled-ink-color:rgb(119, 98, 158);
+@mixin button-base() {
+
+  display: block;
+  position: relative;
+  height: $button-height;
+  border: 1px solid;
+  border-color: rgb(79, 57, 206);
+  border-radius: 5px;;
+  vertical-align: middle;
+  margin: 10px 0;
+  font-size: 0.7rem;
+
+  &:hover { 
+    cursor: pointer; 
+    color: $mdc-button-disabled-ink-color;
+
+    background: rgb(180, 235, 180);
+
+  }
+
+  &:disabled {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+button{
+  @include button-base();
+}
+
+#label-keyword, #input-keyword{
+  width:100px;
+}

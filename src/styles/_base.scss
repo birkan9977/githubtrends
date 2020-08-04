@@ -1,0 +1,31 @@
+
+
+$font-stack: Helvetica, Arial, sans-serif;
+
+$primary-color: #333;
+$header-gray:rgb(199, 196, 196);
+$topnavbar-color:rgb(112, 87, 87);
+$mid-section-color:rgb(211, 175, 175);
+$light-blue:rgb(222, 216, 240);
+$light-gray:rgb(219, 216, 216);
+
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  
+}
+
+
+@mixin transform($property) {
+  -webkit-transform: $property;
+  -ms-transform: $property;
+  transform: $property;
+}
+.box { @include transform(rotate(30deg)); }
+
+%equal-heights {
+  display: flex;
+  flex-direction:row;
+  flex-wrap: nowrap;
+}

@@ -9,10 +9,11 @@ export default function DataLoader (props){
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
   
-  console.log('DataLoader/filterLanguage: ',props.filterlanguage)
-  console.log('DataLoader/filterFollowers>: ',props.filterFollowers)
+  console.log('Data/filterLanguage: ',props.filterlanguage)
+  console.log('Data/filterFollowers>: ',props.filterFollowers)
+  console.log('Data/filterKeyword>: ',props.filterKeyword)
   
-  let url = `https://api.github.com/search/repositories?q=followers:>${props.filterFollowers} language:${props.filterlanguage} sort:stars`
+  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword}followers:>=${props.filterFollowers} language:${props.filterlanguage} sort:stars`
   console.log(url)
 
   useEffect(() => {
@@ -83,7 +84,7 @@ function textminimize(text){
             {data?data.map((item) =>
             <>
             <div id='repo-items'>
-                <div id='repo-list-items'>
+              <div id='repo-list-items'>
                 <div id='order-number'>
                 {noItemIncrement()}
                 </div>
@@ -100,7 +101,7 @@ function textminimize(text){
                 <li id='repo-list-items-stars' 
                 key = {keyIndex()+'star' + item.id}>{item.stargazers_count} Stars</li>
                 
-                </div>
+              </div>
                 
             <div id= 'repo-user-items'>
               <div id = 'repo-list-items-img'>

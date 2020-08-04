@@ -108,6 +108,7 @@ header{
 #repo-list-items{
   flex:3;
   padding-left:10px;
+  max-width:300px;
 }
 
 #order-number{
@@ -203,6 +204,7 @@ header{
 #filter-queries label{
   display:block;
   padding-bottom: 5px;
+  padding-top: 5px;
 }
 
 #left-nav-bar{
