@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import LoadData from './filterData'
 import FilterQuery from './filter'
-import '../styles/testC.css'
+import '../styles/mainOutput.css'
 
 export default function Layout() {
 const [state,setState] = useState({
@@ -61,7 +61,7 @@ const [state,setState] = useState({
 
               <section id='center-section'>
               
-              <h3>Top 30 Chart</h3>
+              <h3>Top Chart</h3>
               <LoadData filters={state}/>
               </section>
 

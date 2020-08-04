@@ -17,7 +17,7 @@ export default function DataLoader (props){
 
   let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>${props.filterStars} ${filterLanguage} sort:stars`
   console.log(url)
-  
+
   useEffect(() => {
 
       fetch(url, {
@@ -81,7 +81,7 @@ function textminimize(text){
       
       <div>
         <p>{loading?'Loading Data':null}</p>
-        <p>{error?`Error:$(error)`:null}</p>
+        <p>{error?console.log(`Error: ${error}`):null}</p>
           <ul>
             {data?data.map((item) =>
             <>
@@ -124,7 +124,7 @@ function textminimize(text){
                 
             </div>
             </>
-            ):null}
+            ):<p>{console.log('no data')}Search Filters returned no results. Try changing search filters.</p>}
           </ul>
       </div>
 
