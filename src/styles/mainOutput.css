@@ -132,7 +132,7 @@ body {
   font-size: 0.9rem;
 }
 #main #middle-section section #repo-items a:visited {
-  color: rgba(211, 175, 175, 0.2);
+  color: rgba(112, 87, 87, 0.5);
 }
 #main #middle-section section #repo-items a:hover {
   text-decoration: none;
