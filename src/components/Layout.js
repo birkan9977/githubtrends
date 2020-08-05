@@ -115,7 +115,7 @@ function displayChartNumber(){
               <p>Language: {state.language}</p>
               <p>Stars: {state.stars}</p>
               <p>Keyword: {state.keyword}</p>
-              <label>Api address:</label>
+              <p>Api address:</p>
               <textarea id='url-textarea' defaultValue={state.url}></textarea>
               </nav>
 

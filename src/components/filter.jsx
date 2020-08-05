@@ -26,11 +26,11 @@ const onKeyPress = (e) => {
       <label id='label-language'>Language</label>
       <select id='dropdown-language' defaultValue='javascript'
         onChange={(e) => props.filterLanguage(e.target.value)}>
-        <option value=''>Not Selected</option>
+        <option value=''>All</option>
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
         <option value='java'>Java</option>
-        <option value='c++'>C++</option>
+        <option value='c%2B%2B'>C++</option>
       </select>
 
       <label id='label-followers'>Stars greater than:</label>
