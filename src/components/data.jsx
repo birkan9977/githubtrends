@@ -8,7 +8,7 @@ export default function DataLoader (props){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-  
+  const[filterdUrl,setFilteredUrl] = useState(null)
   console.log('Data/filterLanguage: ',props.filterLanguage)
   console.log('Data/filterStars>: ',props.filterStars)
   console.log('Data/filterKeyword>: ',props.filterKeyword)
@@ -16,9 +16,9 @@ export default function DataLoader (props){
   let filterLanguage = props.filterLanguage?`language:${props.filterLanguage}`:''
 
   let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>${props.filterStars} ${filterLanguage} sort:stars`
-  console.log(url)
 
   useEffect(() => {
+    //setFilteredUrl(url)
 
       fetch(url, {
         headers: {
@@ -36,10 +36,13 @@ export default function DataLoader (props){
             setLoading(false);
             console.log('error',err)
           })
+
+          props.filteredUrl(url)
   },[url]); 
   
+
   
-  
+
 
   let noItem = ''
   function noItemIncrement(){
