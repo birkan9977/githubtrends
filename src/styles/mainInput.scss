@@ -261,6 +261,10 @@
   @include side-labels
 }
 
+#url-textarea{
+  width:fit-content;
+  height:100px;
+}
 #filter-queries label{
   @include side-labels
 

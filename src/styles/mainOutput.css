@@ -210,6 +210,11 @@ body {
   font-size: 0.8rem;
 }
 
+#url-textarea {
+  width: fit-content;
+  height: 100px;
+}
+
 #filter-queries label {
   display: block;
   padding-bottom: 5px;

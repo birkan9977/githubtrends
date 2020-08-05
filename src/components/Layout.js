@@ -7,7 +7,8 @@ export default function Layout() {
 const [state,setState] = useState({
   stars:'10000',
   language:'javascript',
-  keyword:''
+  keyword:'',
+  url:''
 })
 
     return (
@@ -30,7 +31,7 @@ const [state,setState] = useState({
             </nav>
 
 
-            
+            {console.log(state)}
 
             <section id='middle-section'>
 
@@ -55,21 +56,37 @@ const [state,setState] = useState({
               }))}
               
               />
-              {console.log('filterData',state)}
 
               </nav>
 
               <section id='center-section'>
               
               <h3>Top Chart</h3>
-              <LoadData filters={state}/>
+              <LoadData 
+              
+
+              filters={state} 
+
+              filteredUrl={e=>setState(prevState => ({
+                ...prevState,
+                url: e
+              }))}
+
+              
+              
+              
+              />
               </section>
+
+              {console.log('filterData',state)}
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
               <p>Language: {state.language}</p>
               <p>Stars: {state.stars}</p>
               <p>Keyword: {state.keyword}</p>
+              <label>Api address:</label>
+              <textarea id='url-textarea' defaultValue={state.url}></textarea>
               </nav>
 
             </section>
