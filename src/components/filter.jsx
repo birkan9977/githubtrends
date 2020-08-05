@@ -9,6 +9,15 @@ const handleTextKeyChange = (e) => {
   setKeyword(e.target.value)
 }
 
+const handleSendKeyWord =()=>{
+  props.filterKeyword(keyword)
+}
+
+const onKeyPress = (e) => {
+  if(e.which === 13) {
+    handleSendKeyWord();
+  }
+}
 
   return(
     
@@ -41,12 +50,13 @@ const handleTextKeyChange = (e) => {
       <label id='label-keyword'>Search Keyword</label>
       <input type='text' id='input-keyword'
       onChange={handleTextKeyChange}
+      onKeyPress={onKeyPress}
       >
               {/*console.log(keyword)*/}
       
 
       </input>
-      <button onClick={() => props.filterKeyword(keyword)}>Submit</button>
+      <button onClick={() => handleSendKeyWord(keyword)}>Submit</button>
     </div>
     
     
