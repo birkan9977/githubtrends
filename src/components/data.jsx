@@ -39,10 +39,7 @@ export default function DataLoader (props){
   },[url]); 
   
   
-  let keyIndex = (function () {
-    let counter = 0;
-    return function () {counter += 1; return counter}
-  })();//closure:)
+  
 
   let noItem = ''
   function noItemIncrement(){
@@ -60,6 +57,12 @@ export default function DataLoader (props){
        )
   } 
 }
+
+let keyIndex = (function () {
+  let counter = 0
+  return function () {counter += 1; return counter}
+})();//closure:)
+
 
 function textminimize(text){
   if(text==null)return text
@@ -93,7 +96,7 @@ function textminimize(text){
 
                 <li id='repo-list-items-name' 
                 key = {keyIndex()+'id'+item.id}>{item.name}</li>
-
+                
                 <li id='repo-list-items-description' 
                 key = {keyIndex()+'des' + item.id}>{textminimize(item.description)}</li>
                 
