@@ -17,8 +17,10 @@ export default function DataLoader (props){
 
   let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>${props.filterStars} ${filterLanguage} sort:stars`
 
-  useEffect(() => {
+  
 
+  useEffect(() => {
+    setLoading(true, props.loading(loading))
       fetch(url, {
         headers: {
           'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
@@ -27,28 +29,31 @@ export default function DataLoader (props){
       })
           .then(response => response.json())
           .then(data => {
-            setData(data.items);
-            setLoading(false)
+            setData(data.items, props.resultCount(data.items.length));
+            setLoading(false, props.loading(loading))
           })
           .catch((err) => {
             setError(err);
-            setLoading(false);
+            setLoading(false, props.loading(loading));
             console.log('error',err)
           })
 
           props.filteredUrl(url)
+          props.loading(loading)
+        
   },[url]); 
   
 
   
-
-
-  let noItem = ''
+  let noItem = 0
   function noItemIncrement(){
     noItem ++
+
     return noItem
   };
+
   
+
   function language(codeLanguage){
   if (codeLanguage!=null){
      return (
@@ -81,11 +86,28 @@ function textminimize(text){
 
 }
 
+
+function displayresults(){
+  let displaytext=''
+
+    if(loading){
+      displaytext = 'Loading Data Please Wait...'
+    }else{
+      if(props.count>0){
+        displaytext =  `Displaying ${props.count} results.`
+      } else {
+        displaytext = 'Change Search Criteria'
+      }
+    }
+    return displaytext
+}
+
+
+
   return (
-    
       
       <div>
-        <p>{loading?'Loading Data':null}</p>
+        <p>{displayresults()}</p>
         <p>{error?console.log(`Error: ${error}`):null}</p>
           <ul>
             {data?data.map((item) =>

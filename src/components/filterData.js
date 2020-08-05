@@ -10,6 +10,9 @@ export default function LoadData(props){
           filterStars={props.filters.stars}
           filterKeyword={props.filters.keyword}
           filteredUrl={props.filteredUrl}
+          resultCount={props.resultCount}
+          count={props.count}
+          loading={props.loading}
           
       />
   

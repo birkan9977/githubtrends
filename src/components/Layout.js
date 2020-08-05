@@ -8,8 +8,25 @@ const [state,setState] = useState({
   stars:'10000',
   language:'javascript',
   keyword:'',
-  url:''
+  url:'',
+  count:0,
+  loading:true,
 })
+
+function displayChartNumber(){ 
+  let displaytext=''
+
+    if(state.loading){
+      displaytext = '30'
+    }else{
+      if(state.count>0){
+        displaytext =  `Displaying ${state.count} results.`
+      } else {
+        displaytext = 'Change Search Criteria'
+      }
+    }
+    return displaytext
+}
 
     return (
       
@@ -61,7 +78,9 @@ const [state,setState] = useState({
 
               <section id='center-section'>
               
-              <h3>Top Chart</h3>
+              <h3>Top {state.count>0?state.count:'30'} Chart</h3>
+              {/*displayChartNumber()*/}
+              {console.log(state.loading)}
               <LoadData 
               
 
@@ -72,6 +91,17 @@ const [state,setState] = useState({
                 url: e
               }))}
 
+              resultCount={e=>setState(prevState=> ({
+                ...prevState,
+                count:e
+              }))}
+
+              loading={e=>setState(prevState=> ({
+                ...prevState,
+                loading:e
+              }))}
+              
+              count={state.count}
               
               
               
