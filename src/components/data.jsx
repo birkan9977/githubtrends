@@ -8,7 +8,7 @@ export default function DataLoader (props){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-  const[filterdUrl,setFilteredUrl] = useState(null)
+
   console.log('Data/filterLanguage: ',props.filterLanguage)
   console.log('Data/filterStars>: ',props.filterStars)
   console.log('Data/filterKeyword>: ',props.filterKeyword)
@@ -18,7 +18,6 @@ export default function DataLoader (props){
   let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>${props.filterStars} ${filterLanguage} sort:stars`
 
   useEffect(() => {
-    //setFilteredUrl(url)
 
       fetch(url, {
         headers: {
