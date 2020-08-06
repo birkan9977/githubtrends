@@ -24,7 +24,7 @@ const onKeyPress = (e) => {
 
     <div id='filter-queries'>
       <label id='label-language'>Language</label>
-      <select id='dropdown-language' defaultValue='javascript'
+      <select id='dropdown-language' defaultValue='python'
         onChange={(e) => props.filterLanguage(e.target.value)}>
         <option value=''>All</option>
         <option value='javascript'>Java Script</option>
@@ -36,7 +36,7 @@ const onKeyPress = (e) => {
       <label id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='10000'
         onChange={(e) => props.filterStars(e.target.value)}>
-        <option value='1'>1</option>
+        <option value='0'>0</option>
         <option value='500'>500</option>
         <option value='1000'>1000</option>
         <option value='5000'>5000</option>

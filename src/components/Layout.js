@@ -6,7 +6,7 @@ import '../styles/mainOutput.css'
 export default function Layout() {
 const [state,setState] = useState({
   stars:'10000',
-  language:'javascript',
+  language:'python',
   keyword:'',
   url:'',
   count:0,

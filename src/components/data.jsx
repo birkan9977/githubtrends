@@ -8,6 +8,7 @@ export default function DataLoader (props){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
+  const [readMore,setReadMore]=useState(false);
 
   console.log('Data/filterLanguage: ',props.filterLanguage)
   console.log('Data/filterStars>: ',props.filterStars)
@@ -15,7 +16,7 @@ export default function DataLoader (props){
 
   let filterLanguage = props.filterLanguage?`language:${props.filterLanguage}`:''
 
-  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>${props.filterStars} ${filterLanguage} sort:stars`
+  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>=${props.filterStars} ${filterLanguage} sort:stars`
 
   
 
@@ -71,13 +72,38 @@ let keyIndex = (function () {
 })();//closure:)
 
 
-function textminimize(text){
+function textminimize(text,key){
   if(text==null)return text
   let len = text.length;
   let maxlen = 100;
   if(len>maxlen){
-    let finaltext = text.substr(0,maxlen) + ' ...more'
-    return finaltext
+    let subtractedtext = text.substr(0,maxlen)
+
+    const extraContent=<div>
+      <p className="extra-content">
+        {text}
+      </p>
+  </div>
+
+    
+    const linkName = readMore?'..Read Less << ':'..Read More >> '
+
+    
+
+    return (
+      <div id='more-text'>
+        {!readMore && subtractedtext}
+        {readMore && extraContent}
+        <a 
+        onClick={()=>{setReadMore(!readMore)}}>
+        
+        {linkName}
+        
+        </a>
+        
+        
+      </div>
+    )
 
   }else{
     return text
@@ -102,10 +128,10 @@ function displayresults(){
     return displaytext
 }
 
-
+let key=''
+console.log(readMore)
 
   return (
-      
       <div>
         <p>{displayresults()}</p>
         <p>{error?console.log(`Error: ${error}`):null}</p>
@@ -122,7 +148,7 @@ function displayresults(){
                 key = {keyIndex()+'id'+item.id}>{item.name}</li>
                 
                 <li id='repo-list-items-description' 
-                key = {keyIndex()+'des' + item.id}>{textminimize(item.description)}</li>
+                key = {keyIndex()+'des' + item.id}>{textminimize(item.description,key)}</li>
                 
                 
                 <li id='repo-list-items-url' 
