@@ -11,4 +11,10 @@ env:
       - 2
       - always
 
+extends: standard
+rules:
+  comma-dangle:
+    - error
+    - always
+  no-empty: warn
       
