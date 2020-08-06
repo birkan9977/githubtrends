@@ -8,7 +8,7 @@ export default function DataLoader (props){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-  const [readMore,setReadMore]=useState(false);
+  const [readMore,setReadMore]=useState([]);
 
   console.log('Data/filterLanguage: ',props.filterLanguage)
   console.log('Data/filterStars>: ',props.filterStars)
@@ -79,23 +79,49 @@ function textminimize(text,key){
   if(len>maxlen){
     let subtractedtext = text.substr(0,maxlen)
 
-    const extraContent=<div>
-      <p className="extra-content">
-        {text}
-      </p>
-  </div>
+    const extraContent =
+          <div>
+            <p className="extra-content">
+              {text}
+            </p>
+          </div>
 
     
-    const linkName = readMore?'..Read Less << ':'..Read More >> '
+const handleClick = (name) => {
+  const selectedIndex = readMore.indexOf(name)
+  let newSelected = []
 
-    
+  if (selectedIndex === -1) {
+    newSelected = newSelected.concat(readMore, name)
+  } else if (selectedIndex === 0) {
+    newSelected = newSelected.concat(readMore.slice(1))
+  } else if (selectedIndex === readMore.length - 1) {
+    newSelected = newSelected.concat(readMore.slice(0, -1))
+  } else if (selectedIndex > 0) {
+    newSelected = newSelected.concat(
+      readMore.slice(0, selectedIndex),
+      readMore.slice(selectedIndex + 1)
+    )
+  }
+
+  setReadMore(newSelected)
+}
+
+    console.log('key',key)
+
+    let more = readMore.indexOf(key) !== -1
+
+    const linkName = more?'...Read Less << ':'...Read More >> '
+
 
     return (
       <div id='more-text'>
-        {!readMore && subtractedtext}
-        {readMore && extraContent}
+
+        {!more && subtractedtext}
+        {more && extraContent}
         <a 
-        onClick={()=>{setReadMore(!readMore)}}>
+        
+        onClick={()=>{handleClick(key)}}>
         
         {linkName}
         
@@ -128,7 +154,6 @@ function displayresults(){
     return displaytext
 }
 
-let key=''
 console.log(readMore)
 
   return (
@@ -136,7 +161,7 @@ console.log(readMore)
         <p>{displayresults()}</p>
         <p>{error?console.log(`Error: ${error}`):null}</p>
           <ul>
-            {data?data.map((item) =>
+            {data?data.map((item,index) =>
             <>
             <div id='repo-items'>
               <div id='repo-list-items'>
@@ -148,7 +173,7 @@ console.log(readMore)
                 key = {keyIndex()+'id'+item.id}>{item.name}</li>
                 
                 <li id='repo-list-items-description' 
-                key = {keyIndex()+'des' + item.id}>{textminimize(item.description,key)}</li>
+                key = {keyIndex()+'des' + item.id}>{textminimize(item.description,(index+1))}</li>
                 
                 
                 <li id='repo-list-items-url' 
