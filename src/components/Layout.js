@@ -123,7 +123,7 @@ function displayChartNumber(){
 
             
 
-            <footer id='footer'>
+            <footer className='box' id='footer'>
             <h4>Created by GitHub ID: Birkan9977</h4>
             </footer>
 

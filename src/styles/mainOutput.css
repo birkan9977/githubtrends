@@ -4,9 +4,9 @@ body {
 }
 
 .box {
-  -webkit-transform: rotate(30deg);
-  -ms-transform: rotate(30deg);
-  transform: rotate(30deg);
+  -webkit-transform: translateY(-1em);
+  -ms-transform: translateY(-1em);
+  transform: translateY(-1em);
 }
 
 #main #middle-section {
@@ -201,8 +201,7 @@ body {
 footer {
   text-align: center;
   background: rgba(199, 196, 196, 0.7);
-  padding: 5px;
-  color: #333;
+  color: #c7c4c4;
   box-shadow: -10px 20px 10px 5px rgba(112, 87, 87, 0.5);
 }
 
