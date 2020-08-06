@@ -75,7 +75,7 @@ let keyIndex = (function () {
 function textminimize(text,key){
   if(text==null)return text
   let len = text.length;
-  let maxlen = 100;
+  let maxlen = 50;
   if(len>maxlen){
     let subtractedtext = text.substr(0,maxlen)
 
@@ -87,12 +87,12 @@ function textminimize(text,key){
           </div>
 
     
-const handleClick = (name) => {
-  const selectedIndex = readMore.indexOf(name)
+const handleClick = (key) => {
+  const selectedIndex = readMore.indexOf(key)
   let newSelected = []
 
   if (selectedIndex === -1) {
-    newSelected = newSelected.concat(readMore, name)
+    newSelected = newSelected.concat(readMore, key)
   } else if (selectedIndex === 0) {
     newSelected = newSelected.concat(readMore.slice(1))
   } else if (selectedIndex === readMore.length - 1) {
