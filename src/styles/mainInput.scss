@@ -88,6 +88,8 @@
               flex:1;
               width: 300px / 960px * 100%;
               margin:10px;
+              margin-left: 0;
+              margin-right: 0;
               background: base.$light-gray-transparent;
               padding: 1rem;
             }
@@ -241,13 +243,51 @@
     }
 }
 
+@mixin triangle($size, $color, $direction) {
+  height: 0;
+  width: auto;
+
+  border-color: transparent;
+  border-style: solid;
+  border-width: $size*2;
+
+  @if $direction == up {
+    border-bottom-color: $color;
+  } @else if $direction == right {
+    border-left-color: $color;
+  } @else if $direction == down {
+    border-top-color: $color;
+  } @else if $direction == left {
+    border-right-color: $color;
+  } @else {
+    @error "Unknown direction #{$direction}.";
+  }
+}
+
+.next {
+  @include triangle(5px, black, right);
+}
 
 footer{
   text-align: center;
-  background: base.$header-gray-transparent;
+  background: base.$light-gray-transparent;
   color: base.$header-gray;
   box-shadow: -10px 20px 10px 5px base.$topnavbar-color-transparent;
+  height:100px;
+  display: flex;
+  justify-content: center;
+}
+
+footer h4{
+  margin-top:40px;
+  background: base.$light-gray-transparent;
+  padding: 15px;
+
+  border-radius: 5px;
+  text-shadow: 5px 5px 10px #333;
+  @include triangle(15px, base.$light-gray-transparent, right);
   
+
 }
 
 
@@ -281,30 +321,7 @@ footer{
   @include side-labels
 }
 
-@mixin triangle($size, $color, $direction) {
-  height: 0;
-  width: 0;
 
-  border-color: transparent;
-  border-style: solid;
-  border-width: $size / 2;
-
-  @if $direction == up {
-    border-bottom-color: $color;
-  } @else if $direction == right {
-    border-left-color: $color;
-  } @else if $direction == down {
-    border-top-color: $color;
-  } @else if $direction == left {
-    border-right-color: $color;
-  } @else {
-    @error "Unknown direction #{$direction}.";
-  }
-}
-
-.next {
-  @include triangle(5px, black, right);
-}
 
 
 @for $i from 1 through 2 {

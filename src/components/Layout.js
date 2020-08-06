@@ -124,7 +124,8 @@ function displayChartNumber(){
             
 
             <footer className='box' id='footer'>
-            <h4>Created by GitHub ID: Birkan9977</h4>
+            <h4>mailbirkan@gmail.com  - Created by GitHub ID: Birkan9977</h4>
+            <p></p>
             </footer>
 
 

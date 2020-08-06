@@ -1,14 +1,13 @@
 import React, { useState, useEffect} from 'react';
 
 
-
 export default function DataLoader (props){
   
 
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-  const [readMore,setReadMore]=useState([]);
+  const[readMore,setReadMore]=useState([]);
 
   console.log('Data/filterLanguage: ',props.filterLanguage)
   console.log('Data/filterStars>: ',props.filterStars)
@@ -74,6 +73,7 @@ let keyIndex = (function () {
 
 
 function textminimize(text,key){
+
   if(text==null)return text
   let len = text.length;
   let maxlen = 30;
