@@ -111,7 +111,7 @@ const handleClick = (name) => {
 
     let more = readMore.indexOf(key) !== -1
 
-    const linkName = more?'...Read Less << ':'...Read More >> '
+    const linkName = more?' ...Read Less << ':' ...Read More >> '
 
 
     return (
