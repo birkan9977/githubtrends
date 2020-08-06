@@ -241,7 +241,13 @@
 }
 
 
-
+footer{
+  text-align: center;
+  background: base.$header-gray-transparent;
+  padding: 5px;
+  color: base.$primary-color;
+  box-shadow: -10px 20px 10px 5px base.$topnavbar-color-transparent;
+}
 
 
 
