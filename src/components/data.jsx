@@ -22,6 +22,8 @@ export default function DataLoader (props){
 
   useEffect(() => {
     setLoading(true, props.loading(loading))
+    setReadMore([])
+    
       fetch(url, {
         headers: {
           'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
