@@ -23,7 +23,7 @@ export default function DataLoader (props){
   useEffect(() => {
     setLoading(true, props.loading(loading))
     setReadMore([])
-    
+
       fetch(url, {
         headers: {
           'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
@@ -48,12 +48,11 @@ export default function DataLoader (props){
   
 
   
-  let noItem = 0
-  function noItemIncrement(){
-    noItem ++
-
-    return noItem
-  };
+  let noItemIncrement = (function () {
+    let noItem = 0
+    return function () {noItem ++;return noItem}
+    
+  })();//closure with immidiately invoked (self) function
 
   
 
@@ -71,15 +70,48 @@ export default function DataLoader (props){
 let keyIndex = (function () {
   let counter = 0
   return function () {counter += 1; return counter}
-})();//closure:)
+})();//closure with self invoked function:)
 
 
 function textminimize(text,key){
   if(text==null)return text
   let len = text.length;
-  let maxlen = 50;
+  let maxlen = 30;
   if(len>maxlen){
-    let subtractedtext = text.substr(0,maxlen)
+    
+    let spaceIndex = text.indexOf(' ',maxlen)
+    if(spaceIndex<0){
+      
+      
+    }
+    let dotIndex = text.indexOf('.',maxlen)
+    let commaIndex = text.indexOf(',',maxlen)
+    let commawithSpaceIndex = text.indexOf('，',maxlen)
+    let splitIndex = maxlen
+    if(spaceIndex<0){
+      
+      let strSplit = text.split(' ')
+      let lastWord = strSplit[strSplit.length-1]
+      console.log(lastWord)
+      if(lastWord==text){ //chinese with special char '，'
+      splitIndex = commawithSpaceIndex
+      console.log(dotIndex,commaIndex,commawithSpaceIndex,splitIndex)
+      } else if (lastWord!=text){
+        console.log('break and return text')
+        return text
+      } else if (dotIndex<0 && commaIndex>0 ) {
+      splitIndex = commaIndex
+      } else if(dotIndex<0 && commaIndex<0 && commawithSpaceIndex<0){
+      splitIndex = maxlen
+      } else {
+        splitIndex = maxlen
+
+      }
+
+    } else {
+      splitIndex = spaceIndex
+    }
+    let subtractedtext = text.substr(0,splitIndex)
 
     const extraContent =
           <div>
@@ -109,7 +141,7 @@ const handleClick = (key) => {
   setReadMore(newSelected)
 }
 
-    console.log('key',key)
+    console.log('key',key,spaceIndex,text)
 
     let more = readMore.indexOf(key) !== -1
 

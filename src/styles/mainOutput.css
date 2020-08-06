@@ -137,7 +137,6 @@ body {
 #main #middle-section section #repo-items a:hover {
   text-decoration: none;
   color: #1f0909;
-  font-size: 1rem;
 }
 #main #middle-section section #repo-items #repo-list-items {
   flex: 3;
