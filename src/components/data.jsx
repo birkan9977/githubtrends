@@ -13,7 +13,15 @@ export default function DataLoader (props){
   console.log('Data/filterStars>: ',props.filterStars)
   console.log('Data/filterKeyword>: ',props.filterKeyword)
 
-  let filterLanguage = props.filterLanguage?`language:${props.filterLanguage}`:''
+  let filterLanguage = ''
+  if(props.filterLanguage=='c++'){
+    filterLanguage = 'language:c%2B%2B'
+  }else if (props.filterLanguage==''){
+    filterLanguage = ''
+  } else {
+    filterLanguage = `language:${props.filterLanguage}`
+
+  }
 
   let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>=${props.filterStars} ${filterLanguage} sort:stars`
 
@@ -22,6 +30,7 @@ export default function DataLoader (props){
   useEffect(() => {
     setLoading(true, props.loading(loading))
     setReadMore([])
+    setError(null)
 
       fetch(url, {
         headers: {
@@ -193,7 +202,7 @@ console.log(readMore)
   return (
       <div>
         <p>{displayresults()}</p>
-        <p>{error?console.log(`Error: ${error}`):null}</p>
+        <p>{error?`Error: ${error}`:null}</p>
           <ul>
             {data?data.map((item,index) =>
             <>

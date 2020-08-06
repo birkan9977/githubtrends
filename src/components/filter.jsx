@@ -30,7 +30,7 @@ const onKeyPress = (e) => {
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
         <option value='java'>Java</option>
-        <option value='c%2B%2B'>C++</option>
+        <option value='c++'>C++</option>
       </select>
 
       <label id='label-followers'>Stars greater than:</label>

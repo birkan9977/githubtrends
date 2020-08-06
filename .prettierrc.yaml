@@ -3,3 +3,12 @@ tabWidth: 2
 semi: false
 singleQuote: true
 jsxBracketSameLine: true
+
+env:
+    es6: true
+  rules:
+    arrow-parens:
+      - 2
+      - always
+
+      
