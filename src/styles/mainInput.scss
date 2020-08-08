@@ -154,6 +154,7 @@
                           text-decoration: none;
                           color:rgb(31, 9, 9);
                           
+                          
                         }
 
                         
@@ -373,4 +374,8 @@ button{
 
 #label-keyword, #input-keyword{
   width:100px;
+}
+
+#more-text-link{
+  cursor: pointer;
 }

@@ -184,7 +184,7 @@ const handleClick = (key) => {
 
         {!more && subtractedtext}
         {more && extraContent}
-        <a 
+        <a id='more-text-link' 
         
         onClick={()=>{handleClick(key)}}>
         

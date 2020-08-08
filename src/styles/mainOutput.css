@@ -314,4 +314,8 @@ button:disabled {
   width: 100px;
 }
 
+#more-text-link {
+  cursor: pointer;
+}
+
 /*# sourceMappingURL=mainOutput.css.map */
