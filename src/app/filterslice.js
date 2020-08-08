@@ -13,7 +13,6 @@ export const filtersSlice = createSlice({
 
   reducers: {
     filterLanguage: (state, action) => {
-      
       state.language = action.payload;
     },
     filterStars: (state, action) => {

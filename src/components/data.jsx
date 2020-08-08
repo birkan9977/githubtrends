@@ -7,10 +7,7 @@ import {
   selectLanguage,
   selectStars,
   selectKeyword,
-  selectUrl,
   selectCount,
-  selectLoading,
-  selectState,
 
 
 } from '../app/filterslice'
@@ -20,25 +17,23 @@ export default function DataLoader (){
   const stars = useSelector(selectStars);
   const reduxlanguage = useSelector(selectLanguage);
   const keyword = useSelector(selectKeyword);
-  const reduxurl = useSelector(selectUrl);
-  const reduxloading = useSelector(selectLoading);
-  const state = useSelector(selectState);
 
   const[data,setData] = useState([]);
+  const[datalength,setDataLength] = useState([0])
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
   const[readMore,setReadMore]=useState([]);
 
   const dispatch = useDispatch()
 
-  console.log('Data/filterLanguage: ',reduxlanguage)
-  console.log('Data/filterStars>: ',stars)
-  console.log('Data/filterKeyword>: ',reduxloading)
+  //console.log('Data/filterLanguage: ',reduxlanguage)
+  //console.log('Data/filterStars>: ',stars)
+  //console.log('Data/filterKeyword>: ',reduxloading)
 
   let filterLanguage = ''
-  if(reduxlanguage=='c++'){
+  if(reduxlanguage==='c++'){
     filterLanguage = 'language:c%2B%2B'
-  }else if (reduxlanguage==''){
+  }else if (reduxlanguage===''){
     filterLanguage = ''
   } else {
     filterLanguage = `language:${reduxlanguage}`
@@ -48,9 +43,10 @@ export default function DataLoader (){
   let url = `https://api.github.com/search/repositories?q=${keyword} stars:>=${stars} ${filterLanguage} sort:stars`
 
   
+  
 
   useEffect(() => {
-    setLoading(true, dispatch(loadingFunc(loading)))
+    setLoading(true)
     setReadMore([])
     setError(null)
 
@@ -62,21 +58,24 @@ export default function DataLoader (){
       })
           .then(response => response.json())
           .then(data => {
-            setData(data.items, dispatch(resultCount(data.items.length)))
-            setLoading(false, dispatch(loadingFunc(loading)))
+            setData(data.items,setDataLength(data.items.length))
+            setLoading(false)
           })
           .catch((err) => {
             setError(err);
-            setLoading(false, dispatch(loadingFunc(loading)))
+            setLoading(false)
             console.log('error',err)
           })
 
-          dispatch(filteredUrl(url))
-          dispatch(loadingFunc(loading))
+          
+          
+  
         
   },[url]); 
   
-
+  dispatch(filteredUrl(url))
+  dispatch(loadingFunc(loading))
+  dispatch(resultCount(datalength))
   
   let noItemIncrement = (function () {
     let noItem = 0
@@ -123,12 +122,12 @@ function textminimize(text,key){
       
       let strSplit = text.split(' ')
       let lastWord = strSplit[strSplit.length-1]
-      console.log(lastWord)
-      if(lastWord==text){ //chinese with special char '，'
+      //console.log(lastWord)
+      if(lastWord===text){ //chinese with special char '，'
       splitIndex = commawithSpaceIndex
-      console.log(dotIndex,commaIndex,commawithSpaceIndex,splitIndex)
-      } else if (lastWord!=text){
-        console.log('break and return text')
+      //console.log(dotIndex,commaIndex,commawithSpaceIndex,splitIndex)
+      } else if (lastWord!==text){
+        //console.log('break and return text')
         return text
       } else if (dotIndex<0 && commaIndex>0 ) {
       splitIndex = commaIndex
@@ -172,7 +171,7 @@ const handleClick = (key) => {
   setReadMore(newSelected)
 }
 
-    console.log('key',key,spaceIndex,text)
+    //console.log('key',key,spaceIndex,text)
 
     let more = readMore.indexOf(key) !== -1
 
@@ -219,7 +218,7 @@ function displayresults(){
     return displaytext
 }
 
-console.log(readMore)
+//console.log(readMore)
 
   return (
       <div>

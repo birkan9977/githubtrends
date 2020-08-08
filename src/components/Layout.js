@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import FilterQuery from './filter'
 import DataLoader from './data'
 import '../styles/mainOutput.css'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
 
   selectLanguage,
@@ -25,7 +25,6 @@ export default function Layout() {
   const loading = useSelector(selectLoading);
   const state = useSelector(selectState);
 
-  const dispatch = useDispatch()
 
 function displayChartNumber(){ 
   let displaytext=''
@@ -77,11 +76,11 @@ function displayChartNumber(){
               
               <h3>Top {count>0?count:'30'} Chart</h3>
               {/*displayChartNumber()*/}
-              {console.log('loading/layout:',loading)}
+              {/*console.log('loading/layout:',loading)*/}
               <DataLoader/>
               </section>
 
-              {console.log('filterData',state)}
+              {/*console.log('filterData',state)*/}
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
