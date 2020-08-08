@@ -207,7 +207,7 @@ const handleClick = (key) => {
 function displayresults(){
   let displaytext=''
 
-    if(reduxloading){
+    if(loading){
       displaytext = 'Loading Data Please Wait...'
     }else{
       if(count>0){

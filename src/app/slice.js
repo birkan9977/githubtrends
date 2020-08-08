@@ -8,7 +8,7 @@ export const filtersSlice = createSlice({
     keyword:'',
     url:'',
     count:0,
-    loading:true,
+    loading:false,
   },
 
   reducers: {

@@ -62,7 +62,7 @@ function displayChartNumber(){
             </nav>
 
 
-            {console.log(state)}
+            {/*console.log(state)*/}
 
             <section id='middle-section'>
 
@@ -77,7 +77,7 @@ function displayChartNumber(){
               
               <h3>Top {count>0?count:'30'} Chart</h3>
               {/*displayChartNumber()*/}
-              {console.log(loading)}
+              {console.log('loading/layout:',loading)}
               <DataLoader/>
               </section>
 
