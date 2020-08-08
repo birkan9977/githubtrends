@@ -1,26 +1,40 @@
 import React, {useState} from 'react';
-import LoadData from './filterData'
 import FilterQuery from './filter'
+import DataLoader from './data'
 import '../styles/mainOutput.css'
+import { useSelector, useDispatch } from 'react-redux';
+import {
+
+  selectLanguage,
+  selectStars,
+  selectKeyword,
+  selectUrl,
+  selectCount,
+  selectLoading,
+  selectState,
+
+} from '../app/slice'
 
 export default function Layout() {
-const [state,setState] = useState({
-  stars:'10000',
-  language:'python',
-  keyword:'',
-  url:'',
-  count:0,
-  loading:true,
-})
+
+  const count = useSelector(selectCount);
+  const stars = useSelector(selectStars);
+  const language = useSelector(selectLanguage);
+  const keyword = useSelector(selectKeyword);
+  const url = useSelector(selectUrl);
+  const loading = useSelector(selectLoading);
+  const state = useSelector(selectState);
+
+  const dispatch = useDispatch()
 
 function displayChartNumber(){ 
   let displaytext=''
 
-    if(state.loading){
+    if(loading){
       displaytext = '30'
     }else{
       if(state.count>0){
-        displaytext =  `Displaying ${state.count} results.`
+        displaytext =  `Displaying ${count} results.`
       } else {
         displaytext = 'Change Search Criteria'
       }
@@ -55,68 +69,27 @@ function displayChartNumber(){
               <nav id='left-nav-bar'>  
               <h3>Search:</h3>
 
-              <FilterQuery 
-              
-              filterLanguage={e=>setState(prevState => ({
-                ...prevState,
-                language: e
-              }))}
-
-              filterStars={e=>setState(prevState => ({
-                ...prevState,
-                stars: e
-              }))}
-
-              filterKeyword={e=>setState(prevState => ({
-                ...prevState,
-                keyword: e
-              }))}
-              
-              />
+              <FilterQuery/>
 
               </nav>
 
               <section id='center-section'>
               
-              <h3>Top {state.count>0?state.count:'30'} Chart</h3>
+              <h3>Top {count>0?count:'30'} Chart</h3>
               {/*displayChartNumber()*/}
-              {console.log(state.loading)}
-              <LoadData 
-              
-
-              filters={state} 
-
-              filteredUrl={e=>setState(prevState => ({
-                ...prevState,
-                url: e
-              }))}
-
-              resultCount={e=>setState(prevState=> ({
-                ...prevState,
-                count:e
-              }))}
-
-              loading={e=>setState(prevState=> ({
-                ...prevState,
-                loading:e
-              }))}
-              
-              count={state.count}
-              
-              
-              
-              />
+              {console.log(loading)}
+              <DataLoader/>
               </section>
 
               {console.log('filterData',state)}
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
-              <p>Language: {state.language}</p>
-              <p>Stars: {state.stars}</p>
-              <p>Keyword: {state.keyword}</p>
+              <p>Language: {language}</p>
+              <p>Stars: {stars}</p>
+              <p>Keyword: {keyword}</p>
               <p>Api address:</p>
-              <textarea id='url-textarea' defaultValue={state.url}></textarea>
+              <textarea id='url-textarea' defaultValue={url}></textarea>
               </nav>
 
             </section>

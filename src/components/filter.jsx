@@ -1,7 +1,17 @@
 import React, {useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
+import {
+
+  filterLanguage,
+  filterStars,
+  filterKeyword,
+  
+
+} from '../app/slice'
 
 const FilterQuery = (props) => {
+const dispatch = useDispatch()
 
 const [keyword,setKeyword]=useState('')
 
@@ -10,7 +20,7 @@ const handleTextKeyChange = (e) => {
 }
 
 const handleSendKeyWord =()=>{
-  props.filterKeyword(keyword)
+  dispatch(filterKeyword(keyword))
 }
 
 const onKeyPress = (e) => {
@@ -25,7 +35,7 @@ const onKeyPress = (e) => {
     <div id='filter-queries'>
       <label id='label-language'>Language</label>
       <select id='dropdown-language' defaultValue='python'
-        onChange={(e) => props.filterLanguage(e.target.value)}>
+        onChange={(e) => dispatch(filterLanguage(e.target.value))}>
         <option value=''>All</option>
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
@@ -35,7 +45,7 @@ const onKeyPress = (e) => {
 
       <label id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='10000'
-        onChange={(e) => props.filterStars(e.target.value)}>
+        onChange={(e) => dispatch(filterStars(e.target.value))}>
         <option value='0'>0</option>
         <option value='500'>500</option>
         <option value='1000'>1000</option>

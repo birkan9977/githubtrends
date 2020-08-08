@@ -1,34 +1,56 @@
 import React, { useState, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  resultCount,
+  filteredUrl,
+  loadingFunc,
+  selectLanguage,
+  selectStars,
+  selectKeyword,
+  selectUrl,
+  selectCount,
+  selectLoading,
+  selectState,
 
 
-export default function DataLoader (props){
-  
+} from '../app/slice'
+
+export default function DataLoader (){
+  const count = useSelector(selectCount);
+  const stars = useSelector(selectStars);
+  const reduxlanguage = useSelector(selectLanguage);
+  const keyword = useSelector(selectKeyword);
+  const reduxurl = useSelector(selectUrl);
+  const reduxloading = useSelector(selectLoading);
+  const state = useSelector(selectState);
 
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
   const[readMore,setReadMore]=useState([]);
 
-  console.log('Data/filterLanguage: ',props.filterLanguage)
-  console.log('Data/filterStars>: ',props.filterStars)
-  console.log('Data/filterKeyword>: ',props.filterKeyword)
+  const dispatch = useDispatch()
+
+  console.log('Data/filterLanguage: ',reduxlanguage)
+  console.log('Data/filterStars>: ',stars)
+  console.log('Data/filterKeyword>: ',reduxloading)
 
   let filterLanguage = ''
-  if(props.filterLanguage=='c++'){
+  if(reduxlanguage=='c++'){
     filterLanguage = 'language:c%2B%2B'
-  }else if (props.filterLanguage==''){
+  }else if (reduxlanguage==''){
     filterLanguage = ''
   } else {
-    filterLanguage = `language:${props.filterLanguage}`
+    filterLanguage = `language:${reduxlanguage}`
 
   }
 
-  let url = `https://api.github.com/search/repositories?q=${props.filterKeyword} stars:>=${props.filterStars} ${filterLanguage} sort:stars`
+  let url = `https://api.github.com/search/repositories?q=${keyword} stars:>=${stars} ${filterLanguage} sort:stars`
 
   
 
   useEffect(() => {
-    setLoading(true, props.loading(loading))
+    setLoading(true, dispatch(loadingFunc(loading)))
     setReadMore([])
     setError(null)
 
@@ -40,17 +62,17 @@ export default function DataLoader (props){
       })
           .then(response => response.json())
           .then(data => {
-            setData(data.items, props.resultCount(data.items.length));
-            setLoading(false, props.loading(loading))
+            setData(data.items, dispatch(resultCount(data.items.length)))
+            setLoading(false, dispatch(loadingFunc(loading)))
           })
           .catch((err) => {
             setError(err);
-            setLoading(false, props.loading(loading));
+            setLoading(false, dispatch(loadingFunc(loading)))
             console.log('error',err)
           })
 
-          props.filteredUrl(url)
-          props.loading(loading)
+          dispatch(filteredUrl(url))
+          dispatch(loadingFunc(loading))
         
   },[url]); 
   
@@ -185,11 +207,11 @@ const handleClick = (key) => {
 function displayresults(){
   let displaytext=''
 
-    if(loading){
+    if(reduxloading){
       displaytext = 'Loading Data Please Wait...'
     }else{
-      if(props.count>0){
-        displaytext =  `Displaying ${props.count} results.`
+      if(count>0){
+        displaytext =  `Displaying ${count} results.`
       } else {
         displaytext = 'Change Search Criteria'
       }
