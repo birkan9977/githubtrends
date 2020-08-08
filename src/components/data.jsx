@@ -13,10 +13,10 @@ import {
 } from '../app/filterslice'
 
 export default function DataLoader (){
-  const count = useSelector(selectCount);
-  const stars = useSelector(selectStars);
-  const reduxlanguage = useSelector(selectLanguage);
-  const keyword = useSelector(selectKeyword);
+  const globCount = useSelector(selectCount);
+  const globStars = useSelector(selectStars);
+  const globLanguage = useSelector(selectLanguage);
+  const globkeyword = useSelector(selectKeyword);
 
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
@@ -25,28 +25,31 @@ export default function DataLoader (){
 
   const dispatch = useDispatch()
 
-  //console.log('Data/filterLanguage: ',reduxlanguage)
-  //console.log('Data/filterStars>: ',stars)
+  //console.log('Data/filterLanguage: ',globLanguage)
+  //console.log('Data/filterStars>: ',globStars)
   //console.log('Data/filterKeyword>: ',reduxloading)
 
   let filterLanguage = ''
-  if(reduxlanguage==='c++'){
+  if(globLanguage==='c++'){
     filterLanguage = 'language:c%2B%2B'
-  }else if (reduxlanguage===''){
+  }else if (globLanguage===''){
     filterLanguage = ''
   } else {
-    filterLanguage = `language:${reduxlanguage}`
+    filterLanguage = `language:${globLanguage}`
 
   }
 
-  let url = `https://api.github.com/search/repositories?q=${keyword} stars:>=${stars} ${filterLanguage} sort:stars`
+  let url = `https://api.github.com/search/repositories?q=${globkeyword} stars:>=${globStars} ${filterLanguage} sort:stars`
 
   
-  
+  const itemsCount = ((len) => dispatch(resultCount(len)))
+  const isLoading = ((val) => dispatch(loadingFunc(val)))
+  const isfilteredUrl = ((val) => dispatch(filteredUrl(val)))
+
 
   useEffect(() => {
     setLoading(true)
-    dispatch(loadingFunc(true))
+    isLoading(true)
 
     setReadMore([])
     setError(null)
@@ -61,14 +64,19 @@ export default function DataLoader (){
           .then(data => {
             setData(data.items)
             setLoading(false)
-            dispatch(filteredUrl(url))
-            dispatch(resultCount(data.items.length))
-            dispatch(loadingFunc(false))
+        
+            itemsCount(data.items.length)
+           
           })
           .catch((err) => {
             setError(err);
             console.log('error',err)
           })
+
+          isfilteredUrl(url)
+          isLoading(loading)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[url]); 
   
   
@@ -207,8 +215,8 @@ function displayresults(){
     if(loading){
       displaytext = 'Loading Data Please Wait...'
     }else{
-      if(count>0){
-        displaytext =  `Displaying ${count} results.`
+      if(globCount>0){
+        displaytext =  `Displaying ${globCount} results.`
       } else {
         displaytext = 'Change Search Criteria'
       }
