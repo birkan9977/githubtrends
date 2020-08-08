@@ -13,7 +13,7 @@ import {
   selectLoading,
   selectState,
 
-} from '../app/slice'
+} from '../app/filterslice'
 
 export default function Layout() {
 

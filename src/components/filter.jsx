@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
 
@@ -8,7 +8,7 @@ import {
   filterKeyword,
   
 
-} from '../app/slice'
+} from '../app/filterslice'
 
 const FilterQuery = (props) => {
 const dispatch = useDispatch()
