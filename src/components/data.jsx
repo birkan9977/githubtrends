@@ -19,7 +19,6 @@ export default function DataLoader (){
   const keyword = useSelector(selectKeyword);
 
   const[data,setData] = useState([]);
-  const[datalength,setDataLength] = useState([0])
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
   const[readMore,setReadMore]=useState([]);
@@ -47,6 +46,8 @@ export default function DataLoader (){
 
   useEffect(() => {
     setLoading(true)
+    dispatch(loadingFunc(true))
+
     setReadMore([])
     setError(null)
 
@@ -58,24 +59,21 @@ export default function DataLoader (){
       })
           .then(response => response.json())
           .then(data => {
-            setData(data.items,setDataLength(data.items.length))
+            setData(data.items)
             setLoading(false)
+            dispatch(filteredUrl(url))
+            dispatch(resultCount(data.items.length))
+            dispatch(loadingFunc(false))
           })
           .catch((err) => {
             setError(err);
-            setLoading(false)
             console.log('error',err)
           })
-
-          
-          
-  
-        
   },[url]); 
   
-  dispatch(filteredUrl(url))
-  dispatch(loadingFunc(loading))
-  dispatch(resultCount(datalength))
+  
+ 
+  
   
   let noItemIncrement = (function () {
     let noItem = 0
