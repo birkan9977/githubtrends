@@ -42,14 +42,13 @@ export default function DataLoader (){
   let url = `https://api.github.com/search/repositories?q=${globkeyword} stars:>=${globStars} ${filterLanguage} sort:stars`
 
   
-  const itemsCount = ((len) => dispatch(resultCount(len)))
-  const isLoading = ((val) => dispatch(loadingFunc(val)))
-  const isfilteredUrl = ((val) => dispatch(filteredUrl(val)))
 
 
   useEffect(() => {
+    
+    const itemsCount = (len) => dispatch(resultCount(len))
+
     setLoading(true)
-    isLoading(true)
 
     setReadMore([])
     setError(null)
@@ -73,11 +72,10 @@ export default function DataLoader (){
             console.log('error',err)
           })
 
-          isfilteredUrl(url)
-          isLoading(loading)
+          dispatch(loadingFunc(false))
+          dispatch(filteredUrl(url))
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[url]); 
+  },[url,dispatch]); 
   
   
  
@@ -103,7 +101,7 @@ export default function DataLoader (){
 }
 
 let keyIndex = (function () {
-  let counter = 0
+  let counter = 100
   return function () {counter += 1; return counter}
 })();//closure with self invoked function:)
 
@@ -189,7 +187,7 @@ const handleClick = (key) => {
 
         {!more && subtractedtext}
         {more && extraContent}
-        <a id='more-text-link' 
+        <a id='more-text-link'
         
         onClick={()=>{handleClick(key)}}>
         
