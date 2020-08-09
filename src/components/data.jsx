@@ -1,6 +1,13 @@
 import React, { useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
+  TextMinimize,
+  ItemIncrement,
+  keyIndex,
+
+ } from '../extraFunctions/dataFunctions'
+
+import {
   resultCount,
   filteredUrl,
   loadingFunc,
@@ -21,11 +28,10 @@ export default function DataLoader (){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-  const[readMore,setReadMore]=useState([]);
 
   const dispatch = useDispatch()
 
-  //console.log('Data/filterLanguage: ',globLanguage)
+  console.log('Data/filterLanguage: ',globLanguage)
   //console.log('Data/filterStars>: ',globStars)
   //console.log('Data/filterKeyword>: ',reduxloading)
 
@@ -43,14 +49,17 @@ export default function DataLoader (){
 
   
 
+  const setReadMoreEmpty = () => []
+  
 
   useEffect(() => {
-    
+
     const itemsCount = (len) => dispatch(resultCount(len))
 
     setLoading(true)
 
-    setReadMore([])
+    setReadMoreEmpty()
+
     setError(null)
 
       fetch(url, {
@@ -74,18 +83,14 @@ export default function DataLoader (){
 
           dispatch(loadingFunc(false))
           dispatch(filteredUrl(url))
-
+          
   },[url,dispatch]); 
   
   
  
   
   
-  let noItemIncrement = (function () {
-    let noItem = 0
-    return function () {noItem ++;return noItem}
-    
-  })();//closure with immidiately invoked (self) function
+  
 
   
 
@@ -100,111 +105,10 @@ export default function DataLoader (){
   } 
 }
 
-let keyIndex = (function () {
-  let counter = 100
-  return function () {counter += 1; return counter}
-})();//closure with self invoked function:)
 
 
-function textminimize(text,key){
-
-  if(text==null)return text
-  let len = text.length;
-  let maxlen = 30;
-  if(len>maxlen){
-    
-    let spaceIndex = text.indexOf(' ',maxlen)
-    if(spaceIndex<0){
-      
-      
-    }
-    let dotIndex = text.indexOf('.',maxlen)
-    let commaIndex = text.indexOf(',',maxlen)
-    let commawithSpaceIndex = text.indexOf('，',maxlen)
-    let splitIndex = maxlen
-    if(spaceIndex<0){
-      
-      let strSplit = text.split(' ')
-      let lastWord = strSplit[strSplit.length-1]
-      //console.log(lastWord)
-      if(lastWord===text){ //chinese with special char '，'
-      splitIndex = commawithSpaceIndex
-      //console.log(dotIndex,commaIndex,commawithSpaceIndex,splitIndex)
-      } else if (lastWord!==text){
-        //console.log('break and return text')
-        return text
-      } else if (dotIndex<0 && commaIndex>0 ) {
-      splitIndex = commaIndex
-      } else if(dotIndex<0 && commaIndex<0 && commawithSpaceIndex<0){
-      splitIndex = maxlen
-      } else {
-        splitIndex = maxlen
-
-      }
-
-    } else {
-      splitIndex = spaceIndex
-    }
-    let subtractedtext = text.substr(0,splitIndex)
-
-    const extraContent =
-          <div>
-            <p className="extra-content">
-              {text}
-            </p>
-          </div>
-
-    
-const handleClick = (key) => {
-  const selectedIndex = readMore.indexOf(key)
-  let newSelected = []
-
-  if (selectedIndex === -1) {
-    newSelected = newSelected.concat(readMore, key)
-  } else if (selectedIndex === 0) {
-    newSelected = newSelected.concat(readMore.slice(1))
-  } else if (selectedIndex === readMore.length - 1) {
-    newSelected = newSelected.concat(readMore.slice(0, -1))
-  } else if (selectedIndex > 0) {
-    newSelected = newSelected.concat(
-      readMore.slice(0, selectedIndex),
-      readMore.slice(selectedIndex + 1)
-    )
-  }
-
-  setReadMore(newSelected)
-}
-
-    //console.log('key',key,spaceIndex,text)
-
-    let more = readMore.indexOf(key) !== -1
-
-    const linkName = more?' ...Read Less << ':' ...Read More >> '
 
 
-    return (
-      <div id='more-text'>
-
-        {!more && subtractedtext}
-        {more && extraContent}
-        <a id='more-text-link'
-        
-        onClick={()=>{handleClick(key)}}>
-        
-        {linkName}
-        
-        </a>
-        
-        
-      </div>
-    )
-
-  }else{
-    return text
-  }
-
-
-}
 
 
 function displayresults(){
@@ -223,25 +127,37 @@ function displayresults(){
 }
 
 //console.log(readMore)
+function textMin(text,keyNo){
+    return(
+      <TextMinimize keyNo={keyNo} text={text} setEmpty={setReadMoreEmpty}/>
+    )
+}
+
+const ItemIncrement = (function () {
+  let counter = 0
+  return function () {counter += 1; return counter}
+})();//closure with self invoked function:)
+
 
   return (
       <div>
         <p>{displayresults()}</p>
         <p>{error?`Error: ${error}`:null}</p>
           <ul>
+            
             {data?data.map((item,index) =>
             <>
             <div id='repo-items'>
               <div id='repo-list-items'>
                 <div id='order-number'>
-                {noItemIncrement()}
+                {ItemIncrement()}
                 </div>
 
                 <li id='repo-list-items-name' 
                 key = {keyIndex()+'id'+item.id}>{item.name}</li>
-                
+                {/*console.log(keyIndex())*/}
                 <li id='repo-list-items-description' 
-                key = {keyIndex()+'des' + item.id}>{textminimize(item.description,(index+1))}</li>
+                key = {keyIndex()+'des' + item.id}>{textMin(item.description,(index+1))}</li>
                 
                 
                 <li id='repo-list-items-url' 
