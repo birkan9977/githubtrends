@@ -2,7 +2,6 @@ import React, { useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   TextMinimize,
-  ItemIncrement,
   keyIndex,
 
  } from '../extraFunctions/dataFunctions'
@@ -95,15 +94,15 @@ export default function DataLoader (){
   
 
   function language(codeLanguage){
-  if (codeLanguage!=null){
-     return (
-        <>
-        {/*<span>Language</span>*/}
-        <p>{codeLanguage}</p>
-        </>
-       )
-  } 
-}
+    if (codeLanguage!=null){
+      return (
+          <>
+          {/*<span>Language</span>*/}
+          <p>{codeLanguage}</p>
+          </>
+        )
+    } 
+  }
 
 
 
@@ -111,32 +110,32 @@ export default function DataLoader (){
 
 
 
-function displayresults(){
-  let displaytext=''
+  function displayresults(){
+    let displaytext=''
 
-    if(loading){
-      displaytext = 'Loading Data Please Wait...'
-    }else{
-      if(globCount>0){
-        displaytext =  `Displaying ${globCount} results.`
-      } else {
-        displaytext = 'Change Search Criteria'
+      if(loading){
+        displaytext = 'Loading Data Please Wait...'
+      }else{
+        if(globCount>0){
+          displaytext =  `Displaying ${globCount} results.`
+        } else {
+          displaytext = 'Change Search Criteria'
+        }
       }
-    }
-    return displaytext
-}
+      return displaytext
+  }
 
-//console.log(readMore)
-function textMin(text,keyNo){
-    return(
-      <TextMinimize keyNo={keyNo} text={text} setEmpty={setReadMoreEmpty}/>
-    )
-}
+  //console.log(readMore)
+  function textMin(text,keyNo){
+      return(
+        <TextMinimize keyNo={keyNo} text={text} setEmpty={setReadMoreEmpty}/>
+      )
+  }
 
-const ItemIncrement = (function () {
-  let counter = 0
-  return function () {counter += 1; return counter}
-})();//closure with self invoked function:)
+  const ItemIncrement = (function () {
+    let counter = 0
+    return function () {counter += 1; return counter}
+  })();//closure with self invoked function:)
 
 
   return (

@@ -1,7 +1,7 @@
 body {
   font: 100% Helvetica, Arial, sans-serif;
   color: #333;
-  background-color: #d3afaf;
+  background-color: #c7c4c4;
 }
 
 .box {
@@ -221,9 +221,9 @@ footer {
 }
 
 footer h4 {
-  margin-top: 40px;
+  margin-top: 10px;
   background: rgba(219, 216, 216, 0.3);
-  padding: 15px;
+  padding: 10px;
   border-radius: 5px;
   text-shadow: 5px 5px 10px #333;
   height: 0;
