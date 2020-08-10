@@ -1,41 +1,45 @@
 import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
 
-import {
+import { Filters, AppConsumer } from '../app/context'
 
-  filterLanguage,
-  filterStars,
-  filterKeyword,
-  
 
-} from '../app/filterslice'
+const FilterQuery = () => {
 
-const FilterQuery = (props) => {
-const dispatch = useDispatch()
+const setKeywordFilter = (value) => {
+    setKeyword({...Filters, keyword: value });
+}
 
-const [keyword,setKeyword]=useState('')
+const [keyword,setKeyword]=useState({...Filters, setFilter: setKeywordFilter})
 
 const handleTextKeyChange = (e) => {
   setKeyword(e.target.value)
 }
 
-const handleSendKeyWord =()=>{
-  dispatch(filterKeyword(keyword))
-}
-
 const onKeyPress = (e) => {
+
+  
   if(e.which === 13) {
-    handleSendKeyWord();
+    return(
+    <AppConsumer>
+
+        {context => 
+          context.setFilter(keyword) 
+        }
+   
+    </AppConsumer>
+    )
   }
 }
 
   return(
     
+    <AppConsumer>
 
+   {context => 
     <div id='filter-queries'>
       <label id='label-language'>Language</label>
       <select id='dropdown-language' defaultValue='python'
-        onChange={(e) => dispatch(filterLanguage(e.target.value))}>
+        onChange={(e) => setKeywordFilter(e.target.value)}>
         <option value=''>All</option>
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
@@ -45,7 +49,7 @@ const onKeyPress = (e) => {
 
       <label id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='10000'
-        onChange={(e) => dispatch(filterStars(e.target.value))}>
+        onChange={(e) => setKeywordFilter(e.target.value)}>
         <option value='0'>0</option>
         <option value='500'>500</option>
         <option value='1000'>1000</option>
@@ -66,10 +70,11 @@ const onKeyPress = (e) => {
       
 
       </input>
-      <button onClick={() => handleSendKeyWord(keyword)}>Submit</button>
+      <button onClick={() => context.setFilter(keyword)}>Submit</button>
     </div>
     
-    
+    }
+    </AppConsumer>
 
   )
 }
