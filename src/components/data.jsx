@@ -13,27 +13,22 @@ export default function DataLoader (props){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-
-
-  //console.log('Data/filterLanguage: ',globLanguage)
-  //console.log('Data/filterStars>: ',globStars)
-  //console.log('Data/filterKeyword>: ',reduxloading)
+  const[xcount,setXcount] = useState(0)
 
 
   const setReadMoreEmpty = () => []
   
-  let xcount = 0
   const itemsCount = (len) => {
-    xcount = len
-    return xcount  
+    setXcount(len)
   }
 
+  
 
   useEffect(() => {
 
 
     setLoading(true)
-    
+
     setReadMoreEmpty()
 
     setError(null)
@@ -50,8 +45,7 @@ export default function DataLoader (props){
             setLoading(false)
            
             itemsCount(data.items.length)
-            
-            
+            props.count(data.items.length)
           })
           .catch((err) => {
             setError(err);
@@ -59,12 +53,10 @@ export default function DataLoader (props){
           })
 
           
-            
-          
-
+        
+      
   },[props.url]); 
   
-
 
 
   function displayresults(){
@@ -109,6 +101,7 @@ export default function DataLoader (props){
   return (
     
       <div>
+        
         
         
 
@@ -160,6 +153,7 @@ export default function DataLoader (props){
             </>
             ):<p>{console.log('no data')}Search Filters returned no results. Try changing search filters.</p>}
           </ul>
+          
       </div>
 
   )

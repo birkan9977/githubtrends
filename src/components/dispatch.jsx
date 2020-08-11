@@ -1,15 +1,19 @@
+import React from 'react';
+import { AppConsumer } from '../app/context'
 
 
-const dispatch = (key,value) =>{
+export default function Dispatch (props){
+  console.log('dispatch')
   return(
   <AppConsumer>
       { context =>
       <>
-          {context.setFilter(key,value)}   
+          {context.setFilter(props.key,props.value)} 
+          {console.log('dispatch')} 
+          {console.log(context)} 
       </>
       }
   </AppConsumer>
   )
 }
 
-{dispatch('url',url)}

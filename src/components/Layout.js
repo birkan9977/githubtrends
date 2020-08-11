@@ -1,12 +1,31 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import FilterQuery from './filter'
 import DataMiddleMan from './dataMid'
 import '../styles/mainOutput.css'
 import { AppConsumer } from '../app/context'
+import Dispatch from './dispatch'
 
 export default function Layout() {
+const [xcount, setXCount]=useState(0)
+const [xurl,xsetUrl]=useState('')
 
-  
+  const getCount = (e) =>{
+    setXCount(e)
+    console.log(xcount)
+  }
+
+  const getUrl = (e) =>{
+    xsetUrl(e)
+    console.log(xurl)
+  }
+
+  const disp = () =>{
+  return(<Dispatch key = 'count' value = {xcount}/>)
+  }
+  useEffect(() => {
+    
+    disp()
+  })
 
     return (
       <AppConsumer>
@@ -41,12 +60,12 @@ export default function Layout() {
 
               <section id='center-section'>
               
-              <h3>Top {context.count>0?context.count:'30'} Chart</h3>
+              <h3>Top {xcount>0?xcount:'30'} Chart</h3>
               
-              {<DataMiddleMan/>}
+              <DataMiddleMan count = {getCount} xurl={getUrl}/>
               </section>
 
-              
+              {/*<Dispatch key = 'count' value = {count}/>*/}
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
@@ -54,7 +73,10 @@ export default function Layout() {
               <p>Stars: {context.stars}</p>
               <p>Keyword: {context.keyword}</p>
               <p>Api address:</p>
-              <textarea id='url-textarea' defaultValue={context.url}></textarea>
+              <textarea id='url-textarea' defaultValue={xurl}>
+              
+              {/*context.setFilter('count',count)*/} 
+              </textarea>
               </nav>
 
             </section>

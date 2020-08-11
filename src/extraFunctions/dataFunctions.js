@@ -13,23 +13,25 @@ export function TextMinimize(props){
   if(len>maxlen){
     
     let spaceIndex = text.indexOf(' ',maxlen)
-    if(spaceIndex<0){
-      
-      
-    }
+    
     let dotIndex = text.indexOf('.',maxlen)
     let commaIndex = text.indexOf(',',maxlen)
     let commawithSpaceIndex = text.indexOf('，',maxlen)
+    let chineseComma = text.indexOf('、',maxlen)
     let splitIndex = maxlen
+
     if(spaceIndex<0){
       
       let strSplit = text.split(' ')
       let lastWord = strSplit[strSplit.length-1]
       //console.log(lastWord)
-      if(lastWord===text){ //chinese with special char '，'
+      if(lastWord===text && commawithSpaceIndex!==-1){ //chinese with special char '，'
       splitIndex = commawithSpaceIndex
       //console.log(dotIndex,commaIndex,commawithSpaceIndex,splitIndex)
-      } else if (lastWord!==text){
+      } else if (lastWord===text && chineseComma!==-1) {
+        splitIndex = chineseComma
+      }
+        else if (lastWord!==text){
         //console.log('break and return text')
         return text
       } else if (dotIndex<0 && commaIndex>0 ) {

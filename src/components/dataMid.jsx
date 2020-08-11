@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { AppConsumer, InitialFilters } from '../app/context'
 import DataLoader from './data'
-export default function DataMiddleMan(){
+
+export default function DataMiddleMan(props){
   
   const[url,setUrl]=useState('https://api.github.com/search/repositories?q= stars:>=10000 language:python sort:stars')
   const Filters = InitialFilters
@@ -31,8 +32,11 @@ export default function DataMiddleMan(){
     
   }
   
+
+  
   useEffect(() => {
     setUrl(Filters.url)
+    props.xurl(url)
   })
 
   return( 
@@ -51,6 +55,7 @@ export default function DataMiddleMan(){
           
           {console.log('data/url: ',url)}
           {console.log('dataMid/Filters:',Filters)}
+
           
 
         </>
@@ -58,8 +63,10 @@ export default function DataMiddleMan(){
         }
       </AppConsumer>
       
-      <p>{url}</p>
-      <DataLoader url = {url}/>
+      
+      <DataLoader url = {url} count = {props.count}/>
+      
+      
     </>
       
   )
