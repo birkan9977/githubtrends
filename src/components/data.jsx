@@ -1,34 +1,23 @@
 import React, { useState, useEffect} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import {
   TextMinimize,
   keyIndex,
 
  } from '../extraFunctions/dataFunctions'
-
-import {
-  resultCount,
-  filteredUrl,
-  loadingFunc,
-  selectLanguage,
-  selectStars,
-  selectKeyword,
-  selectCount,
+ import { Filters, AppConsumer } from '../app/context'
 
 
-} from '../app/filterslice'
 
 export default function DataLoader (){
-  const globCount = useSelector(selectCount);
-  const globStars = useSelector(selectStars);
-  const globLanguage = useSelector(selectLanguage);
-  const globkeyword = useSelector(selectKeyword);
+  
+  const globLanguage = () =><AppConsumer>{ value =><div>{value.language}</div>}</AppConsumer>
+  const globStars = () =><AppConsumer>{ value =><div>{value.stars}</div>}</AppConsumer>
+  const globkeyword = () =><AppConsumer>{ value =><div>{value.keyword}</div>}</AppConsumer>
 
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
 
-  const dispatch = useDispatch()
 
   console.log('Data/filterLanguage: ',globLanguage)
   //console.log('Data/filterStars>: ',globStars)

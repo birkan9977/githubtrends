@@ -1,48 +1,16 @@
 import React from 'react';
 import FilterQuery from './filter'
-import DataLoader from './data'
+//import DataLoader from './data'
 import '../styles/mainOutput.css'
-import { useSelector } from 'react-redux';
-import {
-
-  selectLanguage,
-  selectStars,
-  selectKeyword,
-  selectUrl,
-  selectCount,
-  selectLoading,
-  selectState,
-
-} from '../app/filterslice'
+import { AppConsumer } from '../app/context'
 
 export default function Layout() {
 
-  const count = useSelector(selectCount);
-  const stars = useSelector(selectStars);
-  const language = useSelector(selectLanguage);
-  const keyword = useSelector(selectKeyword);
-  const url = useSelector(selectUrl);
-  const loading = useSelector(selectLoading);
-  const state = useSelector(selectState);
-
-
-function displayChartNumber(){ 
-  let displaytext=''
-
-    if(loading){
-      displaytext = '30'
-    }else{
-      if(state.count>0){
-        displaytext =  `Displaying ${count} results.`
-      } else {
-        displaytext = 'Change Search Criteria'
-      }
-    }
-    return displaytext
-}
+  
 
     return (
-      
+      <AppConsumer>
+      { context =>
         <main id='main'>
 
             <header id='header'>
@@ -61,7 +29,6 @@ function displayChartNumber(){
             </nav>
 
 
-            {/*console.log(state)*/}
 
             <section id='middle-section'>
 
@@ -74,21 +41,20 @@ function displayChartNumber(){
 
               <section id='center-section'>
               
-              <h3>Top {count>0?count:'30'} Chart</h3>
-              {/*displayChartNumber()*/}
-              {/*console.log('loading/layout:',loading)*/}
-              <DataLoader/>
+              <h3>Top {context.count>0?context.count:'30'} Chart</h3>
+              
+              {/*<DataLoader/>*/}
               </section>
 
-              {/*console.log('filterData',state)*/}
+              
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
-              <p>Language: {language}</p>
-              <p>Stars: {stars}</p>
-              <p>Keyword: {keyword}</p>
+              <p>Language: {context.language}</p>
+              <p>Stars: {context.stars}</p>
+              <p>Keyword: {context.keyword}</p>
               <p>Api address:</p>
-              <textarea id='url-textarea' defaultValue={url}></textarea>
+              <textarea id='url-textarea' defaultValue={context.url}></textarea>
               </nav>
 
             </section>
@@ -103,7 +69,8 @@ function displayChartNumber(){
 
         </main>
 
-
+      }
+      </AppConsumer>
 
 
     )

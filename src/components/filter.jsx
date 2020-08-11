@@ -1,45 +1,30 @@
 import React, {useState} from 'react';
 
-import { Filters, AppConsumer } from '../app/context'
+import { AppConsumer } from '../app/context'
 
 
 const FilterQuery = () => {
 
-const setKeywordFilter = (value) => {
-    setKeyword({...Filters, keyword: value });
-}
 
-const [keyword,setKeyword]=useState({...Filters, setFilter: setKeywordFilter})
+const [keyword,setKeyword]=useState('')
+
+
 
 const handleTextKeyChange = (e) => {
   setKeyword(e.target.value)
 }
 
-const onKeyPress = (e) => {
 
-  
-  if(e.which === 13) {
-    return(
-    <AppConsumer>
-
-        {context => 
-          context.setFilter(keyword) 
-        }
-   
-    </AppConsumer>
-    )
-  }
-}
 
   return(
     
     <AppConsumer>
-
-   {context => 
+            
+    {context => 
     <div id='filter-queries'>
       <label id='label-language'>Language</label>
       <select id='dropdown-language' defaultValue='python'
-        onChange={(e) => setKeywordFilter(e.target.value)}>
+        onChange={(e) => context.setFilter('language',e.target.value)}>
         <option value=''>All</option>
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
@@ -49,7 +34,7 @@ const onKeyPress = (e) => {
 
       <label id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='10000'
-        onChange={(e) => setKeywordFilter(e.target.value)}>
+        onChange={(e) => context.setFilter('stars',e.target.value)}>
         <option value='0'>0</option>
         <option value='500'>500</option>
         <option value='1000'>1000</option>
@@ -64,17 +49,17 @@ const onKeyPress = (e) => {
       <label id='label-keyword'>Search Keyword</label>
       <input type='text' id='input-keyword'
       onChange={handleTextKeyChange}
-      onKeyPress={onKeyPress}
+      onKeyPress={(e)=>e.which===13?context.setFilter('keyword',keyword):null}
       >
               {/*console.log(keyword)*/}
       
 
       </input>
-      <button onClick={() => context.setFilter(keyword)}>Submit</button>
+      <button onClick={() => context.setFilter('keyword',keyword)}>Submit</button>
     </div>
-    
     }
     </AppConsumer>
+    
 
   )
 }

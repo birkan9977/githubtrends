@@ -1,8 +1,8 @@
 import {createContext} from 'react';
 
 
-export const Filters = {
-  stars:'10000',
+export const InitialFilters = {
+  stars:10000,
   language:'python',
   keyword:'',
   url:'',
@@ -11,7 +11,7 @@ export const Filters = {
   setFilter: () => {},
 }
 
-const AppContext = createContext(Filters)
+const AppContext = createContext(InitialFilters)
 
 export const AppProvider = AppContext.Provider
 
