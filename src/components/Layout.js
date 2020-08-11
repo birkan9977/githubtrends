@@ -1,9 +1,10 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import FilterQuery from './filter'
 import DataMiddleMan from './dataMid'
-import '../styles/mainOutput.css'
-import AppContext, { AppConsumer } from '../app/context'
+import AppContext from '../app/context'
 import Dispatch from './dispatch'
+import '../styles/mainOutput.css'
+
 
 export default function Layout() {
 const [xcount, setXCount]=useState(0)
@@ -21,15 +22,7 @@ const appfilters = useContext(AppContext)
     console.log(xurl)
   }
 
-  const disp = () =>{
-  return(<Dispatch key = 'count' value = {xcount}/>)
-  }
-  useEffect(() => {
-    
-    disp()
-  })
-
-
+  
     return (
       
         <main id='main'>
