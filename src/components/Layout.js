@@ -1,13 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import FilterQuery from './filter'
 import DataMiddleMan from './dataMid'
 import '../styles/mainOutput.css'
-import { AppConsumer } from '../app/context'
+import AppContext, { AppConsumer } from '../app/context'
 import Dispatch from './dispatch'
 
 export default function Layout() {
 const [xcount, setXCount]=useState(0)
 const [xurl,xsetUrl]=useState('')
+
+const appfilters = useContext(AppContext)
 
   const getCount = (e) =>{
     setXCount(e)
@@ -27,9 +29,9 @@ const [xurl,xsetUrl]=useState('')
     disp()
   })
 
+
     return (
-      <AppConsumer>
-      { context =>
+      
         <main id='main'>
 
             <header id='header'>
@@ -62,18 +64,25 @@ const [xurl,xsetUrl]=useState('')
               
               <h3>Top {xcount>0?xcount:'30'} Chart</h3>
               
-              <DataMiddleMan count = {getCount} xurl={getUrl}/>
+              <DataMiddleMan 
+                  count = {getCount} 
+                  xurl={getUrl}
+              />
+
               </section>
 
-              {/*<Dispatch key = 'count' value = {count}/>*/}
+              <Dispatch 
+                  xcount = {xcount} 
+                  xurl={xurl}
+              />
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
-              <p>Language: {context.language}</p>
-              <p>Stars: {context.stars}</p>
-              <p>Keyword: {context.keyword}</p>
+              <p>Language: {appfilters.language}</p>
+              <p>Stars: {appfilters.stars}</p>
+              <p>Keyword: {appfilters.keyword}</p>
               <p>Api address:</p>
-              <textarea id='url-textarea' defaultValue={xurl}>
+              <textarea id='url-textarea' defaultValue={appfilters.url}>
               
               {/*context.setFilter('count',count)*/} 
               </textarea>
@@ -91,8 +100,7 @@ const [xurl,xsetUrl]=useState('')
 
         </main>
 
-      }
-      </AppConsumer>
+      
 
 
     )

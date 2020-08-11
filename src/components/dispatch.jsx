@@ -1,19 +1,27 @@
-import React from 'react';
-import { AppConsumer } from '../app/context'
+import React, {useContext, useEffect} from 'react';
+import AppContext from '../app/context'
 
 
 export default function Dispatch (props){
-  console.log('dispatch')
+  console.log('dispatch',props.xcount,props.xurl)
+  const appfilters = useContext(AppContext)
+
+  useEffect(() => {
+    appfilters.setFilter('url',props.xurl)
+
+  },[props.xurl])
+
+  useEffect(() => {
+
+    appfilters.setFilter('count',props.xcount)
+  },[props.xcount])
+
   return(
-  <AppConsumer>
-      { context =>
       <>
-          {context.setFilter(props.key,props.value)} 
-          {console.log('dispatch')} 
-          {console.log(context)} 
+          
+          {console.log('dispatch',appfilters)} 
       </>
-      }
-  </AppConsumer>
+      
   )
 }
 
