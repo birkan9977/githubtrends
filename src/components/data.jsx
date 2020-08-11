@@ -1,56 +1,44 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   TextMinimize,
   keyIndex,
 
  } from '../extraFunctions/dataFunctions'
- import { Filters, AppConsumer } from '../app/context'
 
 
 
-export default function DataLoader (){
+export default function DataLoader (props){
   
-  const globLanguage = () =><AppConsumer>{ value =><div>{value.language}</div>}</AppConsumer>
-  const globStars = () =><AppConsumer>{ value =><div>{value.stars}</div>}</AppConsumer>
-  const globkeyword = () =><AppConsumer>{ value =><div>{value.keyword}</div>}</AppConsumer>
-
+  
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
 
 
-  console.log('Data/filterLanguage: ',globLanguage)
+  //console.log('Data/filterLanguage: ',globLanguage)
   //console.log('Data/filterStars>: ',globStars)
   //console.log('Data/filterKeyword>: ',reduxloading)
 
-  let filterLanguage = ''
-  if(globLanguage==='c++'){
-    filterLanguage = 'language:c%2B%2B'
-  }else if (globLanguage===''){
-    filterLanguage = ''
-  } else {
-    filterLanguage = `language:${globLanguage}`
-
-  }
-
-  let url = `https://api.github.com/search/repositories?q=${globkeyword} stars:>=${globStars} ${filterLanguage} sort:stars`
-
-  
 
   const setReadMoreEmpty = () => []
   
+  let xcount = 0
+  const itemsCount = (len) => {
+    xcount = len
+    return xcount  
+  }
+
 
   useEffect(() => {
 
-    const itemsCount = (len) => dispatch(resultCount(len))
 
     setLoading(true)
-
+    
     setReadMoreEmpty()
 
     setError(null)
-
-      fetch(url, {
+    
+      fetch(props.url, {
         headers: {
           'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
           'Accept': 'application/json'
@@ -60,42 +48,22 @@ export default function DataLoader (){
           .then(data => {
             setData(data.items)
             setLoading(false)
-        
-            itemsCount(data.items.length)
            
+            itemsCount(data.items.length)
+            
+            
           })
           .catch((err) => {
             setError(err);
             console.log('error',err)
           })
 
-          dispatch(loadingFunc(false))
-          dispatch(filteredUrl(url))
           
-  },[url,dispatch]); 
-  
-  
- 
-  
-  
-  
+            
+          
 
+  },[props.url]); 
   
-
-  function language(codeLanguage){
-    if (codeLanguage!=null){
-      return (
-          <>
-          {/*<span>Language</span>*/}
-          <p>{codeLanguage}</p>
-          </>
-        )
-    } 
-  }
-
-
-
-
 
 
 
@@ -105,8 +73,8 @@ export default function DataLoader (){
       if(loading){
         displaytext = 'Loading Data Please Wait...'
       }else{
-        if(globCount>0){
-          displaytext =  `Displaying ${globCount} results.`
+        if(xcount>0){
+          displaytext =  `Displaying ${xcount} results.`
         } else {
           displaytext = 'Change Search Criteria'
         }
@@ -127,10 +95,26 @@ export default function DataLoader (){
   })();//closure with self invoked function:)
 
 
+  function language(codeLanguage){
+    if (codeLanguage!=null){
+      return (
+          <>
+          {/*<span>Language</span>*/}
+          <p>{codeLanguage}</p>
+          </>
+        )
+    } 
+  }
+
   return (
+    
       <div>
+        
+        
+
         <p>{displayresults()}</p>
         <p>{error?`Error: ${error}`:null}</p>
+
           <ul>
             
             {data?data.map((item,index) =>

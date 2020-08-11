@@ -1,6 +1,6 @@
 import React from 'react';
 import FilterQuery from './filter'
-//import DataLoader from './data'
+import DataMiddleMan from './dataMid'
 import '../styles/mainOutput.css'
 import { AppConsumer } from '../app/context'
 
@@ -43,7 +43,7 @@ export default function Layout() {
               
               <h3>Top {context.count>0?context.count:'30'} Chart</h3>
               
-              {/*<DataLoader/>*/}
+              {<DataMiddleMan/>}
               </section>
 
               
