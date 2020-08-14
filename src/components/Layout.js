@@ -1,28 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import FilterQuery from './filter'
-import DataMiddleMan from './dataMid'
 import AppContext from '../app/context'
-import Dispatch from './dispatch'
 import '../styles/mainOutput.css'
-
+import DataLoader from './data'
 
 export default function Layout() {
-const [xcount, setXCount]=useState(0)
-const [xurl,xsetUrl]=useState('')
 
-const appfilters = useContext(AppContext)
+const { filters } = useContext(AppContext)
 
-  const getCount = (e) =>{
-    setXCount(e)
-    console.log(xcount)
-  }
 
-  const getUrl = (e) =>{
-    xsetUrl(e)
-    console.log(xurl)
-  }
-
-  
     return (
       
         <main id='main'>
@@ -50,34 +36,32 @@ const appfilters = useContext(AppContext)
               <h3>Search:</h3>
 
               <FilterQuery/>
-
+              
               </nav>
 
               <section id='center-section'>
               
-              <h3>Top {xcount>0?xcount:'30'} Chart</h3>
+              <h3>Top {filters.count>0?filters.count:'30'} Chart</h3>
               
-              <DataMiddleMan 
-                  count = {getCount} 
-                  xurl={getUrl}
-              />
-
+              
+              <DataLoader/>
               </section>
 
-              <Dispatch 
-                  xcount = {xcount} 
-                  xurl={xurl}
-              />
+              
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
-              <p>Language: {appfilters.language}</p>
-              <p>Stars: {appfilters.stars}</p>
-              <p>Keyword: {appfilters.keyword}</p>
+              <p>Language: {filters.language}</p>
+              <p>Stars: {filters.stars}</p>
+              <p>Keyword: {filters.keyword}</p>
               <p>Api address:</p>
-              <textarea id='url-textarea' defaultValue={appfilters.url}>
+              <textarea id='url-textarea' 
+                        value={filters.url}
+                        readOnly
+                        
+                        
+              >
               
-              {/*context.setFilter('count',count)*/} 
               </textarea>
               </nav>
 

@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
-import { AppConsumer } from '../app/context'
+import AppContext from '../app/context'
+import { changeFilter } from '../store/reducerActions'
 
 
 const FilterQuery = () => {
 
+const { dispatch } = useContext(AppContext)
 
 const [keyword,setKeyword]=useState('')
-
-
 
 const handleTextKeyChange = (e) => {
   setKeyword(e.target.value)
@@ -16,15 +16,25 @@ const handleTextKeyChange = (e) => {
 
 
 
+const sendtoReducer = (filterName,filterValue) => {
+  const action = {
+    type: changeFilter,
+    payload: {
+      filterName: filterName,
+      filterValue: filterValue
+      
+    }
+  };
+  dispatch(action);
+};
+
   return(
     
-    <AppConsumer>
-            
-    {context => 
+    
     <div id='filter-queries'>
       <label id='label-language'>Language</label>
       <select id='dropdown-language' defaultValue='python'
-        onChange={(e) => context.setFilter('language',e.target.value)}>
+        onChange={(e) => sendtoReducer('language',e.target.value)}>
         <option value=''>All</option>
         <option value='javascript'>Java Script</option>
         <option value='python'>Python</option>
@@ -34,7 +44,7 @@ const handleTextKeyChange = (e) => {
 
       <label id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='10000'
-        onChange={(e) => context.setFilter('stars',e.target.value)}>
+        onChange={(e) => sendtoReducer('stars',e.target.value)}>
         <option value='0'>0</option>
         <option value='500'>500</option>
         <option value='1000'>1000</option>
@@ -49,16 +59,15 @@ const handleTextKeyChange = (e) => {
       <label id='label-keyword'>Search Keyword</label>
       <input type='text' id='input-keyword'
       onChange={handleTextKeyChange}
-      onKeyPress={(e)=>e.which===13?context.setFilter('keyword',keyword):null}
+      onKeyPress={(e)=>e.which===13?sendtoReducer('keyword',keyword):null}
       >
               {/*console.log(keyword)*/}
       
 
       </input>
-      <button onClick={() => context.setFilter('keyword',keyword)}>Submit</button>
+      <button onClick={() => sendtoReducer('keyword',keyword)}>Submit</button>
     </div>
-    }
-    </AppConsumer>
+    
     
 
   )

@@ -1,20 +1,19 @@
-import {createContext} from 'react';
+import { createContext } from 'react';
 
 
 export const InitialFilters = {
+  
   stars:10000,
   language:'python',
   keyword:'',
-  url:'',
+  url:'https://api.github.com/search/repositories?q= stars:>=10000 language:python sort:stars',
   count:0,
   loading:false,
-  setFilter: () => {},
-}
+  
+  }
 
 const AppContext = createContext(InitialFilters)
 
 export const AppProvider = AppContext.Provider
-
-export const AppConsumer = AppContext.Consumer
 
 export default AppContext

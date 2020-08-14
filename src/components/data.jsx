@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   TextMinimize,
   keyIndex,
 
  } from '../extraFunctions/dataFunctions'
 
+import AppContext from '../app/context';
+import { changeFilter } from '../store/reducerActions'
 
 
-export default function DataLoader (props){
+export default function DataLoader (){
   
   
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
   const[xcount,setXcount] = useState(0)
-
+  const { filters, dispatch } = useContext(AppContext)
 
   const setReadMoreEmpty = () => []
   
@@ -22,10 +24,22 @@ export default function DataLoader (props){
     setXcount(len)
   }
 
+  console.log('data',filters.url)
   
+  const sendtoReducer = (filterName,filterValue) => {
+    const action = {
+      type: changeFilter,
+      payload: {
+        filterName: filterName,
+        filterValue: filterValue
+        
+      }
+    }
+    dispatch(action);
+  }
 
   useEffect(() => {
-
+    
 
     setLoading(true)
 
@@ -33,7 +47,7 @@ export default function DataLoader (props){
 
     setError(null)
     
-      fetch(props.url, {
+      fetch(filters.url, {
         headers: {
           'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
           'Accept': 'application/json'
@@ -45,7 +59,7 @@ export default function DataLoader (props){
             setLoading(false)
            
             itemsCount(data.items.length)
-            props.count(data.items.length)
+            sendtoReducer ('count',data.items.length)
           })
           .catch((err) => {
             setError(err);
@@ -55,7 +69,7 @@ export default function DataLoader (props){
           
         
       
-  },[props.url]); 
+  },[filters.url]); 
   
 
 

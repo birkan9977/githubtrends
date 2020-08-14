@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
-import { InitialFilters, AppProvider } from './app/context'
+import React from 'react';
 import Layout from './components/Layout'
-
+import Store from './store/store'
 
 
 const App = () => {
 
-
-  const setFilter = (key,value) => {
-    console.log(key,value)
-    setFilters(prevState=>({ ...prevState, [key]:value }));
-    
-  }
-  
-  const [filters,setFilters]=useState({...InitialFilters, setFilter: setFilter})
-
   return (
-      <AppProvider value={filters}>
+     
+    <Store>
+
           <Layout />
-          {console.log({filters})}
-      </AppProvider>
+      
+    </Store>
+         
+      
   );
 }
 
