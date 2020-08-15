@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "mathjs": "^7.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-redux": "^7.2.1",
     "react-scripts": "3.4.1",
+    "react-toolkit": "^2.0.0-alpha.3",
     "sass": "^1.26.10"
   },
   "devDependencies": {
@@ -24,8 +28,8 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-react": "7.17.0",
     "eslint-plugin-standard": "4.0.1",
-    "nodemon": "^2.0.4",
-    "prettier": "^2.0.1"
+    "prettier": "^2.0.1",
+    "prettier-eslint": "^11.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,10 +37,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "client": "npm start index.js"
-    
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "env": {
+      "browser": true,
+      "node": true
+    }
   },
   "browserslist": {
     "production": [
@@ -50,6 +57,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4000/",
-  "secure": false
+  "@typescript-eslint/indent": "off"
 }

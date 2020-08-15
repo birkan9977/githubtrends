@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
-import LoadData from './filterData'
+import React, { useContext } from 'react';
 import FilterQuery from './filter'
+import AppContext from '../app/context'
 import '../styles/mainOutput.css'
+import DataLoader from './data'
 
 export default function Layout() {
-const [state,setState] = useState({
-  stars:'10000',
-  language:'javascript',
-  keyword:''
-})
+
+const { filters } = useContext(AppContext)
+
 
     return (
       
@@ -30,60 +29,57 @@ const [state,setState] = useState({
             </nav>
 
 
-            
 
             <section id='middle-section'>
 
               <nav id='left-nav-bar'>  
               <h3>Search:</h3>
 
-              <FilterQuery 
+              <FilterQuery/>
               
-              filterLanguage={e=>setState(prevState => ({
-                ...prevState,
-                language: e
-              }))}
-
-              filterStars={e=>setState(prevState => ({
-                ...prevState,
-                stars: e
-              }))}
-
-              filterKeyword={e=>setState(prevState => ({
-                ...prevState,
-                keyword: e
-              }))}
-              
-              />
-              {console.log('filterData',state)}
-
               </nav>
 
               <section id='center-section'>
               
-              <h3>Top Chart</h3>
-              <LoadData filters={state}/>
+              <h3>Top {filters.count>0?filters.count:'30'} Chart</h3>
+              
+              
+              <DataLoader/>
               </section>
+
+              
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
-              <p>Language: {state.language}</p>
-              <p>Stars: {state.stars}</p>
-              <p>Keyword: {state.keyword}</p>
+              
+              <p>Language: {filters.language}</p>
+              <p>Stars: {filters.stars}</p>
+              <p>Keyword: {filters.keyword}</p>
+              <p>Api address:</p>
+              <textarea id='url-textarea' 
+                        value={filters.url}
+                        readOnly
+                        
+                        
+              >
+              
+              </textarea>
+              
               </nav>
 
             </section>
 
             
 
-            <footer id='footer'>
-
+            <footer className='box' id='footer'>
+            <h4>mailbirkan@gmail.com  - Created by GitHub ID: Birkan9977</h4>
+            <p></p>
             </footer>
 
 
         </main>
 
-
+      
 
 
     )

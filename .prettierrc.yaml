@@ -3,3 +3,18 @@ tabWidth: 2
 semi: false
 singleQuote: true
 jsxBracketSameLine: true
+
+env:
+    es6: true
+  rules:
+    arrow-parens:
+      - 2
+      - always
+
+extends: standard
+rules:
+  comma-dangle:
+    - error
+    - always
+  no-empty: warn
+      

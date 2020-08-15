@@ -31,6 +31,8 @@ $stacked-radial:
 body {
   font: 100% $font-stack;
   color: $primary-color;
+  background-color: $header-gray;
+  
   
 }
 
@@ -40,7 +42,7 @@ body {
   -ms-transform: $property;
   transform: $property;
 }
-.box { @include transform(rotate(30deg)); }
+.box { @include transform(translateY(-1em)); }
 
 %equal-heights {
   display: flex;
