@@ -31,6 +31,8 @@ export default function DataLoader (){
   }
 
   
+  //console.log('test')
+
 
   useEffect(() => {
 
@@ -99,6 +101,7 @@ export default function DataLoader (){
   return (
     
       <div>
+        
         <p>{displayresults()}</p>
         <p>{error?`Error: ${error}`:null}</p>
 
