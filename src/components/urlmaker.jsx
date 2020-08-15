@@ -8,7 +8,7 @@ export default function urlMaker(filters){
         filterLanguage = 'language:C%2B%2B'
       }else if(filters.language==='C#'){
         filterLanguage = 'language:C%23'
-      }else if (filters.language===''){
+      }else if (filters.language==='All'){
         filterLanguage = ''
       } else {
         filterLanguage = `language:${filters.language}`
@@ -23,7 +23,7 @@ export default function urlMaker(filters){
   const url = (`https://api.github.com/search/repositories?q=${filters.keyword} stars:>=${filters.stars} ${languageCorrect()} sort:stars`)
   
 
-  //console.log('dataMid/url',url)
+  console.log('dataMid/url',url)
   return url
   
 }

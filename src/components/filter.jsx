@@ -1,12 +1,11 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext,useEffect} from 'react';
 
 import AppContext from '../app/context'
-import { changeFilter } from '../store/reducerActions'
-
+import { changeFilter, defaultFilter } from '../store/reducerActions'
 
 const FilterQuery = () => {
 
-const { dispatch } = useContext(AppContext)
+const { filters, dispatch } = useContext(AppContext)
 
 const [keyword,setKeyword]=useState('')
 
@@ -29,11 +28,34 @@ const sendtoReducer = (filterName,filterValue) => {
 };
 
 
+const resetFilters = () => {
+  const action = {
+    type: defaultFilter
+    
+  };
+  dispatch(action);
+};
+
+useEffect(()=>{
+  let elemLanguage = document.getElementById('dropdown-language')
+  elemLanguage.value = filters.language
+
+  let elemStars = document.getElementById('dropdown-followers')
+  elemStars.value = filters.stars
+
+  let elemKeyword = document.getElementById('input-keyword')
+  elemKeyword.value = filters.keyword
+
+
+},[filters])
+
+
+
 const codelanguages = {
   'JavaScript':'JavaScript','Python':'Python','Java':'Java','C++':'C++',
   'Swift':'Swift','Ruby':'Ruby','C':'C','C#':'C#','Rust':'Rust',
   'TypeScript':'TypeScript','Dart':'Dart','Shell':'Shell','Objective-C':'Objective-C',
-  'CSS':'CSS'
+  'CSS':'CSS','All':'All'
   
 }
 
@@ -54,7 +76,7 @@ const starValues = {
       
       <select id='dropdown-language' 
               name='dropdown-language' 
-              defaultValue='Python'
+              defaultValue={filters.language}
               
               onChange={(e) => sendtoReducer('language',e.target.value)}>
                 
@@ -67,7 +89,7 @@ const starValues = {
       <label htmlFor='dropdown-followers' id='label-followers'>Stars greater than:</label>
       
       <select id='dropdown-followers' 
-              defaultValue='10000'
+              defaultValue={filters.stars}
               
               onChange={(e) => sendtoReducer('stars',e.target.value)}>
 
@@ -82,6 +104,7 @@ const starValues = {
 
       <input  type='text' 
               id='input-keyword'
+              defaultValue={filters.keyword}
               onChange={handleTextKeyChange}
               onKeyPress={(e)=>e.which===13?sendtoReducer('keyword',keyword):null}
       >
@@ -92,6 +115,8 @@ const starValues = {
       
       <button 
               onClick={() => sendtoReducer('keyword',keyword)}>Submit</button>
+      <button 
+              onClick={() => resetFilters()}>Reset Filters</button>
     </div>
     
     

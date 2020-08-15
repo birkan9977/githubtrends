@@ -31,7 +31,7 @@ export default function DataLoader (){
   }
 
   
-  console.log(filters)
+  //console.log(filters)
 
   const headers = {
     headers: {
@@ -54,6 +54,7 @@ export default function DataLoader (){
           let response = await fetch(url, headers)
 
           let data = await response.json()
+
           return data
             
         }
@@ -64,7 +65,7 @@ export default function DataLoader (){
             setData(data.items)
            
             //global
-            sendtoReducer ('count',data.items.length)
+           if(data)sendtoReducer ('count',data.items.length)
             sendtoReducer ('loading',false)
 
           })
@@ -73,7 +74,15 @@ export default function DataLoader (){
             console.log('error',err)
           })
 
-          
+    //set to session storage at every mutation
+    
+    const setSessionStorage=()=>{
+      sessionStorage.setItem('language',filters.language)
+      sessionStorage.setItem('stars',filters.stars)
+      sessionStorage.setItem('keyword',filters.keyword)
+    }
+    
+    setSessionStorage()
         
       
   },[filters.url]); 

@@ -1,9 +1,9 @@
 import React, { useReducer } from 'react'
-import { AppProvider, InitialFilters } from '../app/context'
+import { AppProvider, InitialFilters, LoadedFilters } from '../app/context'
 import reducer from './reducer'
 
 const Store = props => {
-  const [filters, dispatch] = useReducer(reducer, InitialFilters);
+  const [filters, dispatch] = useReducer(reducer, LoadedFilters);
   return (
     <AppProvider value={{ filters, dispatch }}>
       {props.children}

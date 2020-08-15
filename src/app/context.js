@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+import urlMaker from '../components/urlmaker'
 
 
 export const InitialFilters = {
@@ -12,7 +13,27 @@ export const InitialFilters = {
   
   }
 
-const AppContext = createContext(InitialFilters)
+  export let LoadedFilters = {
+    ...InitialFilters,
+            language : sessionStorage.getItem('language')?sessionStorage.getItem('language'):InitialFilters.language,
+            stars : sessionStorage.getItem('stars')?sessionStorage.getItem('stars'):InitialFilters.stars,
+            keyword : sessionStorage.getItem('keyword')?sessionStorage.getItem('keyword'):InitialFilters.keyword,
+            count:InitialFilters.count,
+            loading:InitialFilters.loading,
+          }
+          
+          const url = urlMaker(LoadedFilters)
+
+          LoadedFilters = {
+            ...LoadedFilters,
+            url:url
+          }
+
+
+          
+
+console.log(InitialFilters)
+const AppContext = createContext(LoadedFilters)
 
 export const AppProvider = AppContext.Provider
 
