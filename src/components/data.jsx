@@ -31,7 +31,7 @@ export default function DataLoader (){
   }
 
   
-  //console.log('test')
+  console.log(filters)
 
 
   useEffect(() => {
@@ -42,13 +42,23 @@ export default function DataLoader (){
 
     sendtoReducer ('loading',true)
 
-  fetch(filters.url, {
-        headers: {
-          'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
-          'Accept': 'application/json'
+  async function getDataAsync(url)
+
+        {
+          let response = await fetch(url, {
+            headers: {
+              'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
+              'Accept': 'application/json'
+            }
+          })
+
+          let data = await response.json()
+          return data
+            
         }
-      })
-          .then(response => response.json())
+
+  getDataAsync(filters.url)
+          
           .then(data => {
             setData(data.items)
            
