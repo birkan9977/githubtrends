@@ -13,7 +13,7 @@ const  reducer = (state, action) => {
 
 
 export function ChangeFilter(state, filterName, filterValue) {
-  console.log('state:',state,'filterName:',filterName,'filterValue',filterValue )
+  //console.log('state:',state,'filterName:',filterName,'filterValue',filterValue )
   
   let newState = { 
     ...state, 
@@ -26,7 +26,7 @@ export function ChangeFilter(state, filterName, filterValue) {
     [filterName]:filterValue,
     url:url,
   }
-  console.log('reducer',newState)
+  //console.log('reducer',newState)
 
     return newState;
     

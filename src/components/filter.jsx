@@ -32,8 +32,8 @@ const sendtoReducer = (filterName,filterValue) => {
     
     
     <div id='filter-queries'>
-      <label id='label-language'>Language</label>
-      <select id='dropdown-language' defaultValue='python'
+      <label htmlFor='dropdown-language' id='label-language'>Language</label>
+      <select id='dropdown-language' name='dropdown-language' defaultValue='python'
         onChange={(e) => sendtoReducer('language',e.target.value)}>
         <option value=''>All</option>
         <option value='javascript'>Java Script</option>
@@ -41,8 +41,8 @@ const sendtoReducer = (filterName,filterValue) => {
         <option value='java'>Java</option>
         <option value='c++'>C++</option>
       </select>
-
-      <label id='label-followers'>Stars greater than:</label>
+     
+      <label htmlFor='dropdown-followers' id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='10000'
         onChange={(e) => sendtoReducer('stars',e.target.value)}>
         <option value='0'>0</option>
@@ -56,7 +56,7 @@ const sendtoReducer = (filterName,filterValue) => {
         <option value='50000'>50000</option>
       </select>
 
-      <label id='label-keyword'>Search Keyword</label>
+      <label htmlFor='input-keyword' id='label-keyword'>Search Keyword</label>
       <input type='text' id='input-keyword'
       onChange={handleTextKeyChange}
       onKeyPress={(e)=>e.which===13?sendtoReducer('keyword',keyword):null}

@@ -51,6 +51,7 @@ const { filters } = useContext(AppContext)
 
               <nav id='right-nav-bar'>
               <h3>Filters:</h3>
+              
               <p>Language: {filters.language}</p>
               <p>Stars: {filters.stars}</p>
               <p>Keyword: {filters.keyword}</p>
@@ -63,6 +64,7 @@ const { filters } = useContext(AppContext)
               >
               
               </textarea>
+              
               </nav>
 
             </section>

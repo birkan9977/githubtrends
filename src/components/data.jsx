@@ -15,16 +15,15 @@ export default function DataLoader (){
   const[data,setData] = useState([]);
   const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-  const[xcount,setXcount] = useState(0)
+  const[count,setcount] = useState(0)
   const { filters, dispatch } = useContext(AppContext)
 
   const setReadMoreEmpty = () => []
   
   const itemsCount = (len) => {
-    setXcount(len)
+    setcount(len)
   }
 
-  console.log('data',filters.url)
   
   const sendtoReducer = (filterName,filterValue) => {
     const action = {
@@ -46,8 +45,8 @@ export default function DataLoader (){
     setReadMoreEmpty()
 
     setError(null)
-    
-      fetch(filters.url, {
+
+  fetch(filters.url, {
         headers: {
           'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
           'Accept': 'application/json'
@@ -79,10 +78,10 @@ export default function DataLoader (){
       if(loading){
         displaytext = 'Loading Data Please Wait...'
       }else{
-        if(xcount>0){
-          displaytext =  `Displaying ${xcount} results.`
+        if(count>0){
+          displaytext =  `Displaying ${count} results.`
         } else {
-          displaytext = 'Change Search Criteria'
+          displaytext = 'Search Filters returned no results. Try changing search filters.'
         }
       }
       return displaytext
@@ -101,24 +100,10 @@ export default function DataLoader (){
   })();//closure with self invoked function:)
 
 
-  function language(codeLanguage){
-    if (codeLanguage!=null){
-      return (
-          <>
-          {/*<span>Language</span>*/}
-          <p>{codeLanguage}</p>
-          </>
-        )
-    } 
-  }
 
   return (
     
       <div>
-        
-        
-        
-
         <p>{displayresults()}</p>
         <p>{error?`Error: ${error}`:null}</p>
 
@@ -152,7 +137,7 @@ export default function DataLoader (){
               <div id = 'repo-list-items-img'>
                 <li id='repo-list-items-img-list' 
                 key = {keyIndex()+'lan' + item.id}>
-                {language(item.language)}
+                {item.language?item.language:null}
                 
                 
                 </li>

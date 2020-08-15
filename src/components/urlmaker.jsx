@@ -21,7 +21,7 @@ export default function urlMaker(filters){
   const url = (`https://api.github.com/search/repositories?q=${filters.keyword} stars:>=${filters.stars} ${languageCorrect()} sort:stars`)
   
 
-  console.log('dataMid/url',url)
+  //console.log('dataMid/url',url)
   return url
   
 }
