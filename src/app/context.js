@@ -8,7 +8,7 @@ export const InitialFilters = {
   keyword:'',
   url:'https://api.github.com/search/repositories?q= stars:>=10000 language:python sort:stars',
   count:0,
-  loading:false,
+  loading:true,
   
   }
 

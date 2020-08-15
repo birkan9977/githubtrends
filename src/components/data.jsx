@@ -13,18 +13,11 @@ export default function DataLoader (){
   
   
   const[data,setData] = useState([]);
-  const[loading,setLoading] = useState(true)
   const[error,setError] = useState(null)
-  const[count,setcount] = useState(0)
   const { filters, dispatch } = useContext(AppContext)
 
   const setReadMoreEmpty = () => []
-  
-  const itemsCount = (len) => {
-    setcount(len)
-  }
 
-  
   const sendtoReducer = (filterName,filterValue) => {
     const action = {
       type: changeFilter,
@@ -37,14 +30,15 @@ export default function DataLoader (){
     dispatch(action);
   }
 
-  useEffect(() => {
-    
+  
 
-    setLoading(true)
+  useEffect(() => {
 
     setReadMoreEmpty()
 
     setError(null)
+
+    sendtoReducer ('loading',true)
 
   fetch(filters.url, {
         headers: {
@@ -55,10 +49,11 @@ export default function DataLoader (){
           .then(response => response.json())
           .then(data => {
             setData(data.items)
-            setLoading(false)
            
-            itemsCount(data.items.length)
+            //global
             sendtoReducer ('count',data.items.length)
+            sendtoReducer ('loading',false)
+
           })
           .catch((err) => {
             setError(err);
@@ -75,11 +70,11 @@ export default function DataLoader (){
   function displayresults(){
     let displaytext=''
 
-      if(loading){
+      if(filters.loading){
         displaytext = 'Loading Data Please Wait...'
       }else{
-        if(count>0){
-          displaytext =  `Displaying ${count} results.`
+        if(filters.count>0){
+          displaytext =  `Displaying ${filters.count} results.`
         } else {
           displaytext = 'Search Filters returned no results. Try changing search filters.'
         }
