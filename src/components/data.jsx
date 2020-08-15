@@ -134,7 +134,7 @@ export default function DataLoader (){
                 <div id='order-number'>
                 {ItemIncrement()}
                 </div>
-
+                {/*console.log(keyIndex())*/}
                 <li id='repo-list-items-name' 
                 key = {keyIndex()+'id'+item.id}>{item.name}</li>
                 {/*console.log(keyIndex())*/}
@@ -144,7 +144,7 @@ export default function DataLoader (){
                 
                 <li id='repo-list-items-url' 
                 key = {keyIndex()+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener">GitHub Link</a></li>
-                
+                {/*console.log(keyIndex()+'url' + item.id)*/}
                 
                 <li id='repo-list-items-stars' 
                 key = {keyIndex()+'star' + item.id}>{item.stargazers_count} Stars</li>

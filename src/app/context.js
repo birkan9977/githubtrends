@@ -32,7 +32,7 @@ export const InitialFilters = {
 
           
 
-console.log(InitialFilters)
+console.log(LoadedFilters)
 const AppContext = createContext(LoadedFilters)
 
 export const AppProvider = AppContext.Provider

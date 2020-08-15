@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react'
-import { AppProvider, InitialFilters, LoadedFilters } from '../app/context'
+import { AppProvider, LoadedFilters } from '../app/context'
 import reducer from './reducer'
 
 const Store = props => {

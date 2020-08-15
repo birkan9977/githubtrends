@@ -1,12 +1,13 @@
-import React, {useState, useContext,useEffect} from 'react';
+import React, {useState, useContext } from 'react';
 
 import AppContext from '../app/context'
 import { changeFilter, defaultFilter } from '../store/reducerActions'
+import { useEffect } from 'react';
 
 const FilterQuery = () => {
 
 const { filters, dispatch } = useContext(AppContext)
-
+console.log('filters',filters)
 const [keyword,setKeyword]=useState('')
 
 const handleTextKeyChange = (e) => {
@@ -37,6 +38,8 @@ const resetFilters = () => {
 };
 
 useEffect(()=>{
+
+
   let elemLanguage = document.getElementById('dropdown-language')
   elemLanguage.value = filters.language
 
@@ -80,8 +83,8 @@ const starValues = {
               
               onChange={(e) => sendtoReducer('language',e.target.value)}>
                 
-                {Object.entries(codelanguages).sort().map(([key,value]) => 
-                <option value={value}>{key}</option>
+                {Object.entries(codelanguages).sort().map(([key,value,index]) => 
+                <option key={index} value={value}>{key}</option>
                 )}
 
       </select>
@@ -93,8 +96,8 @@ const starValues = {
               
               onChange={(e) => sendtoReducer('stars',e.target.value)}>
 
-                {Object.entries(starValues).sort((a,b)=>a[1]-b[1]).map(([key,value]) =>
-                <option value={value}>{key}</option>
+                {Object.entries(starValues).sort((a,b)=>a[1]-b[1]).map(([key,value,index]) =>
+                <option key={index} value={value}>{key}</option>
                 )}
         
       </select>

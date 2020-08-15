@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-
+import { round, random }  from 'mathjs'
 
 export function TextMinimize(props){
   const[readMore,setReadMore]=useState([]);
@@ -112,7 +112,7 @@ const handleClick = (key) => {
 
 
 export const keyIndex = (function () {
-  let counter = 100
+  let counter = round(random(100, 1000))
   return function () {counter += 1; return counter}
 })();//closure with self invoked function:)
 
