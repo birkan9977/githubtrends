@@ -33,13 +33,23 @@ const sendtoReducer = (filterName,filterValue) => {
     
     <div id='filter-queries'>
       <label htmlFor='dropdown-language' id='label-language'>Language</label>
-      <select id='dropdown-language' name='dropdown-language' defaultValue='python'
+      <select id='dropdown-language' name='dropdown-language' defaultValue='Python'
         onChange={(e) => sendtoReducer('language',e.target.value)}>
         <option value=''>All</option>
-        <option value='javascript'>Java Script</option>
-        <option value='python'>Python</option>
-        <option value='java'>Java</option>
-        <option value='c++'>C++</option>
+        <option value='Javascript'>Java Script</option>
+        <option value='Python'>Python</option>
+        <option value='Java'>Java</option>
+        <option value='C++'>C++</option>
+        <option value='Swift'>Swift</option>
+        <option value='Ruby'>Ruby</option>
+        <option value='C'>C</option>
+        <option value='C#'>C#</option>
+        <option value='Rust'>Rust</option>
+        <option value='TypeScript'>TypeScript</option>
+        <option value='Dart'>Dart</option>
+        <option value='Shell'>Shell</option>
+        <option value='Objective-C'>Objective-C</option>
+        <option value='CSS'>CSS</option>
       </select>
      
       <label htmlFor='dropdown-followers' id='label-followers'>Stars greater than:</label>

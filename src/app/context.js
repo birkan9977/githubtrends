@@ -4,7 +4,7 @@ import { createContext } from 'react';
 export const InitialFilters = {
   
   stars:10000,
-  language:'python',
+  language:'Python',
   keyword:'',
   url:'https://api.github.com/search/repositories?q= stars:>=10000 language:python sort:stars',
   count:0,

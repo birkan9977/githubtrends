@@ -4,8 +4,10 @@ export default function urlMaker(filters){
   function languageCorrect(){ 
 
       let filterLanguage = ''
-      if(filters.language==='c++'){
-        filterLanguage = 'language:c%2B%2B'
+      if(filters.language==='C++'){
+        filterLanguage = 'language:C%2B%2B'
+      }else if(filters.language==='C#'){
+        filterLanguage = 'language:C%23'
       }else if (filters.language===''){
         filterLanguage = ''
       } else {
