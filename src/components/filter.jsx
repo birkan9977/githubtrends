@@ -33,16 +33,13 @@ const codelanguages = [
 
 ]
 
-codelanguages.sort()
 
 
 const starValues = {'0':0,'100':100,'500':500,'1k':1000,'5k':5000,'10k':10000,
                     '20k':20000,'30k':30000,'40k':40000,'50k':50000,
                     '100k':100000}
 
-                    //Object.entries(starValues)
-//starValues.sort()
-
+                   
   return(
     
     
@@ -50,7 +47,7 @@ const starValues = {'0':0,'100':100,'500':500,'1k':1000,'5k':5000,'10k':10000,
       <label htmlFor='dropdown-language' id='label-language'>Language</label>
       <select id='dropdown-language' name='dropdown-language' defaultValue='Python'
         onChange={(e) => sendtoReducer('language',e.target.value)}>
-        {codelanguages.map(language => 
+        {codelanguages.sort().map(language => 
         <option value={language}>{language}</option>
         )}
       </select>
