@@ -27,11 +27,15 @@ const sendtoReducer = (filterName,filterValue) => {
   };
   dispatch(action);
 };
-const codelanguages = [
-  'JavaScript','Python','Java','Java','C++','Swift','Ruby','C','C#','Rust',
-  'TypeScript','Dart','Shell','Objective-C','CSS'
 
-]
+
+const codelanguages = {
+  'JavaScript':'JavaScript','Python':'Python','Java':'Java','C++':'C++',
+  'Swift':'Swift','Ruby':'Ruby','C':'C','C#':'C#','Rust':'Rust',
+  'TypeScript':'TypeScript','Dart':'Dart','Shell':'Shell','Objective-C':'Objective-C',
+  'CSS':'CSS'
+  
+}
 
 
 
@@ -47,15 +51,15 @@ const starValues = {'0':0,'100':100,'500':500,'1k':1000,'5k':5000,'10k':10000,
       <label htmlFor='dropdown-language' id='label-language'>Language</label>
       <select id='dropdown-language' name='dropdown-language' defaultValue='Python'
         onChange={(e) => sendtoReducer('language',e.target.value)}>
-        {codelanguages.sort().map(language => 
-        <option value={language}>{language}</option>
+        {Object.entries(codelanguages).sort().map(([key,value]) => 
+        <option value={value}>{key}</option>
         )}
       </select>
      
       <label htmlFor='dropdown-followers' id='label-followers'>Stars greater than:</label>
       <select id='dropdown-followers' defaultValue='10000'
         onChange={(e) => sendtoReducer('stars',e.target.value)}>
-        {Object.entries(starValues).sort((a,b)=>a-b).map(([key,value]) =>
+        {Object.entries(starValues).sort((a,b)=>a[1]-b[1]).map(([key,value]) =>
         <option value={value}>{key}</option>
         )}
         
