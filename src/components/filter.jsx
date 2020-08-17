@@ -1,13 +1,11 @@
-import React, {useState, useContext } from 'react';
-
+import React, {useState, useContext, useEffect } from 'react';
 import AppContext from '../app/context'
 import { changeFilter, defaultFilter } from '../store/reducerActions'
-import { useEffect } from 'react';
 
 const FilterQuery = () => {
 
 const { filters, dispatch } = useContext(AppContext)
-console.log('filters',filters)
+//console.log('filters',filters)
 const [keyword,setKeyword]=useState('')
 
 const handleTextKeyChange = (e) => {

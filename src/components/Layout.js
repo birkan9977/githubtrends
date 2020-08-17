@@ -1,21 +1,41 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import FilterQuery from './filter'
 import AppContext from '../app/context'
 import '../styles/mainOutput.css'
 import DataLoader from './data'
+import userContext from '../app/usercontext'
+import UserLoginScreen from './userLoginScreen'
 
-export default function Layout() {
+
+export default function Layout(props) {
 
 const { filters } = useContext(AppContext)
+const { users } = useContext(userContext)
 
+const [loginvisible,setLoginVisible]=useState(true)
+const [userloggedin,setUserLoggedin]=useState(false)
+
+const onClickLoginShowToggle = () => {
+    setLoginVisible(!loginvisible)
+}
+
+
+
+useEffect(()=>{
+  setUserLoggedin(users.user.loggedin)
+  
+},[users.user.loggedin])
 
     return (
       
         <main id='main'>
-
             <header id='header'>
               <h1>GitHub Trending Repositories</h1>
-
+              
+              
+              <h2>{userloggedin?users.user.info.firstname:null}</h2>
+              <h3>{userloggedin?users.user.info.lastname:null}</h3>
+              
               
             </header>
 
@@ -25,13 +45,14 @@ const { filters } = useContext(AppContext)
                 <a href='#hot'><li>Hot Topics</li></a>
                 <a href='#contact'><li>Contact</li></a>
                 <a href='#ref'><li>References</li></a>
+                <a onClick={onClickLoginShowToggle} href='#'><li>Login</li></a>
               </ul>
             </nav>
 
-
-
+            
+            
             <section id='middle-section'>
-
+            
               <nav id='left-nav-bar'>  
               <h3>Search:</h3>
 
@@ -40,11 +61,15 @@ const { filters } = useContext(AppContext)
               </nav>
 
               <section id='center-section'>
-              
+              <div id='login' style={{display:'flex',justifyContent:'center'}}>
+              <UserLoginScreen user= {props.user} visible={loginvisible}/>
+              </div>
+              <div id='data-section' style={{display:loginvisible?'none':'block'}}>
               <h3>Top {filters.count>0?filters.count:'30'} Chart</h3>
               
               
               <DataLoader/>
+              </div>
               </section>
 
               
@@ -79,7 +104,6 @@ const { filters } = useContext(AppContext)
 
         </main>
 
-      
 
 
     )

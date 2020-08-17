@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import {
   TextMinimize,
   keyIndex,
-
  } from '../extraFunctions/dataFunctions'
 
 import AppContext from '../app/context';
@@ -60,6 +59,7 @@ export default function DataLoader (){
         }
 
   getDataAsync(filters.url)
+  //getDataAsync('test')
           
           .then(data => {
             setData(data.items)

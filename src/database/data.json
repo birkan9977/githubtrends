@@ -1,0 +1,31 @@
+
+  {
+    "user_01": {
+      "firstname": "Pamela",
+      "lastname": "Anderson",
+      "password": "12rtAsd34",
+      "role": "superadmin",
+      "email": "abc@abc"
+    },
+    "user_02": {
+      "firstname": "David",
+      "lastname": "Lynch",
+      "password": "22mo+345",
+      "role": "admin",
+      "email": "bcd@bcd"
+    },
+    "user_03": {
+      "firstname": "Keanu",
+      "lastname": "Reeves",
+      "password": "325POsY6",
+      "role": "regular",
+      "email": "abc@bcd"
+    },
+    "user_04": {
+      "firstname": "Peter",
+      "lastname": "Jackson",
+      "password": "47JKs90",
+      "role": "guest",
+      "email": "abc@bcg"
+    }
+  }
