@@ -3,40 +3,36 @@ import FilterQuery from './filter'
 import AppContext from '../app/context'
 import '../styles/mainOutput.css'
 import DataLoader from './data'
-import userContext from '../app/usercontext'
 import UserLoginScreen from './userLoginScreen'
+import UserInfo from './userinfo'
+
+export default function Layout() {
 
 
-export default function Layout(props) {
+  const { filters } = useContext(AppContext)
 
-const { filters } = useContext(AppContext)
-const { users } = useContext(userContext)
+  const [loginvisible,setLoginVisible]=useState(true)
 
-const [loginvisible,setLoginVisible]=useState(true)
-const [userloggedin,setUserLoggedin]=useState(false)
-
-const onClickLoginShowToggle = () => {
-    setLoginVisible(!loginvisible)
+  const onClickLoginShowToggle = () => {
+        
+        setLoginVisible(!loginvisible)
 }
-
-
-
-useEffect(()=>{
-  setUserLoggedin(users.user.loggedin)
-  
-},[users.user.loggedin])
 
     return (
       
         <main id='main'>
             <header id='header'>
+              <div className='page-title'>
               <h1>GitHub Trending Repositories</h1>
+              </div>
+
+              <div className='user-info'>
               
+              <UserInfo/>
               
-              <h2>{userloggedin?users.user.info.firstname:null}</h2>
-              <h3>{userloggedin?users.user.info.lastname:null}</h3>
+              </div>
               
-              
+
             </header>
 
             <nav id='topics-nav-bar'> 
@@ -61,14 +57,20 @@ useEffect(()=>{
               </nav>
 
               <section id='center-section'>
+
               <div id='login' style={{display:'flex',justifyContent:'center'}}>
-              <UserLoginScreen user= {props.user} visible={loginvisible}/>
+              
+                <UserLoginScreen  visible={loginvisible}
+                                  toggle= {onClickLoginShowToggle}/>
+
               </div>
+
               <div id='data-section' style={{display:loginvisible?'none':'block'}}>
+              
               <h3>Top {filters.count>0?filters.count:'30'} Chart</h3>
               
-              
               <DataLoader/>
+
               </div>
               </section>
 
@@ -103,7 +105,7 @@ useEffect(()=>{
 
 
         </main>
-
+        
 
 
     )

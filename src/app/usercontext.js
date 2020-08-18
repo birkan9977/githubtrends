@@ -3,15 +3,15 @@ import {createContext} from 'react'
 
 
 const activeuser = {
-   firstname:'test',
-   lastname:'',
-   role:'',
-   userlogin:'',
+   firstname:'test-first-name',
+   lastname:'test-last-name',
+   role:'test-role',
+   email:'test@test',//email
    loggedin:false,
    userid:'0'
 }
 
-const {firstname,lastname,role,userlogin,loggedin,userid} = activeuser
+const {firstname,lastname,role,email,loggedin,userid} = activeuser
 
 export const globals = {
   user:{
@@ -19,7 +19,7 @@ export const globals = {
         info: { 
                 firstname:firstname,
                 lastname:lastname,
-                userlogin:userlogin,
+                email:email,
                 role:role,
                 
               },

@@ -10,11 +10,13 @@ import UsersStore from './store/usersStore'
 ReactDOM.render(
   
   <React.StrictMode>
-      <UsersStore>
+    
+    <UsersStore>
 
       <App />
     
-      </UsersStore>
+    </UsersStore>
+
   </React.StrictMode>,
   
   document.getElementById('root')

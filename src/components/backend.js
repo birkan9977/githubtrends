@@ -6,7 +6,7 @@ import customData from '../database/data.json'
 
 
 const Backend = (props) => {
-
+console.log(props)
 const { users, userDispatch } = useContext(userContext)
 const sendtoUsersReducer = (newUser) => {
   const action = {
@@ -36,6 +36,7 @@ const authorize =()=>{
   if (foundItem!==undefined || null){
     found=true
     sendtoUsersReducer(foundItem)
+    props.toggle()
   }
   //console.log(foundItem)
 

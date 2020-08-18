@@ -83,6 +83,13 @@ export default function DataLoader (){
     }
     
     setSessionStorage()
+
+            //clean up after unmount
+            return ()=>{
+              
+            }
+
+            
         
       
   },[filters.url]); 

@@ -7,12 +7,12 @@ import customData from '../database/data.json'
 
 const UserLoginScreen = (props) => {
 
- const userlist = customData
+const userlist = customData
 //console.log(userlist)
 const { users } = useContext(userContext)
 
-const [loginInput,setloginInput]=useState('abc@abc')
-const [passwordInput,setPasswordInput]=useState('1234')
+const [loginInput,setloginInput]=useState('')
+const [passwordInput,setPasswordInput]=useState('')
 const [submitted,setSubmitted]=useState(false)
 const [error,setError] = useState(false)
 
@@ -59,6 +59,7 @@ const Back = () =>{
               reset={resetSubmission}
               submitted={submitted}
               error={(e)=>handleError(e)}
+              toggle={props.toggle}
               
               />
 
@@ -71,16 +72,41 @@ const onSubmitHandler = (e) => {
     setSubmitted(true)
 }
 
+
+
 useEffect(()=>{
-  let element = document.getElementById('user_password')
-  let user = Object.entries(userlist).find(([key,value]) => 
-  (value.email === loginInput) 
+
+  let password_input_element = document.getElementById('user_password')
+  
+  let user =  Object.entries(userlist).find(([key,value]) => 
+              (value.email === loginInput) 
   )
 
-  //console.log(user[1].password)
+  if(user!==undefined){
 
-  element.value = user[1].password
-  setPasswordInput(element.value)
+    console.log(user)
+
+    // example of object destructuring
+    let userinfo = {
+      userid: [
+        user[0],
+        { second: user[1].password }
+      ]
+    };
+    
+    let { userid: [first, { second }] } = userinfo;
+
+    console.log(first) //userid
+  
+    console.log(second) //password
+  
+    //input password text field value assigned according to login info
+    password_input_element.value = second
+    
+    setPasswordInput(password_input_element.value)
+
+  }
+
 },[loginInput])
 
 
@@ -125,9 +151,10 @@ useEffect(()=>{
                 id='user_login'
                 type='text'
                 onChange={changeLoginHandler} 
-                defaultValue=''
+                defaultValue='notselected'
                 required
                 >
+                <option value='notselected'>Choose</option>
                 {Object.entries(userlist).map(([key,value,index]) => 
                 <option key={index} value={value.email}>{value.firstname} {value.lastname}</option>
                 )}              
@@ -147,9 +174,8 @@ useEffect(()=>{
                 style={{width:'50px'}} 
                 >Submit</button>
 
-                {/*Below code is to update all comps after context is updated 
-                beginning from app*/}
-                {users.user.loggedin?props.user(users.user.userid):null}
+                
+               
       </form>
       {submitted?<Back/>:null}
       {error?<Errormessage/>:null}
