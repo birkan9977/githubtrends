@@ -5,11 +5,16 @@ import '../styles/mainOutput.css'
 import DataLoader from './data'
 import UserLoginScreen from './userLoginScreen'
 import UserInfo from './userinfo'
+import userContext from '../app/usercontext'
 
 export default function Layout() {
 
 
   const { filters } = useContext(AppContext)
+  
+  const { users } = useContext(userContext)
+  const loggedin = users.user.loggedin
+  const username = users.user.info.firstname
 
   const [loginvisible,setLoginVisible]=useState(true)
 
@@ -41,7 +46,11 @@ export default function Layout() {
                 <a href='#hot'><li>Hot Topics</li></a>
                 <a href='#contact'><li>Contact</li></a>
                 <a href='#ref'><li>References</li></a>
-                <a onClick={onClickLoginShowToggle} href='#'><li>Login</li></a>
+                <a  
+                    href='#'
+                    onClick={onClickLoginShowToggle}
+
+                >   <li>Login</li></a>
               </ul>
             </nav>
 
@@ -67,7 +76,7 @@ export default function Layout() {
 
               <div id='data-section' style={{display:loginvisible?'none':'block'}}>
               
-              <h3>Top {filters.count>0?filters.count:'30'} Chart</h3>
+              <h3>{loggedin?`${username}'s`:null} Top {filters.count>0?filters.count:'30'} Chart</h3>
               
               <DataLoader/>
 
