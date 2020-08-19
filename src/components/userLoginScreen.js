@@ -16,6 +16,10 @@ const [hiddenPassword,setHiddenPassword]=useState('')
 const [hidepassword,setHidePassword]=useState(false)
 const [submitted,setSubmitted]=useState(false)
 const [error,setError] = useState(false)
+const [timerid,setTimerid]=useState(0)
+const [timerMiliseconds,settimerMiliseconds]=useState(1000)
+
+
 
 const changeLoginHandler = (e) => {
   setloginInput(e.target.value)
@@ -26,13 +30,15 @@ const changePasswordHandler = (e) => {
   let curval= passwordInput
 
   console.log(e.which)
+
   let lastchar = String.fromCharCode(e.which)
       curval+=lastchar
-  setPasswordInput(curval)
+        
+        setPasswordInput(curval)
 
-  securepassword(curval)
+        securepassword(curval)
 
-  setError(false)
+        setError(false)
 }
 
 
@@ -40,37 +46,39 @@ const deleteChar = (e) => {
   
   if(e.which==8){
     let curval= passwordInput
-    curval = curval.substring(0, curval.length - 1);
-    setPasswordInput(curval)
-    securepassword(curval)
-    setError(false)
+        curval = curval.substring(0, curval.length - 1);
+    
+        setPasswordInput(curval)
+        securepassword(curval)
+        setError(false)
 
   }
   
 }
 const resetSubmission = () => {
-setSubmitted(false)
+    
+      setSubmitted(false)
 
 }
 
 const handleError = (e) => {
-console.log('error',e)
-setError(e)
+      console.log('error',e)
+      setError(e)
 }
 
 
 const Errormessage = () => {
 let message=''
 
-if(error){
-  console.log('error')
-  message = 'Wrong password or login'
-  
-}
-  
-return message
-  
-}
+    if(error){
+      console.log('error')
+      message = 'Wrong password or login'
+      
+    }
+      
+    return message
+      
+    }
 
 const Back = () =>{
   return(
@@ -87,24 +95,32 @@ const Back = () =>{
   )
 }
 const onSubmitHandler = (e) => {
-    e.preventDefault()
-    console.log(loginInput,passwordInput)
-    setSubmitted(true)
+
+      e.preventDefault()
+
+      console.log(loginInput,passwordInput)
+
+      setSubmitted(true)
+
 }
 
 const passwordshowtoggle = () => {
-  setHidePassword(!hidepassword)
+
+      setHidePassword(!hidepassword)
   
 }
 
 
-const changevaluepassword = () => {
-  if(hidepassword){
-    return hiddenPassword
-  } else {
-    return passwordInput 
+const changeTypePassword = () => {
+  
+      if(hidepassword){
+        return hiddenPassword
+      } else {
+        return passwordInput 
 
-}}
+      }
+}
+
 
 const securepassword = (p) => {
   let hiddentext = ''
@@ -120,11 +136,10 @@ const securepassword = (p) => {
       }
     }
     console.log(hiddentext)
-    return(
-      setHiddenPassword(hiddentext),
-      setTimeout(()=>completesecure(hiddentext),100)
+    setHiddenPassword(hiddentext)
+    clearTimeout(timerid)
+    setTimerid(setTimeout(()=>completesecure(hiddentext),timerMiliseconds))
     
-    )
 }
 
 const completesecure = (e) =>{
@@ -144,14 +159,14 @@ const completesecure = (e) =>{
 }
 const delayedsecure = () => {
   
-  return(setTimeout(()=>setHidePassword(true),1000)
+  return(setTimeout(()=>setHidePassword(true),timerMiliseconds)
   
   )
 }
 
 useEffect(()=>{
   setHidePassword(false)
-  let password_input_element = document.getElementById('user_password')
+  //let password_input_element = document.getElementById('user_password')
   
   let user =  Object.entries(userlist).find(([key,value]) => 
               (value.email === loginInput) 
@@ -207,8 +222,10 @@ useEffect(()=>{
     
     >
 
-<span>Click 'Login' Tab to Close</span>
+      <span>Click 'Login' Tab to Close</span>
+
       <form style={{
+
           display:'flex',
           flexDirection:'column',
           width:'200px',
@@ -217,14 +234,15 @@ useEffect(()=>{
           border:'1px dashed lightblue',
           borderRadius:'15px',
           background:'linear-gradient(0deg, rgba(195,129,34,0.6) 27%, rgba(89,81,55,0.6) 66%)',
-          boxShadow: '5px 10px rgb(89,81,55,0.3)'
+          boxShadow: '5px 10px rgb(89,81,55,0.3)',
+          
           }}> 
 
         <h3 style={{textAlign:'center'}}>User Login</h3>
 
         <label forhtml='user_login'>Name : </label>
 
-        <select  style={{width:'150px'}}
+        <select style={{width:'150px'}}
                 id='user_login'
                 type='text'
                 onChange={changeLoginHandler} 
@@ -237,11 +255,29 @@ useEffect(()=>{
                 )}              
         </select>
 
-        <label forhtml='user_password'>Password : <a
-        style={{cursor:'pointer'}}
-        onClick={passwordshowtoggle}
-          >{hidepassword?'show':'hide'}</a></label>
-        
+        <label  style={{marginTop:'20px'}} 
+                forhtml='user_password'
+                >Password : <a
+                            style={{cursor:'pointer'}}
+                            onClick={passwordshowtoggle}
+                            >{hidepassword?'show':'hide'}
+                            </a>
+        </label>
+
+        <label  forhtml='timer-miliseconds' 
+                style={{marginBottom:'-10px'}}
+                >Timer Hide Miliseconds</label>
+
+        <input  id='timer-miliseconds'  
+                style={{margin:'10px'}}
+                type='number'
+                defaultValue='1000'
+                step='100'
+                min='0'
+                max='2000'
+                onChange={(e)=>settimerMiliseconds(e.target.value)}
+        ></input>
+
         <input  id='user_password' 
                 type='text' 
                 
@@ -249,10 +285,9 @@ useEffect(()=>{
                 onKeyDown={deleteChar}
                 required
                 
-                value={changevaluepassword()}
+                value={changeTypePassword()}
                 style={{width:'150px'}}
                 
-
                 >
         </input>
 
@@ -263,8 +298,10 @@ useEffect(()=>{
                 
                
       </form>
+
       {submitted?<Back/>:null}
       {error?<Errormessage/>:null}
+
     </div>
 
   )

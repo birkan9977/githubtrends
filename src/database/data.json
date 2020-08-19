@@ -27,5 +27,19 @@
       "password": "47JKs90",
       "role": "guest",
       "email": "ptr@jcks.io"
+    },
+    "user_05": {
+      "firstname": "Natalie",
+      "lastname": "Portman",
+      "password": "94gtAwNtl",
+      "role": "admin",
+      "email": "ntly@prtmn.io"
+    },
+    "user_06": {
+      "firstname": "Brad",
+      "lastname": "Pitt",
+      "password": "brg56uYt",
+      "role": "guest",
+      "email": "brdpt@moviecelebs.io"
     }
   }
