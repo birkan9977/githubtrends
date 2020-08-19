@@ -111,34 +111,40 @@ const securepassword = (p) => {
     let len = p.length
     console.log(p,len)
     
-    for(let i=0; i<len; i++){
+    for(let i=1; i<=len; i++){
+      if(i===len){
+        hiddentext += p[len-1]
+      }else{
       hiddentext += '*'
       //console.log(hiddentext)
-      if(i===len-1){
-        hiddentext += p[len-1]
       }
     }
-    //console.log(hiddentext)
+    console.log(hiddentext)
     return(
       setHiddenPassword(hiddentext),
-      setTimeout(()=>completesecure(hiddentext),200)
+      setTimeout(()=>completesecure(hiddentext),100)
     
     )
 }
 
 const completesecure = (e) =>{
-  console.log(e)
+  console.log('complete',e,e.length)
+  let len = e.length
   let arr = [...e]
-  arr.splice(arr.length-1,1)
-  console.log(arr)
-  let str = arr.join('')
-  console.log(str,str.length)
-  setHiddenPassword(str)
 
+  if(len!==0){
+      arr.splice(arr.length-1,1,'*')
+      console.log(arr)
+      let str = arr.join('')
+      console.log(str,str.length)
+      setHiddenPassword(str)
+  }
+  
+  
 }
 const delayedsecure = () => {
   
-  return(setTimeout(()=>setHidePassword(true),2000)
+  return(setTimeout(()=>setHidePassword(true),1000)
   
   )
 }
