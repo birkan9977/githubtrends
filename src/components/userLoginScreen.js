@@ -26,10 +26,36 @@ const changeLoginHandler = (e) => {
 }
 
 const changePasswordHandler = (e) => {
-  setPasswordInput(e.target.value)
+  //setHidePassword(false)
+  let curval= passwordInput
+  console.log(e.which)
+  
+    curval+=String.fromCharCode(e.which)
+  
+    
+  
+  setPasswordInput(curval)
+  securepassword(curval)
+  //delayedsecure()
+
   setError(false)
 }
 
+const deleteChar = (e) => {
+  
+  if(e.which==8){
+    //setHidePassword(false)
+    let curval= passwordInput
+    curval = curval.substring(0, curval.length - 1);
+    setPasswordInput(curval)
+    securepassword(curval)
+    //delayedsecure()
+
+    setError(false)
+
+  }
+  
+}
 const resetSubmission = () => {
 setSubmitted(false)
 
@@ -202,11 +228,12 @@ useEffect(()=>{
         <input  id='user_password' 
                 type='text' 
                 
-                onChange={changePasswordHandler}
+                onKeyPress={changePasswordHandler}
+                onKeyDown={deleteChar}
                 required
                 value={hidepassword?hiddenPassword:passwordInput}
                 style={{width:'150px'}}
-                disabled
+                
 
                 >
         </input>
