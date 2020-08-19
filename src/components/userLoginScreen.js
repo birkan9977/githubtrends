@@ -198,13 +198,17 @@ useEffect(()=>{
         style={{cursor:'pointer'}}
         onClick={passwordToggle}
           >{hidepassword?'show':'hide'}</a></label>
-{console.log(hiddenPassword)}
+        
         <input  id='user_password' 
                 type='text' 
+                
                 onChange={changePasswordHandler}
                 required
                 value={hidepassword?hiddenPassword:passwordInput}
-                style={{width:'150px'}}>
+                style={{width:'150px'}}
+                disabled
+
+                >
         </input>
 
         <button onClick={onSubmitHandler}
