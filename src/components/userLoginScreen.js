@@ -8,7 +8,6 @@ import customData from '../database/data.json'
 const UserLoginScreen = (props) => {
 
 const userlist = customData
-//console.log(userlist)
 const { users } = useContext(userContext)
 
 const [loginInput,setloginInput]=useState('')
@@ -25,12 +24,14 @@ const changeLoginHandler = (e) => {
 
 const changePasswordHandler = (e) => {
   let curval= passwordInput
+
   console.log(e.which)
   let lastchar = String.fromCharCode(e.which)
       curval+=lastchar
-    
   setPasswordInput(curval)
+
   securepassword(curval)
+
   setError(false)
 }
 
@@ -91,9 +92,19 @@ const onSubmitHandler = (e) => {
     setSubmitted(true)
 }
 
-const passwordToggle = () => {
+const passwordshowtoggle = () => {
   setHidePassword(!hidepassword)
+  
 }
+
+
+const changevaluepassword = () => {
+  if(hidepassword){
+    return hiddenPassword
+  } else {
+    return passwordInput 
+
+}}
 
 const securepassword = (p) => {
   let hiddentext = ''
@@ -103,14 +114,33 @@ const securepassword = (p) => {
     for(let i=0; i<len; i++){
       hiddentext += '*'
       //console.log(hiddentext)
+      if(i===len-1){
+        hiddentext += p[len-1]
+      }
     }
     //console.log(hiddentext)
-    return setHiddenPassword(hiddentext)
+    return(
+      setHiddenPassword(hiddentext),
+      setTimeout(()=>completesecure(hiddentext),200)
+    
+    )
 }
 
+const completesecure = (e) =>{
+  console.log(e)
+  let arr = [...e]
+  arr.splice(arr.length-1,1)
+  console.log(arr)
+  let str = arr.join('')
+  console.log(str,str.length)
+  setHiddenPassword(str)
+
+}
 const delayedsecure = () => {
   
-  return(setTimeout(()=>setHidePassword(true),2000))
+  return(setTimeout(()=>setHidePassword(true),2000)
+  
+  )
 }
 
 useEffect(()=>{
@@ -203,7 +233,7 @@ useEffect(()=>{
 
         <label forhtml='user_password'>Password : <a
         style={{cursor:'pointer'}}
-        onClick={passwordToggle}
+        onClick={passwordshowtoggle}
           >{hidepassword?'show':'hide'}</a></label>
         
         <input  id='user_password' 
@@ -213,7 +243,7 @@ useEffect(()=>{
                 onKeyDown={deleteChar}
                 required
                 
-                value={hidepassword?hiddenPassword:passwordInput}
+                value={changevaluepassword()}
                 style={{width:'150px'}}
                 
 
