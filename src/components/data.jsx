@@ -58,14 +58,14 @@ export default function DataLoader (){
             
         }
 
-  getDataAsync(filters.url)
-  //getDataAsync('test')
+  //getDataAsync(filters.url)
+  getDataAsync('test')
           
           .then(data => {
             setData(data.items)
            
             //global
-           if(data)sendtoReducer ('count',data.items.length)
+           if(data.items)sendtoReducer ('count',data.items.length)
             sendtoReducer ('loading',false)
 
           })

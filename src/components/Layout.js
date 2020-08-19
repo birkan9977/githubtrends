@@ -76,7 +76,10 @@ export default function Layout() {
 
               <div id='data-section' style={{display:loginvisible?'none':'block'}}>
               
-              <h3>{loggedin?`${username}'s`:null} Top {filters.count>0?filters.count:'30'} Chart</h3>
+              <h3>{loggedin?`${username}'s`:null} Top {filters.count>0?filters.count:'30'} 
+              {` Chart for '${filters.language}'`}
+              
+              </h3>
               
               <DataLoader/>
 

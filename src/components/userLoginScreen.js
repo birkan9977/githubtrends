@@ -13,6 +13,8 @@ const { users } = useContext(userContext)
 
 const [loginInput,setloginInput]=useState('')
 const [passwordInput,setPasswordInput]=useState('')
+const [hiddenPassword,setHiddenPassword]=useState('')
+const [hidepassword,setHidePassword]=useState(false)
 const [submitted,setSubmitted]=useState(false)
 const [error,setError] = useState(false)
 
@@ -72,10 +74,30 @@ const onSubmitHandler = (e) => {
     setSubmitted(true)
 }
 
+const passwordToggle = () => {
+  setHidePassword(!hidepassword)
+}
 
+const securepassword = (p) => {
+  let hiddentext = ''
+    let len = p.length
+    console.log(p,len)
+    
+    for(let i=0; i<len; i++){
+      hiddentext += '*'
+      //console.log(hiddentext)
+    }
+    //console.log(hiddentext)
+    return setHiddenPassword(hiddentext)
+}
+
+const delayedsecure = () => {
+  
+  return(setTimeout(()=>setHidePassword(true),2000))
+}
 
 useEffect(()=>{
-
+  setHidePassword(false)
   let password_input_element = document.getElementById('user_password')
   
   let user =  Object.entries(userlist).find(([key,value]) => 
@@ -101,10 +123,21 @@ useEffect(()=>{
     console.log(second) //password
   
     //input password text field value assigned according to login info
-    password_input_element.value = second
+    //password_input_element.value = second
     
-    setPasswordInput(password_input_element.value)
+    setPasswordInput(second)
+    securepassword(second)
+    
 
+    
+    
+    
+    
+    //setTimeout(()=>securepassword(second),1)
+    //console.log(hiddentext)
+    //password_input_element.value = securepassword(second)
+    password_input_element.value = delayedsecure()
+    
   }
 
 },[loginInput])
@@ -115,6 +148,7 @@ useEffect(()=>{
   let loginvisibility = props.visible?'flex':'none'
   
   return(
+    
     <div style={{
                   display:`${loginvisibility}`, 
                   flexDirection:'column', 
@@ -160,13 +194,16 @@ useEffect(()=>{
                 )}              
         </select>
 
-        <label forhtml='user_password'>Password : </label>
-
+        <label forhtml='user_password'>Password : <a
+        style={{cursor:'pointer'}}
+        onClick={passwordToggle}
+          >{hidepassword?'show':'hide'}</a></label>
+{console.log(hiddenPassword)}
         <input  id='user_password' 
                 type='text' 
                 onChange={changePasswordHandler}
                 required
-                defaultValue=''
+                value={hidepassword?hiddenPassword:passwordInput}
                 style={{width:'150px'}}>
         </input>
 
