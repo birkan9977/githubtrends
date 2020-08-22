@@ -1,6 +1,17 @@
 import React, { useState} from 'react';
 import { round, random }  from 'mathjs'
 
+
+export const convertArrayToObject = (array, key, index) => {
+  const initialValue = {};
+  return array.reduce((obj, item) => {
+    return {
+      ...obj[index],
+      [item[key]]: item,
+    };
+  }, initialValue);
+};
+
 export function TextMinimize(props){
   const[readMore,setReadMore]=useState([]);
   props.setEmpty()

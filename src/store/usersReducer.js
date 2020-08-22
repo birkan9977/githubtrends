@@ -7,7 +7,7 @@ const  UserReducer = (state, action) => {
 
     case actions.changeUser:
       console.log('reducertest')
-     return ChangeUser(state, payload.newUser);
+     return ChangeUser(state, payload.newUser, action.userid);
     
     case actions.logoutUser:
      return LogoutUser();
@@ -23,12 +23,23 @@ export function LogoutUser(){
 }
 
 
-export function ChangeUser(prevstate, newUser) {
-  //console.log('state',state)
-  //console.log(newUser)
+export function ChangeUser(prevstate, newUser, userid) {
+    
+    console.log('previous state',prevstate)
+    console.log('newuser',newUser)
+
   let newState = prevstate
-  newState.user.userid=newUser[0]
-  newState.user.info = {...newUser[1]}
+
+  newState.user.userid = userid
+
+  //this works too!
+  //newState.user.info = {...newUser[user_id]}
+      
+  newState.user.info = newUser[userid]
+
+  //previous array version
+  //newState.user.info = {...newUser[1]}
+  
   newState.user.loggedin=true
   console.log('newstate',newState)
   
