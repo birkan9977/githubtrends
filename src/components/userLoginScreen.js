@@ -1,23 +1,20 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Backend from './backend'
-import userContext from '../app/usercontext'
 import customData from '../database/data.json'
-
 
 
 const UserLoginScreen = (props) => {
 
 const userlist = customData
-const { users } = useContext(userContext)
 
 const [loginInput,setloginInput]=useState('')
 const [passwordInput,setPasswordInput]=useState('')
 const [hiddenPassword,setHiddenPassword]=useState('')
-const [hidepassword,setHidePassword]=useState(false)
+const [hidePassword,setHidePassword]=useState(false)
 const [submitted,setSubmitted]=useState(false)
 const [error,setError] = useState(false)
 const [timerid,setTimerid]=useState(0)
-const [timerMiliseconds,settimerMiliseconds]=useState(1000)
+const [timerMiliseconds,setTimerMiliseconds]=useState(1000)
 
 
 
@@ -27,26 +24,26 @@ const changeLoginHandler = (e) => {
 }
 
 const changePasswordHandler = (e) => {
-//using keyPress instead of onChange
+//using keyPress instead of onChange to hide password with delay
   switch (e.which){ 
 
   case 13:
-
+    //return carriage
     //console.log(e.which)
     break
 
   default:
 
-    let curval= passwordInput
+    let currentValue= passwordInput
 
-    console.log(e.which)
+    //console.log(e.which)
 
     let lastchar = String.fromCharCode(e.which)
-      curval+=lastchar
+      currentValue+=lastchar
         
-        setPasswordInput(curval)
+        setPasswordInput(currentValue)
 
-        securepassword(curval)
+        securepassword(currentValue)
 
         setError(false)
   
@@ -55,13 +52,13 @@ const changePasswordHandler = (e) => {
 
 
 const deleteChar = (e) => {
-  
+  //backspace delete ascii '8'
   if(e.which==8){
-    let curval= passwordInput
-        curval = curval.substring(0, curval.length - 1);
+    let currentValue= passwordInput
+        currentValue = currentValue.substring(0, currentValue.length - 1);
     
-        setPasswordInput(curval)
-        securepassword(curval)
+        setPasswordInput(currentValue)
+        securepassword(currentValue)
         setError(false)
 
   }
@@ -74,7 +71,7 @@ const resetSubmission = () => {
 }
 
 const handleError = (e) => {
-      console.log('error',e)
+     
       setError(e)
 }
 
@@ -83,7 +80,7 @@ const Errormessage = () => {
 let message=''
 
     if(error){
-      console.log('error')
+      
       message = 'Wrong password or login'
       
     }
@@ -110,22 +107,20 @@ const onSubmitHandler = (e) => {
 
       e.preventDefault()
 
-      console.log(loginInput,passwordInput)
-
       setSubmitted(true)
 
 }
 
 const passwordshowtoggle = () => {
 
-      setHidePassword(!hidepassword)
+      setHidePassword(!hidePassword)
   
 }
 
 
 const changeTypePassword = () => {
   
-      if(hidepassword){
+      if(hidePassword){
         return hiddenPassword
       } else {
         return passwordInput 
@@ -134,43 +129,40 @@ const changeTypePassword = () => {
 }
 
 
-const securepassword = (p) => {
-  let hiddentext = ''
-    let len = p.length
-    console.log(p,len)
+const securepassword = (password) => {
+  let hiddenText = ''
+    let len = password.length
+    //console.log(password,len)
     
     for(let i=1; i<=len; i++){
       if(i===len){
-        hiddentext += p[len-1]
+        hiddenText += password[len-1]
       }else{
-      hiddentext += '*'
-      //console.log(hiddentext)
+      hiddenText += '*'
       }
     }
-    console.log(hiddentext)
-    setHiddenPassword(hiddentext)
+
+    setHiddenPassword(hiddenText)
     clearTimeout(timerid)
-    setTimerid(setTimeout(()=>completesecure(hiddentext),timerMiliseconds))
+    setTimerid(setTimeout(()=>completeSecure(hiddenText),timerMiliseconds))
     
 }
 
-const completesecure = (e) =>{
-  console.log('complete',e,e.length)
-  let len = e.length
-  let arr = [...e]
+const completeSecure = (password) =>{
+  //replace password with '*'
+  let len = password.length
+  let passwordDestructured = [...password]
 
   if(len!==0){
-      arr.splice(arr.length-1,1,'*')
-      console.log(arr)
-      let str = arr.join('')
-      console.log(str,str.length)
-      setHiddenPassword(str)
+      passwordDestructured.splice(passwordDestructured.length-1,1,'*')
+      let newHiddenString = passwordDestructured.join('')
+      setHiddenPassword(newHiddenString)
   }
   
   
 }
 const delayedsecure = () => {
-  
+  //works only after useEffect to hide whole password
   return(setTimeout(()=>setHidePassword(true),timerMiliseconds)
   
   )
@@ -178,7 +170,6 @@ const delayedsecure = () => {
 
 useEffect(()=>{
   setHidePassword(false)
-  //let password_input_element = document.getElementById('user_password')
   
   let user =  userlist.find(user => 
               (user.email === loginInput) 
@@ -186,7 +177,6 @@ useEffect(()=>{
 
   if(user){
 
-    console.log(user)
 
     // example of object destructuring
     let userinfo = {
@@ -198,10 +188,7 @@ useEffect(()=>{
     
     let { userid: [first, { second }] } = userinfo;
 
-    console.log(first) //userid
-  
-    console.log(second) //password
-  
+    
     //input password text field value assigned according to login info
     //password_input_element.value = { second }
     
@@ -272,7 +259,7 @@ useEffect(()=>{
                 >Password : <a
                             style={{cursor:'pointer'}}
                             onClick={passwordshowtoggle}
-                            >{hidepassword?'show':'hide'}
+                            >{hidePassword?'show':'hide'}
                             </a>
         </label>
 
@@ -287,7 +274,7 @@ useEffect(()=>{
                 step='100'
                 min='0'
                 max='2000'
-                onChange={(e)=>settimerMiliseconds(e.target.value)}
+                onChange={(e)=>setTimerMiliseconds(e.target.value)}
         ></input>
 
         <input  id='user_password' 
