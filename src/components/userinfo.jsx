@@ -5,23 +5,21 @@ const UserInfo = () => {
   
   const { users } = useContext(userContext)
 
-  const loggedin = users.user.loggedin
+  const isLoggedin = users.user.loggedin
 
+  const firstname = isLoggedin?users.user.info.firstname:null
+  const lastname = isLoggedin?users.user.info.lastname:null
+  const email = isLoggedin?users.user.info.email:null
 
 return(
-  
-<UserConsumer>
-        {value => 
-        
         <>
 
-            <h2>{loggedin?value.users.user.info.firstname:null}</h2>
-            <h3>{loggedin?value.users.user.info.lastname:null}</h3>
-            <h3>{loggedin?value.users.user.info.email:null}</h3>
+            <h2>{firstname}</h2>
+            <h3>{lastname}</h3>
+            <h3>{email}</h3>
 
         </>
-        }
-</UserConsumer>
+       
 )
 }
 

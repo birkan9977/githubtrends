@@ -18,7 +18,18 @@ export default function Layout() {
 
   const [loginvisible,setLoginVisible]=useState(true)
 
-  const onClickLoginShowToggle = () => {
+  const TopChart = () => { 
+
+    return(
+            <div> {loggedin?`${username}'s `:null} 
+                  Top {filters.count>0?filters.count:'30'} 
+                  {` Chart for '${filters.language}'`}
+            </div>
+    )
+  }
+
+
+  const handleLoginToggle = () => {
         
         setLoginVisible(!loginvisible)
 }
@@ -26,6 +37,7 @@ export default function Layout() {
     return (
       
         <main id='main'>
+
             <header id='header'>
               <div className='page-title'>
               <h1>GitHub Trending Repositories</h1>
@@ -33,7 +45,7 @@ export default function Layout() {
 
               <div className='user-info'>
               
-              <UserInfo/>
+                <UserInfo/>
               
               </div>
               
@@ -48,7 +60,7 @@ export default function Layout() {
                 <a href='#ref'><li>References</li></a>
                 <a  
                     href='#'
-                    onClick={onClickLoginShowToggle}
+                    onClick={handleLoginToggle}
 
                 >   <li>Login</li></a>
               </ul>
@@ -61,7 +73,7 @@ export default function Layout() {
               <nav id='left-nav-bar'>  
               <h3>Search:</h3>
 
-              <FilterQuery/>
+                <FilterQuery/>
               
               </nav>
 
@@ -70,18 +82,17 @@ export default function Layout() {
               <div id='login' style={{display:'flex',justifyContent:'center'}}>
               
                 <UserLoginScreen  visible={loginvisible}
-                                  toggle= {onClickLoginShowToggle}/>
+                                  toggle= {handleLoginToggle}/>
 
               </div>
 
               <div id='data-section' style={{display:loginvisible?'none':'block'}}>
               
-              <h3>{loggedin?`${username}'s`:null} Top {filters.count>0?filters.count:'30'} 
-              {` Chart for '${filters.language}'`}
+                <h3>
+                  <TopChart/>
+                </h3>
               
-              </h3>
-              
-              <DataLoader/>
+                  <DataLoader/>
 
               </div>
               </section>
@@ -111,8 +122,8 @@ export default function Layout() {
             
 
             <footer className='box' id='footer'>
-            <h4>mailbirkan@gmail.com  - Created by GitHub ID: Birkan9977</h4>
-            <p></p>
+              <h4>mailbirkan@gmail.com  - Created by GitHub ID: Birkan9977</h4>
+              
             </footer>
 
 

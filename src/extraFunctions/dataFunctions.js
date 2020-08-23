@@ -2,11 +2,11 @@ import React, { useState} from 'react';
 import { round, random }  from 'mathjs'
 
 
-export const convertArrayToObject = (array, key, index) => {
+export const convertArrayToObject = (array, key) => {
   const initialValue = {};
   return array.reduce((obj, item) => {
     return {
-      ...obj[index],
+      ...obj,
       [item[key]]: item,
     };
   }, initialValue);

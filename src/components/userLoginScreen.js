@@ -27,11 +27,21 @@ const changeLoginHandler = (e) => {
 }
 
 const changePasswordHandler = (e) => {
-  let curval= passwordInput
+//using keyPress instead of onChange
+  switch (e.which){ 
 
-  console.log(e.which)
+  case 13:
 
-  let lastchar = String.fromCharCode(e.which)
+    //console.log(e.which)
+    break
+
+  default:
+
+    let curval= passwordInput
+
+    console.log(e.which)
+
+    let lastchar = String.fromCharCode(e.which)
       curval+=lastchar
         
         setPasswordInput(curval)
@@ -39,6 +49,8 @@ const changePasswordHandler = (e) => {
         securepassword(curval)
 
         setError(false)
+  
+  }
 }
 
 
@@ -168,19 +180,19 @@ useEffect(()=>{
   setHidePassword(false)
   //let password_input_element = document.getElementById('user_password')
   
-  let user =  Object.entries(userlist).find(([key,value]) => 
-              (value.email === loginInput) 
+  let user =  userlist.find(user => 
+              (user.email === loginInput) 
   )
 
-  if(user!==undefined){
+  if(user){
 
     console.log(user)
 
     // example of object destructuring
     let userinfo = {
       userid: [
-        user[0],
-        { second: user[1].password }
+        user,
+        { second: user.password }
       ]
     };
     
@@ -191,7 +203,7 @@ useEffect(()=>{
     console.log(second) //password
   
     //input password text field value assigned according to login info
-    //password_input_element.value = second
+    //password_input_element.value = { second }
     
     setPasswordInput(second)
     securepassword(second)
