@@ -43,7 +43,7 @@ const changePasswordHandler = (e) => {
         
         setPasswordInput(currentValue)
 
-        securepassword(currentValue)
+        securePassword(currentValue)
 
         setError(false)
   
@@ -58,7 +58,7 @@ const deleteChar = (e) => {
         currentValue = currentValue.substring(0, currentValue.length - 1);
     
         setPasswordInput(currentValue)
-        securepassword(currentValue)
+        securePassword(currentValue)
         setError(false)
 
   }
@@ -129,17 +129,19 @@ const changeTypePassword = () => {
 }
 
 
-const securepassword = (password) => {
+const securePassword = (password) => {
   let hiddenText = ''
     let len = password.length
     //console.log(password,len)
     
     for(let i=1; i<=len; i++){
+      //view last character not hidden!
       if(i===len){
         hiddenText += password[len-1]
       }else{
       hiddenText += '*'
       }
+      
     }
 
     setHiddenPassword(hiddenText)
@@ -162,7 +164,7 @@ const completeSecure = (password) =>{
   
 }
 const delayedsecure = () => {
-  //works only after useEffect to hide whole password
+  //works after 'useEffect' to hide password in whole
   return(setTimeout(()=>setHidePassword(true),timerMiliseconds)
   
   )
@@ -179,22 +181,24 @@ useEffect(()=>{
 
 
     // example of object destructuring
-    let userinfo = {
+    let userInfo = {
       userid: [
         user,
-        { second: user.password }
+        { userPassword: user.password }
       ]
     };
     
-    let { userid: [first, { second }] } = userinfo;
+    let { userid: [userDetails, { userPassword }] } = userInfo;
 
     
     //input password text field value assigned according to login info
     //password_input_element.value = { second }
-    
-    setPasswordInput(second)
-    securepassword(second)
+    //console.log('userDetails',userDetails)
+
+    setPasswordInput(userPassword)
+    securePassword(userPassword)
     delayedsecure()
+    
   }
 
 },[loginInput])
