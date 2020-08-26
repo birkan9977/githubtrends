@@ -58,8 +58,8 @@ export default function DataLoader (){
             
         }
 
-  getDataAsync(filters.url)
-  //getDataAsync('test')
+  //getDataAsync(filters.url)
+  getDataAsync('test')
           
           .then(data => {
             setData(data.items)

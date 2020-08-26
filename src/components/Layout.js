@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import FilterQuery from './filter'
 import AppContext from '../app/context'
 import '../styles/mainOutput.css'
@@ -6,6 +6,7 @@ import DataLoader from './data'
 import UserLoginScreen from './userLoginScreen'
 import UserInfo from './userinfo'
 import userContext from '../app/usercontext'
+
 
 export default function Layout() {
 
@@ -17,6 +18,10 @@ export default function Layout() {
   const username = users.user.info.firstname
 
   const [loginvisible,setLoginVisible]=useState(true)
+  const [pageIndex, setPageIndex]=useState(0)
+
+  const [HOME,HOT_REPOS,CONTACTS,REFERENCES] = [1,2,4,8]
+  
 
   const TopChart = () => { 
 
@@ -33,6 +38,17 @@ export default function Layout() {
         
         setLoginVisible(!loginvisible)
 }
+  const handlePageChange = (pageindex) => {
+        
+    setPageIndex(pageindex)
+    console.log(pageindex)
+
+
+}
+
+const bitwise = HOME & HOT_REPOS & CONTACTS & REFERENCES
+console.log(bitwise)
+//00001111
 
     return (
       
@@ -54,10 +70,10 @@ export default function Layout() {
 
             <nav id='topics-nav-bar'> 
               <ul>
-                <a href='#home'><li>Home</li></a>
-                <a href='#hot'><li>Hot Topics</li></a>
-                <a href='#contact'><li>Contact</li></a>
-                <a href='#ref'><li>References</li></a>
+                <a href='#home' onClick={()=>handlePageChange(1)}><li>Home</li></a>
+                <a href='#hot' onClick={()=>handlePageChange(2)}><li>Hot Repos</li></a>
+                <a href='#contact' onClick={()=>handlePageChange(4)}><li>Contact</li></a>
+                <a href='#ref' onClick={()=>handlePageChange(8)}><li>References</li></a>
                 <a  
                     href='#'
                     onClick={handleLoginToggle}
@@ -86,6 +102,7 @@ export default function Layout() {
 
               </div>
 
+              {HOT_REPOS & pageIndex?
               <div id='data-section' style={{display:loginvisible?'none':'block'}}>
               
                 <h3>
@@ -95,6 +112,7 @@ export default function Layout() {
                   <DataLoader/>
 
               </div>
+              :null}
               </section>
 
               
