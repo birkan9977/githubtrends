@@ -11,8 +11,8 @@ import {
   Switch,
   Route,
   Link,
-  useLocation,
-  useHistory
+  useHistory,
+  Redirect
 } from "react-router-dom";
 
 
@@ -25,14 +25,18 @@ export default function Layout() {
   const loggedin = users.user.loggedin
   const username = users.user.info.firstname
 
-  const [loginvisible,setLoginVisible]=useState(false)
+  const [login,setLogin]=useState(false)
   const [pageIndex, setPageIndex]=useState(0)
   const [HOME,HOT_REPOS,CONTACTS,REFERENCES] = [1,2,4,8]
   const [currentLocation, setCurrentLocation] = useState('')
 
-  
+  useEffect(()=>{
+    setLogin(false) 
+
+  },[login])
+
   function handleCurrentLocation(e){
-    console.log('loc',e)
+    console.log('current path',e)
     
     setCurrentLocation(e)
   }
@@ -48,10 +52,11 @@ export default function Layout() {
   }
 
 
-  const handleLoginToggle = () => {
+  const handleLoginChange = () => {
         
-        setLoginVisible(!loginvisible)
-}
+        setLogin(true)      
+  }
+
   const handlePageChange = (pageindex) => {
         
     setPageIndex(pageindex)
@@ -63,7 +68,7 @@ export default function Layout() {
 const bitwise = HOME & HOT_REPOS & CONTACTS & REFERENCES
 //console.log(bitwise)
 //00001111
-const curLoc = currentLocation
+
     return (
       
         <main id='main'>
@@ -82,24 +87,25 @@ const curLoc = currentLocation
 
             </header>
             
-            <nav id='topics-nav-bar'> 
+            <nav id='topics-nav-bar' > 
             
-              <ul>
-              <Router>
-                <Link to="/"><a href='#home'><li>Home</li></a></Link>
-                <Link to="/hot_repos"><a href='#hot'><li>Hot Repos</li></a></Link>
-                <Link to="/contact"><a href='#contact'><li>Contact</li></a></Link>
-                <Link to="/references"><a href='#ref'><li>References</li></a></Link>
-                
-                {/*Login opens at every page*/}
-                <a onClick={handleLoginToggle}><li>Login</li></a>
+              <ul >
+              <Router >
+                <Link to="/"><a><li>Home</li></a></Link>
+                <Link to="/hot_repos"><a><li>Hot Repos</li></a></Link>
+                <Link to="/contact"><a><li>Contact</li></a></Link>
+                <Link to="/references"><a><li>References</li></a></Link>
+                <Link to="/login"><a><li>Login</li></a></Link>
 
                 <Switch>
                   <Route exact path="/"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
                   <Route path="/hot_repos"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
                   <Route path="/contact"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
                   <Route path="/references"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
+                  <Route path="/login"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
                 </Switch> 
+
+                {login?<Redirect to="/"/>:null}
               </Router>
               
               </ul>
@@ -114,17 +120,18 @@ const curLoc = currentLocation
               
               </nav>
 
-              <section id='center-section'>{curLoc}
+              <section id='center-section'>{currentLocation}
 
+              {currentLocation==='/login'?
               <div id='login' style={{display:'flex',justifyContent:'center'}}>
-              
-                <UserLoginScreen  visible={loginvisible}
-                                  toggle= {handleLoginToggle}/>
-
+               
+                <UserLoginScreen  loginChange = {handleLoginChange}/>
+                
               </div>
+              :null}
 
-              {HOT_REPOS & pageIndex?
-              <div id='data-section' style={{display:loginvisible?'none':'block'}}>
+              {currentLocation==='/hot_repos'?
+              <div id='data-section' style={{display:'block'}}>
               
                 <h3>
                   <TopChart/>
@@ -179,8 +186,7 @@ const curLoc = currentLocation
 
 function GetLocation(props){
   let history = useHistory()
-  let currentPath = ''
-  currentPath = history?history.location.pathname.toString():'nopath'
+  let currentPath = history?history.location.pathname:null
       
       //console.log(currentPath, typeof currentPath)
       useEffect(()=>{
@@ -195,44 +201,3 @@ function GetLocation(props){
       //return currentPath
 
 }
-/*
-function GetLocation(props) {
-  
-  let currentPath = FindLocation()
-  console.log(currentPath)
-
-  useEffect(()=>{
-    props.currentPath(currentPath)
-
-  },[props])
-
-  return (
-    <>
-    </>
-  )
-}
-
-function HotRepos() {
-  
-  let currentPath = FindLocation()
-  console.log(currentPath)
-
-  return currentPath
-}
-
-function Contact() {
-
-  let currentPath = FindLocation()
-  console.log(currentPath)
-
-  return currentPath
-}
-
-function References() {
-
-  let currentPath = FindLocation()
-  console.log(currentPath)
-
-  return currentPath
-}
-*/

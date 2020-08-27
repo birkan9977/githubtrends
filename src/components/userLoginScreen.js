@@ -96,7 +96,7 @@ const Back = () =>{
               reset={resetSubmission}
               submitted={submitted}
               error={(e)=>handleError(e)}
-              toggle={props.toggle}
+              loginChange={props.loginChange}
               
               />
 
@@ -206,12 +206,11 @@ useEffect(()=>{
 
 
 
-  let loginvisibility = props.visible?'flex':'none'
   
   return(
     
     <div style={{
-                  display:`${loginvisibility}`, 
+                  display:'flex', 
                   flexDirection:'column', 
                   width:'300px',
                   lineHeight:'2',
@@ -225,7 +224,7 @@ useEffect(()=>{
     
     >
 
-      <span>Click 'Login' Tab to Close</span>
+      
 
       <form style={{
 

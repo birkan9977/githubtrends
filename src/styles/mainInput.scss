@@ -14,6 +14,7 @@
           justify-content: flex-end;
           padding-right: 2rem;
           margin: 0;
+          
 }
 
 @mixin horizontal-list {
@@ -23,6 +24,7 @@
     margin: 0;
     height: 2rem;
     padding: 0.5rem 1rem 0.1rem 1rem;
+    
     
   }
 }
@@ -61,8 +63,11 @@
 
   nav{ 
 
-        ul{@include horizontal-list;}
-  
+        ul{
+          @include horizontal-list;
+          
+        }
+        
         a {         
           color:base.$primary-color;
           text-decoration: none;
@@ -74,6 +79,8 @@
           text-decoration: none;
           cursor:pointer;
         }
+
+        
     }
 
     //layout.js

@@ -44,7 +44,7 @@ import { convertArrayToObject } from '../extraFunctions/dataFunctions'
 
           sendtoUsersReducer(foundItem)
 
-          props.toggle()
+          props.loginChange()
       }
 
           props.error(!loginSuccessful)
