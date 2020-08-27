@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import FilterQuery from './filter'
 import AppContext from '../app/context'
 import '../styles/mainOutput.css'
@@ -6,6 +6,14 @@ import DataLoader from './data'
 import UserLoginScreen from './userLoginScreen'
 import UserInfo from './userinfo'
 import userContext from '../app/usercontext'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useLocation,
+  useHistory
+} from "react-router-dom";
 
 
 export default function Layout() {
@@ -17,11 +25,17 @@ export default function Layout() {
   const loggedin = users.user.loggedin
   const username = users.user.info.firstname
 
-  const [loginvisible,setLoginVisible]=useState(true)
+  const [loginvisible,setLoginVisible]=useState(false)
   const [pageIndex, setPageIndex]=useState(0)
-
   const [HOME,HOT_REPOS,CONTACTS,REFERENCES] = [1,2,4,8]
+  const [currentLocation, setCurrentLocation] = useState('')
+
   
+  function handleCurrentLocation(e){
+    console.log('loc',e)
+    
+    setCurrentLocation(e)
+  }
 
   const TopChart = () => { 
 
@@ -47,13 +61,13 @@ export default function Layout() {
 }
 
 const bitwise = HOME & HOT_REPOS & CONTACTS & REFERENCES
-console.log(bitwise)
+//console.log(bitwise)
 //00001111
-
+const curLoc = currentLocation
     return (
       
         <main id='main'>
-
+          
             <header id='header'>
               <div className='page-title'>
               <h1>GitHub Trending Repositories</h1>
@@ -67,23 +81,30 @@ console.log(bitwise)
               
 
             </header>
-
+            
             <nav id='topics-nav-bar'> 
+            
               <ul>
-                <a href='#home' onClick={()=>handlePageChange(1)}><li>Home</li></a>
-                <a href='#hot' onClick={()=>handlePageChange(2)}><li>Hot Repos</li></a>
-                <a href='#contact' onClick={()=>handlePageChange(4)}><li>Contact</li></a>
-                <a href='#ref' onClick={()=>handlePageChange(8)}><li>References</li></a>
-                <a  
-                    href='#'
-                    onClick={handleLoginToggle}
+              <Router>
+                <Link to="/"><a href='#home'><li>Home</li></a></Link>
+                <Link to="/hot_repos"><a href='#hot'><li>Hot Repos</li></a></Link>
+                <Link to="/contact"><a href='#contact'><li>Contact</li></a></Link>
+                <Link to="/references"><a href='#ref'><li>References</li></a></Link>
+                
+                {/*Login opens at every page*/}
+                <a onClick={handleLoginToggle}><li>Login</li></a>
 
-                >   <li>Login</li></a>
+                <Switch>
+                  <Route exact path="/"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
+                  <Route path="/hot_repos"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
+                  <Route path="/contact"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
+                  <Route path="/references"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
+                </Switch> 
+              </Router>
+              
               </ul>
             </nav>
-
-            
-            
+           
             <section id='middle-section'>
             
               <nav id='left-nav-bar'>  
@@ -93,7 +114,7 @@ console.log(bitwise)
               
               </nav>
 
-              <section id='center-section'>
+              <section id='center-section'>{curLoc}
 
               <div id='login' style={{display:'flex',justifyContent:'center'}}>
               
@@ -143,8 +164,8 @@ console.log(bitwise)
               <h4>mailbirkan@gmail.com  - Created by GitHub ID: Birkan9977</h4>
               
             </footer>
-
-
+            
+          
         </main>
         
 
@@ -154,3 +175,64 @@ console.log(bitwise)
 
 
 }
+
+
+function GetLocation(props){
+  let history = useHistory()
+  let currentPath = ''
+  currentPath = history?history.location.pathname.toString():'nopath'
+      
+      //console.log(currentPath, typeof currentPath)
+      useEffect(()=>{
+        props.currentPath(currentPath)
+    
+      },[props])
+    
+      return (
+        <>
+        </>
+      )
+      //return currentPath
+
+}
+/*
+function GetLocation(props) {
+  
+  let currentPath = FindLocation()
+  console.log(currentPath)
+
+  useEffect(()=>{
+    props.currentPath(currentPath)
+
+  },[props])
+
+  return (
+    <>
+    </>
+  )
+}
+
+function HotRepos() {
+  
+  let currentPath = FindLocation()
+  console.log(currentPath)
+
+  return currentPath
+}
+
+function Contact() {
+
+  let currentPath = FindLocation()
+  console.log(currentPath)
+
+  return currentPath
+}
+
+function References() {
+
+  let currentPath = FindLocation()
+  console.log(currentPath)
+
+  return currentPath
+}
+*/

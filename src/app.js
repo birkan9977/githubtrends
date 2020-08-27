@@ -1,8 +1,6 @@
-import React, {useContext,useState} from 'react';
-import Layout from './components/Layout'
+import React from 'react';
 import Store from './store/store'
-import userContext from './app/usercontext'
-
+import Layout from './components/Layout'
 
 const App = () => {
 
@@ -19,5 +17,8 @@ const App = () => {
       
   );
 }
+
+
+
 
 export default App

@@ -81,6 +81,7 @@ body {
   background: rgba(112, 87, 87, 0.5);
   color: #dbd8d8;
   text-decoration: none;
+  cursor: pointer;
 }
 #main #middle-section {
   background: radial-gradient(circle at 20% 0, rgba(143, 107, 107, 0.5), rgba(77, 37, 37, 0.5) 70.71%), radial-gradient(circle at 6.7% 75%, rgba(219, 213, 193, 0.5), rgba(191, 191, 223, 0.5) 70.71%), radial-gradient(circle at 93.3% 75%, rgba(182, 180, 202, 0.5), rgba(247, 242, 242, 0.5) 10.71%) rgba(233, 233, 206, 0.5);
