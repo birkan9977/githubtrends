@@ -3,7 +3,7 @@ import { TextMinimize, keyIndex } from '../extraFunctions/dataFunctions';
 
 import AppContext from '../app/context';
 import { changeFilter } from '../store/reducerActions';
-import { idMaker } from '../extraFunctions/dataFunctions';
+//import { idMaker } from '../extraFunctions/dataFunctions';
 
 export default function DataLoader() {
   const [data, setData] = useState([]);
@@ -109,7 +109,7 @@ export default function DataLoader() {
     };
   })(); //closure with self invoked function:)
 
-  const genid = idMaker();
+  //const genid = idMaker();
 
   return (
     <div>
@@ -124,7 +124,7 @@ export default function DataLoader() {
                   <div id="repo-list-items">
                     <div id="order-number">{ItemIncrement()}</div>
 
-                    {console.log(genid.next().value)}
+                    {/*console.log(genid.next().value)*/}
 
                     <li
                       id="repo-list-items-name"
