@@ -128,21 +128,21 @@ export default function DataLoader() {
 
                     <li
                       id="repo-list-items-name"
-                      key={genid.next().value + 'id' + item.id}
+                      key={`repo-list-items-name-${index}`}
                     >
                       {item.name}
                     </li>
 
                     <li
                       id="repo-list-items-description"
-                      key={genid.next().value + 'des' + item.id}
+                      key={`repo-list-items-description-${index}`}
                     >
                       {textMin(item.description, index + 1)}
                     </li>
 
                     <li
                       id="repo-list-items-url"
-                      key={genid.next().value + 'url' + item.id}
+                      key={`repo-list-items-url-${index}`}
                     >
                       <a href={item.html_url} target="_blank" rel="noopener">
                         GitHub Link
@@ -151,7 +151,7 @@ export default function DataLoader() {
 
                     <li
                       id="repo-list-items-stars"
-                      key={genid.next().value + 'star' + item.id}
+                      key={`repo-list-items-stars-${index}`}
                     >
                       {item.stargazers_count} Stars
                     </li>
@@ -161,7 +161,7 @@ export default function DataLoader() {
                     <div id="repo-list-items-img">
                       <li
                         id="repo-list-items-img-list"
-                        key={genid.next().value + 'lan' + item.id}
+                        key={`repo-list-items-img-list-${index}`}
                       >
                         {item.language ? item.language : null}
                       </li>
