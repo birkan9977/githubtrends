@@ -108,7 +108,7 @@ const bitwise = HOME & HOT_REPOS & CONTACTS & REFERENCES
                   <Route path="/login"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
                 </Switch> 
 
-                {login?<Redirect to="/"/>:null}
+                {login?<Redirect to="/hot_repos"/>:null}
               </Router>
               
               </ul>
@@ -139,8 +139,9 @@ const bitwise = HOME & HOT_REPOS & CONTACTS & REFERENCES
                 <h3>
                   <TopChart/>
                 </h3>
-              
+                  
                   <DataLoader/>
+                  
 
               </div>
               :null}

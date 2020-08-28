@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   TextMinimize,
   keyIndex,
@@ -40,8 +40,12 @@ export default function DataLoader (){
     }
   }
 
+  
+  const ref = useRef()
 
   useEffect(() => {
+
+    ref.current = data
 
     setReadMoreEmpty()
     
@@ -56,7 +60,7 @@ export default function DataLoader (){
          
           .then(data => {
             setData(data.items)
-           
+            
             //global
            if(data.items) sendtoReducer('count',data.items.length)
             sendtoReducer ('loading',false)
@@ -77,7 +81,7 @@ export default function DataLoader (){
     }
     
     setSessionStorage()
-
+    
             //clean up after unmount
             return ()=>{
               
@@ -121,17 +125,19 @@ export default function DataLoader (){
 
   const genid = idMaker()
   
-
+  
+    
   return (
+    
       
       <div>
          
-        <p>{!error?displayresults():null}</p>
-        <p>{error?`Error: ${error}`:null}</p>
+        <p></p>
+        <p>{error?`Error: ${error}`:displayresults()}</p>
 
           <ul>
-            
-            {data?data.map((item,index) =>
+
+            {data && (ref.current!==data)?data.map((item,index) =>
             <>
             <div id='repo-items'>
               <div id='repo-list-items'>
@@ -141,7 +147,7 @@ export default function DataLoader (){
 
                 </div>
 
-                {/*console.log(genid.next().value)*/}
+                {console.log(genid.next().value)}
 
                 <li id='repo-list-items-name' 
                 key = {genid.next().value+'id' + item.id}>{item.name}</li>
