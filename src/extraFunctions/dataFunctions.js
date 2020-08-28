@@ -12,6 +12,12 @@ export const convertArrayToObject = (array, key) => {
   }, initialValue);
 };
 
+export function* idMaker() {
+  var index = 0;
+  while (true)
+    yield index++;
+}
+
 export function TextMinimize(props){
   const[readMore,setReadMore]=useState([]);
   props.setEmpty()

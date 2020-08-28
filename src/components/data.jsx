@@ -6,6 +6,7 @@ import {
 
 import AppContext from '../app/context';
 import { changeFilter } from '../store/reducerActions'
+import { idMaker } from '../extraFunctions/dataFunctions'
 
 
 export default function DataLoader (){
@@ -39,39 +40,32 @@ export default function DataLoader (){
     }
   }
 
+
   useEffect(() => {
 
     setReadMoreEmpty()
-
+    
     setError(null)
 
     sendtoReducer ('loading',true)
 
-  async function getDataAsync(url)
-
-        {
-          let response = await fetch(url, headers)
-
-          let data = await response.json()
-
-          return data
-            
-        }
-
-  //getDataAsync(filters.url)
-  getDataAsync('test')
+    fetch(filters.url, headers)
           
+          .then(response => response.json())
+          
+         
           .then(data => {
             setData(data.items)
            
             //global
-           if(data.items)sendtoReducer ('count',data.items.length)
+           if(data.items) sendtoReducer('count',data.items.length)
             sendtoReducer ('loading',false)
 
           })
           .catch((err) => {
             setError(err);
             console.log('error',err)
+            sendtoReducer ('loading',false)
           })
 
     //set to session storage at every mutation
@@ -102,8 +96,10 @@ export default function DataLoader (){
       if(filters.loading){
         displaytext = 'Loading Data Please Wait...'
       }else{
-        if(filters.count>0){
+        if(filters.count>1){
           displaytext =  `Displaying ${filters.count} results.`
+        } else if((filters.count===1)){
+          displaytext =  `Displaying ${filters.count} result.`
         } else {
           displaytext = 'Search Filters returned no results. Try changing search filters.'
         }
@@ -123,13 +119,14 @@ export default function DataLoader (){
     return function () {counter += 1; return counter}
   })();//closure with self invoked function:)
 
-
+  const genid = idMaker()
+  
 
   return (
-    
+      
       <div>
-        
-        <p>{displayresults()}</p>
+         
+        <p>{!error?displayresults():null}</p>
         <p>{error?`Error: ${error}`:null}</p>
 
           <ul>
@@ -139,29 +136,32 @@ export default function DataLoader (){
             <div id='repo-items'>
               <div id='repo-list-items'>
                 <div id='order-number'>
+
                 {ItemIncrement()}
+
                 </div>
-                {/*console.log(keyIndex())*/}
+
+                {/*console.log(genid.next().value)*/}
+
                 <li id='repo-list-items-name' 
-                key = {keyIndex()+'id'+item.id}>{item.name}</li>
-                {/*console.log(keyIndex())*/}
+                key = {genid.next().value+'id' + item.id}>{item.name}</li>
+                
                 <li id='repo-list-items-description' 
-                key = {keyIndex()+'des' + item.id}>{textMin(item.description,(index+1))}</li>
+                key = {genid.next().value+'des' + item.id}>{textMin(item.description,(index+1))}</li>
                 
                 
                 <li id='repo-list-items-url' 
-                key = {keyIndex()+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener">GitHub Link</a></li>
-                {/*console.log(keyIndex()+'url' + item.id)*/}
+                key = {genid.next().value+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener">GitHub Link</a></li>
                 
                 <li id='repo-list-items-stars' 
-                key = {keyIndex()+'star' + item.id}>{item.stargazers_count} Stars</li>
+                key = {genid.next().value+'star' + item.id}>{item.stargazers_count} Stars</li>
                 
               </div>
                 
             <div id= 'repo-user-items'>
               <div id = 'repo-list-items-img'>
                 <li id='repo-list-items-img-list' 
-                key = {keyIndex()+'lan' + item.id}>
+                key = {genid.next().value+'lan' + item.id}>
                 {item.language?item.language:null}
                 
                 
@@ -175,10 +175,12 @@ export default function DataLoader (){
                 
             </div>
             </>
-            ):<p>{console.log('no data')}Search Filters returned no results. Try changing search filters.</p>}
-          </ul>
+            ):null
+            }
+          </ul>         
           
       </div>
-
+      
+      
   )
 }

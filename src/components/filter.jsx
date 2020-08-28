@@ -1,6 +1,9 @@
 import React, {useState, useContext, useEffect } from 'react';
 import AppContext from '../app/context'
 import { changeFilter, defaultFilter } from '../store/reducerActions'
+import { idMaker } from '../extraFunctions/dataFunctions'
+
+
 
 const FilterQuery = () => {
 
@@ -68,7 +71,11 @@ const starValues = {
     '100k':100000
   }
 
-                   
+
+  const gen = idMaker()
+    
+  //console.log(gen.next().value)
+
   return(
     
     
@@ -82,7 +89,7 @@ const starValues = {
               onChange={(e) => sendtoReducer('language',e.target.value)}>
                 
                 {Object.entries(codelanguages).sort().map(([key,value,index]) => 
-                <option key={index} value={value}>{key}</option>
+                <option key={gen.next().value} value={value}>{key}</option>
                 )}
 
       </select>
@@ -95,7 +102,7 @@ const starValues = {
               onChange={(e) => sendtoReducer('stars',e.target.value)}>
 
                 {Object.entries(starValues).sort((a,b)=>a[1]-b[1]).map(([key,value,index]) =>
-                <option key={index} value={value}>{key}</option>
+                <option key={gen.next().value} value={value}>{key}</option>
                 )}
         
       </select>

@@ -36,7 +36,7 @@ export default function Layout() {
   },[login])
 
   function handleCurrentLocation(e){
-    console.log('current path',e)
+    //console.log('current path',e)
     
     setCurrentLocation(e)
   }
@@ -63,7 +63,7 @@ export default function Layout() {
   const handlePageChange = (pageindex) => {
         
     setPageIndex(pageindex)
-    console.log(pageindex)
+    //console.log(pageindex)
 
 
 }
@@ -94,11 +94,11 @@ const bitwise = HOME & HOT_REPOS & CONTACTS & REFERENCES
             
               <ul >
               <Router >
-                <Link to="/"><a><li>Home</li></a></Link>
-                <Link to="/hot_repos"><a><li>Hot Repos</li></a></Link>
-                <Link to="/contact"><a><li>Contact</li></a></Link>
-                <Link to="/references"><a><li>References</li></a></Link>
-                <Link to="/login"><a><li>Login</li></a></Link>
+                <Link to="/"><li>Home</li></Link>
+                <Link to="/hot_repos"><li>Hot Repos</li></Link>
+                <Link to="/contact"><li>Contact</li></Link>
+                <Link to="/references"><li>References</li></Link>
+                <Link to="/login"><li>Login</li></Link>
 
                 <Switch>
                   <Route exact path="/"><GetLocation currentPath={(e)=>handleCurrentLocation(e)}/></Route>
