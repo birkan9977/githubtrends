@@ -220,6 +220,7 @@ useEffect(()=>{
                   boxSizing: 'borderBox',
                   alignItems:'center',
                   background:'linear-gradient(0deg, rgba(195,129,34,0.6) 0%, rgba(156,146,114,0.5) 100%)',
+                  marginTop: '1.5rem',
     }}
     
     >

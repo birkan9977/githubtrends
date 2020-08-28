@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect } from 'react';
 import AppContext from '../app/context'
 import { changeFilter, defaultFilter } from '../store/reducerActions'
 import { idMaker } from '../extraFunctions/dataFunctions'
-
+import FetchOptions from './fetchOptions.jsx'
 
 
 const FilterQuery = () => {
@@ -80,6 +80,7 @@ const starValues = {
     
     
     <div id='filter-queries'>
+      <FetchOptions/>
       <label htmlFor='dropdown-language' id='label-language'>Language</label>
       
       <select id='dropdown-language' 

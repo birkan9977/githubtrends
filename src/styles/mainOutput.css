@@ -59,7 +59,7 @@ body {
   text-align: left;
 }
 #main nav ul {
-  background: rgba(112, 87, 87, 0.5);
+  background: rgba(112, 87, 87, 0.7);
   list-style: none;
   font-size: 1rem;
   display: flex;
@@ -74,11 +74,11 @@ body {
   padding: 0.5rem 1rem 0.1rem 1rem;
 }
 #main nav a {
-  color: #333;
+  color: #aaa5a5;
   text-decoration: none;
 }
 #main nav a:hover {
-  background: rgba(112, 87, 87, 0.5);
+  background: rgba(112, 87, 87, 0.7);
   color: #dbd8d8;
   text-decoration: none;
   cursor: pointer;
@@ -107,7 +107,7 @@ body {
   margin: 0;
   padding: 10px;
   list-style: none;
-  box-shadow: -10px 20px 10px 5px rgba(112, 87, 87, 0.5);
+  box-shadow: -10px 20px 10px 5px rgba(112, 87, 87, 0.7);
 }
 @media (max-width: 700px) {
   #main #middle-section section #repo-items {
@@ -136,7 +136,7 @@ body {
   font-size: 0.9rem;
 }
 #main #middle-section section #repo-items a:visited {
-  color: rgba(112, 87, 87, 0.5);
+  color: rgba(112, 87, 87, 0.7);
 }
 #main #middle-section section #repo-items a:hover {
   text-decoration: none;
@@ -215,7 +215,7 @@ footer {
   text-align: center;
   background: rgba(219, 216, 216, 0.3);
   color: #c7c4c4;
-  box-shadow: -10px 20px 10px 5px rgba(112, 87, 87, 0.5);
+  box-shadow: -10px 20px 10px 5px rgba(112, 87, 87, 0.7);
   height: 100px;
   display: flex;
   justify-content: center;
