@@ -1,193 +1,184 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import {
-  TextMinimize,
-  keyIndex,
- } from '../extraFunctions/dataFunctions'
+import { TextMinimize, keyIndex } from '../extraFunctions/dataFunctions';
 
 import AppContext from '../app/context';
-import { changeFilter } from '../store/reducerActions'
-import { idMaker } from '../extraFunctions/dataFunctions'
+import { changeFilter } from '../store/reducerActions';
+import { idMaker } from '../extraFunctions/dataFunctions';
 
+export default function DataLoader() {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const { filters, dispatch } = useContext(AppContext);
 
-export default function DataLoader (){
-  
-  
-  const[data,setData] = useState([]);
-  const[error,setError] = useState(null)
-  const { filters, dispatch } = useContext(AppContext)
+  const setReadMoreEmpty = () => [];
 
-  const setReadMoreEmpty = () => []
-
-  const sendtoReducer = (filterName,filterValue) => {
+  const sendtoReducer = (filterName, filterValue) => {
     const action = {
       type: changeFilter,
       payload: {
         filterName: filterName,
-        filterValue: filterValue
-        
-      }
-    }
+        filterValue: filterValue,
+      },
+    };
     dispatch(action);
-  }
+  };
 
-  
   //console.log(filters)
 
   const headers = {
     headers: {
       'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
-      'Accept': 'application/json'
-    }
-  }
+      Accept: 'application/json',
+    },
+  };
 
-  
-  const ref = useRef()
+  const ref = useRef();
 
   useEffect(() => {
+    ref.current = data;
 
-    ref.current = data
+    setReadMoreEmpty();
 
-    setReadMoreEmpty()
-    
-    setError(null)
+    setError(null);
 
-    sendtoReducer ('loading',true)
+    sendtoReducer('loading', true);
 
     fetch(filters.url, headers)
-          
-          .then(response => response.json())
-          
-         
-          .then(data => {
-            setData(data.items)
-            
-            //global
-           if(data.items) sendtoReducer('count',data.items.length)
-            sendtoReducer ('loading',false)
+      .then((response) => response.json())
 
-          })
-          .catch((err) => {
-            setError(err);
-            console.log('error',err)
-            sendtoReducer ('loading',false)
-          })
+      .then((data) => {
+        setData(data.items);
+
+        //global
+        if (data.items) sendtoReducer('count', data.items.length);
+        sendtoReducer('loading', false);
+      })
+      .catch((err) => {
+        setError(err);
+        console.log('error', err);
+        sendtoReducer('loading', false);
+      });
 
     //set to session storage at every mutation
-    
-    const setSessionStorage=()=>{
-      sessionStorage.setItem('language',filters.language)
-      sessionStorage.setItem('stars',filters.stars)
-      sessionStorage.setItem('keyword',filters.keyword)
-    }
-    
-    setSessionStorage()
-    
-            //clean up after unmount
-            return ()=>{
-              setData(null)
-              setSessionStorage()
-            }
 
-            
-        
-      
-  },[filters.url]); 
-  
+    const setSessionStorage = () => {
+      sessionStorage.setItem('language', filters.language);
+      sessionStorage.setItem('stars', filters.stars);
+      sessionStorage.setItem('keyword', filters.keyword);
+    };
 
+    setSessionStorage();
 
-  function displayresults(){
-    let displaytext=''
+    //clean up after unmount
+    return () => {
+      setData(null);
+      setSessionStorage();
+    };
+  }, [filters.url]);
 
-      if(filters.loading){
-        displaytext = 'Loading Data Please Wait...'
-      }else{
-        if(filters.count>1){
-          displaytext =  `Displaying ${filters.count} results.`
-        } else if((filters.count===1)){
-          displaytext =  `Displaying ${filters.count} result.`
-        } else {
-          displaytext = 'Search Filters returned no results. Try changing search filters.'
-        }
+  function displayresults() {
+    let displaytext = '';
+
+    if (filters.loading) {
+      displaytext = 'Loading Data Please Wait...';
+    } else {
+      if (filters.count > 1) {
+        displaytext = `Displaying ${filters.count} results.`;
+      } else if (filters.count === 1) {
+        displaytext = `Displaying ${filters.count} result.`;
+      } else {
+        displaytext =
+          'Search Filters returned no results. Try changing search filters.';
       }
-      return displaytext
+    }
+    return displaytext;
   }
 
   //console.log(readMore)
-  function textMin(text,keyNo){
-      return(
-        <TextMinimize keyNo={keyNo} text={text} setEmpty={setReadMoreEmpty}/>
-      )
+  function textMin(text, keyNo) {
+    return (
+      <TextMinimize keyNo={keyNo} text={text} setEmpty={setReadMoreEmpty} />
+    );
   }
 
   const ItemIncrement = (function () {
-    let counter = 0
-    return function () {counter += 1; return counter}
-  })();//closure with self invoked function:)
+    let counter = 0;
+    return function () {
+      counter += 1;
+      return counter;
+    };
+  })(); //closure with self invoked function:)
 
-  const genid = idMaker()
-  
-  
-    
+  const genid = idMaker();
+
   return (
-    
-      
-      <div>
-         
-        <p></p>
-        <p>{error?`Error: ${error}`:displayresults()}</p>
+    <div>
+      <p></p>
+      <p>{error ? `Error: ${error}` : displayresults()}</p>
 
-          <ul>
+      <ul>
+        {data && ref.current !== data
+          ? data.map((item, index) => (
+              <>
+                <div id="repo-items">
+                  <div id="repo-list-items">
+                    <div id="order-number">{ItemIncrement()}</div>
 
-            {data && (ref.current!==data)?data.map((item,index) =>
-            <>
-            <div id='repo-items'>
-              <div id='repo-list-items'>
-                <div id='order-number'>
+                    {console.log(genid.next().value)}
 
-                {ItemIncrement()}
+                    <li
+                      id="repo-list-items-name"
+                      key={genid.next().value + 'id' + item.id}
+                    >
+                      {item.name}
+                    </li>
 
+                    <li
+                      id="repo-list-items-description"
+                      key={genid.next().value + 'des' + item.id}
+                    >
+                      {textMin(item.description, index + 1)}
+                    </li>
+
+                    <li
+                      id="repo-list-items-url"
+                      key={genid.next().value + 'url' + item.id}
+                    >
+                      <a href={item.html_url} target="_blank" rel="noopener">
+                        GitHub Link
+                      </a>
+                    </li>
+
+                    <li
+                      id="repo-list-items-stars"
+                      key={genid.next().value + 'star' + item.id}
+                    >
+                      {item.stargazers_count} Stars
+                    </li>
+                  </div>
+
+                  <div id="repo-user-items">
+                    <div id="repo-list-items-img">
+                      <li
+                        id="repo-list-items-img-list"
+                        key={genid.next().value + 'lan' + item.id}
+                      >
+                        {item.language ? item.language : null}
+                      </li>
+
+                      <figure id="repo-img-figure">
+                        <img src={item.owner.avatar_url} alt={item.login}></img>
+                        <figcaption id="repo-img-caption">
+                          {item.owner.login}
+                        </figcaption>
+                      </figure>
+                    </div>
+                  </div>
                 </div>
-
-                {console.log(genid.next().value)}
-
-                <li id='repo-list-items-name' 
-                key = {genid.next().value+'id' + item.id}>{item.name}</li>
-                
-                <li id='repo-list-items-description' 
-                key = {genid.next().value+'des' + item.id}>{textMin(item.description,(index+1))}</li>
-                
-                
-                <li id='repo-list-items-url' 
-                key = {genid.next().value+'url' + item.id}><a href={item.html_url} target='_blank' rel="noopener">GitHub Link</a></li>
-                
-                <li id='repo-list-items-stars' 
-                key = {genid.next().value+'star' + item.id}>{item.stargazers_count} Stars</li>
-                
-              </div>
-                
-            <div id= 'repo-user-items'>
-              <div id = 'repo-list-items-img'>
-                <li id='repo-list-items-img-list' 
-                key = {genid.next().value+'lan' + item.id}>
-                {item.language?item.language:null}
-                
-                
-                </li>
-
-                <figure id='repo-img-figure'><img src={item.owner.avatar_url} alt={item.login}></img>
-                <figcaption id= 'repo-img-caption'>{item.owner.login}</figcaption>
-                </figure>
-              </div>
-            </div>
-                
-            </div>
-            </>
-            ):null
-            }
-          </ul>         
-          
-      </div>
-      
-      
-  )
+              </>
+            ))
+          : null}
+      </ul>
+    </div>
+  );
 }

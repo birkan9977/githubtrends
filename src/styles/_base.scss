@@ -1,52 +1,53 @@
-
-
 $font-stack: Helvetica, Arial, sans-serif;
 
 $primary-color: #333;
-$header-gray:rgb(199, 196, 196);
-$header-gray-transparent:rgb(199, 196, 196,0.7);
-$topnavbar-color:rgb(112, 87, 87);
-$topnavbar-color-transparent:rgb(112, 87, 87,0.7);
-$mid-section-color:rgb(211, 175, 175);
-$mid-section-color-transparent:rgb(211, 175, 175,0.2);
-$light-blue:rgb(124, 175, 241);
-$light-gray:rgb(219, 216, 216);
-$light-gray-transparent:rgb(219, 216, 216,0.3);
-$menu-gray:rgb(170, 165, 165);
-$repo-items-color:rgb(102, 68, 68);
-$repo-items-color-transparent:rgb(102, 68, 68,0.5);
+$header-gray: rgb(199, 196, 196);
+$header-gray-transparent: rgb(199, 196, 196, 0.7);
+$topnavbar-color: rgb(112, 87, 87);
+$topnavbar-color-transparent: rgb(112, 87, 87, 0.7);
+$mid-section-color: rgb(211, 175, 175);
+$mid-section-color-transparent: rgb(211, 175, 175, 0.2);
+$light-blue: rgb(124, 175, 241);
+$light-gray: rgb(219, 216, 216);
+$light-gray-transparent: rgb(219, 216, 216, 0.3);
+$menu-gray: rgb(170, 165, 165);
+$repo-items-color: rgb(102, 68, 68);
+$repo-items-color-transparent: rgb(102, 68, 68, 0.5);
 
-
-$stacked-radial:
-      radial-gradient(circle at 20% 0,
-        rgba(143, 107, 107, 0.5),
-        rgba(77, 37, 37, 0.5) 70.71%),
-      radial-gradient(circle at 6.7% 75%,
-        rgba(219, 213, 193, 0.5),
-        rgba(191, 191, 223, 0.5) 70.71%),
-      radial-gradient(circle at 93.3% 75%,
-        rgba(182, 180, 202, 0.5),
-        rgb(247, 242, 242,0.5) 10.71%) rgb(233, 233, 206,0.5),
-;
+$stacked-radial: radial-gradient(
+    circle at 20% 0,
+    rgba(143, 107, 107, 0.5),
+    rgba(77, 37, 37, 0.5) 70.71%
+  ),
+  radial-gradient(
+    circle at 6.7% 75%,
+    rgba(219, 213, 193, 0.5),
+    rgba(191, 191, 223, 0.5) 70.71%
+  ),
+  radial-gradient(
+      circle at 93.3% 75%,
+      rgba(182, 180, 202, 0.5),
+      rgb(247, 242, 242, 0.5) 10.71%
+    )
+    rgb(233, 233, 206, 0.5);
 
 body {
   font: 100% $font-stack;
   color: $primary-color;
   background-color: $header-gray;
-  
-  
 }
-
 
 @mixin transform($property) {
   -webkit-transform: $property;
   -ms-transform: $property;
   transform: $property;
 }
-.box { @include transform(translateY(-1em)); }
+.box {
+  @include transform(translateY(-1em));
+}
 
 %equal-heights {
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   flex-wrap: nowrap;
 }

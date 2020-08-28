@@ -1,51 +1,50 @@
-
-  [ 
-    {
-      "firstname": "Pamela",
-      "lastname": "Anderson",
-      "password": "12rtAsd34",
-      "role": "superadmin",
-      "email": "pml@andrs.io",
-      "user_id": "user_01"
-    },
-    {
-      "firstname": "David",
-      "lastname": "Lynch",
-      "password": "22mo+345",
-      "role": "admin",
-      "email": "dvd@lync.io",
-      "user_id": "user_02"
-    },
-    {
-      "firstname": "Keanu",
-      "lastname": "Reeves",
-      "password": "325POsY6",
-      "role": "regular",
-      "email": "kean@rvs.io",
-      "user_id": "user_03"
-    },
-    {
-      "firstname": "Peter",
-      "lastname": "Jackson",
-      "password": "47JKs90",
-      "role": "guest",
-      "email": "ptr@jcks.io",
-      "user_id": "user_04"
-    },
-    {
-      "firstname": "Natalie",
-      "lastname": "Portman",
-      "password": "94gtAwNtl",
-      "role": "admin",
-      "email": "ntly@prtmn.io",
-      "user_id": "user_05"
-    },
-    {
-      "firstname": "Brad",
-      "lastname": "Pitt",
-      "password": "brg56uYt",
-      "role": "guest",
-      "email": "brdpt@moviecelebs.io",
-      "user_id": "user_06"
-    }
-  ]
+[
+  {
+    "firstname": "Pamela",
+    "lastname": "Anderson",
+    "password": "12rtAsd34",
+    "role": "superadmin",
+    "email": "pml@andrs.io",
+    "user_id": "user_01"
+  },
+  {
+    "firstname": "David",
+    "lastname": "Lynch",
+    "password": "22mo+345",
+    "role": "admin",
+    "email": "dvd@lync.io",
+    "user_id": "user_02"
+  },
+  {
+    "firstname": "Keanu",
+    "lastname": "Reeves",
+    "password": "325POsY6",
+    "role": "regular",
+    "email": "kean@rvs.io",
+    "user_id": "user_03"
+  },
+  {
+    "firstname": "Peter",
+    "lastname": "Jackson",
+    "password": "47JKs90",
+    "role": "guest",
+    "email": "ptr@jcks.io",
+    "user_id": "user_04"
+  },
+  {
+    "firstname": "Natalie",
+    "lastname": "Portman",
+    "password": "94gtAwNtl",
+    "role": "admin",
+    "email": "ntly@prtmn.io",
+    "user_id": "user_05"
+  },
+  {
+    "firstname": "Brad",
+    "lastname": "Pitt",
+    "password": "brg56uYt",
+    "role": "guest",
+    "email": "brdpt@moviecelebs.io",
+    "user_id": "user_06"
+  }
+]

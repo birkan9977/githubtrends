@@ -1,27 +1,22 @@
-import React, { useContext } from 'react'
-import userContext from '../app/usercontext'
+import React, { useContext } from 'react';
+import userContext from '../app/usercontext';
 
 const UserInfo = () => {
-  
-  const { users } = useContext(userContext)
+  const { users } = useContext(userContext);
 
-  const isLoggedin = users.user.loggedin
+  const isLoggedin = users.user.loggedin;
 
-  const firstname = isLoggedin?users.user.info.firstname:null
-  const lastname = isLoggedin?users.user.info.lastname:null
-  const email = isLoggedin?users.user.info.email:null
+  const firstname = isLoggedin ? users.user.info.firstname : null;
+  const lastname = isLoggedin ? users.user.info.lastname : null;
+  const email = isLoggedin ? users.user.info.email : null;
 
-return(
-        <>
+  return (
+    <>
+      <h2>{firstname}</h2>
+      <h3>{lastname}</h3>
+      <h3>{email}</h3>
+    </>
+  );
+};
 
-            <h2>{firstname}</h2>
-            <h3>{lastname}</h3>
-            <h3>{email}</h3>
-
-        </>
-       
-)
-}
-
-export default UserInfo
-
+export default UserInfo;
