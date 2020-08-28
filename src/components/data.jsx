@@ -84,7 +84,8 @@ export default function DataLoader (){
     
             //clean up after unmount
             return ()=>{
-              
+              setData(null)
+              setSessionStorage()
             }
 
             

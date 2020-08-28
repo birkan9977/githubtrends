@@ -192,7 +192,7 @@ function GetLocation(props){
   let history = useHistory()
   let currentPath = history?history.location.pathname:null
       
-      //console.log(currentPath, typeof currentPath)
+      console.log(currentPath)
       useEffect(()=>{
         props.currentPath(currentPath)
     

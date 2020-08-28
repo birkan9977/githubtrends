@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 const Div = styled.div`
@@ -13,6 +13,11 @@ const Div = styled.div`
   }
 `
 
+const OptionalVisibility = styled.div`
+
+  ${props=> (props.visible?Div:"display:none")};
+
+`
 
 const Label = styled.label`
   color: papayawhip;
@@ -26,15 +31,12 @@ const Label = styled.label`
       margin-bottom: -20px;
       
     }
-
 `
 const Input = styled.input`
   padding: 0.5em;
   margin: 0.5em;
   margin-bottom: -1px;
   color: ${props => props.inputColor || "palevioletred"};
-  background: papayawhip;
-  border: none;
   border-radius: 3px;
   :hover{
     cursor:pointer
@@ -42,7 +44,7 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-      display: inline-block;
+      display: block;
       color: palevioletred;
       font-size: 1em;
       margin: 1em;
@@ -55,37 +57,78 @@ const Button = styled.button`
 
 export default function FetchOptions(){
 
+const[fetchVisible, setFetchVisible]=useState(true)
+const[fetchOption, setFetchOption]=useState('manuel')
+
+const handleFetchVisibility = () => {
+  setFetchVisible(!fetchVisible)
+  
+}
+
+const handleOptionChange = (e) => {
+  setFetchOption(e.target.value)
+  console.log(e.target.value)
+}
 
 return (
   <Div id="fetch-options">
       <div className="changeOptions">
       <Input type ="checkbox"
               id="fetch-data"
-              defaultChecked
+              onClick = {handleFetchVisibility}
+              checked = {fetchVisible}
+              
       />
-      <Label className='optionLabels' htmltFor='fetch-data'>Fetch Options</Label>
+      <Label  className='optionLabels' 
+              onClick={handleFetchVisibility}
+              htmltFor='fetch-data'>{fetchVisible?'Hide ':'Show '}Fetch Options</Label>
       </div>
 
-      <div className="changeOptions">
-      <Input type='radio' 
-              name="fetch" 
-              id="onChange" 
-              value="onchange" 
-              inputColor="rebeccapurple"/>
-      <Label className='optionLabels' htmlFor="onChange">Fetch Data on Change</Label>
-      </div>
+      <OptionalVisibility visible={fetchVisible}>
 
-      <div className="changeOptions">
-      <Input  type='radio' 
-              name="fetch" 
-              id="manuel" 
-              value="manuel" 
-              defaultChecked/>
-      <Label className='optionLabels' htmlFor="manuel">Manuel Submit</Label>
-      </div>
+        <div className="changeOptions">
 
-      <Button>Submit</Button>
+          <Input type="radio"
+                  name="fetch" 
+                  id="FetchOnChange" 
+                  value="fetchonchange" 
+                  inputColor="rebeccapurple"
+                  onClick={handleOptionChange}
+          />
+
+<a><Label  className="optionLabels" 
+                  htmlFor="FetchOnChange">Fetch Data on Change</Label></a>
+        </div>
+
+        <div className="changeOptions">
+          
+
+          <Input  type="radio"
+                  name="fetch" 
+                  id="manuel" 
+                  value="manuel" 
+                  onClick={handleOptionChange}
+                  defaultChecked/>
+
+          <Label  className="optionLabels" 
+                  htmlFor="manuel">Manuel Submit</Label>
+
+        </div>
+
+        
+
+      </OptionalVisibility>
+
+        <div style={fetchOption==='manuel'?{display:"block"}:{display:"none"}}>
+
+          <Button >Submit</Button>
+
+        
+        </div>
+
+      
+
   </Div>
-)
 
+)
 }
