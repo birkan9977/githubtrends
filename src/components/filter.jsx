@@ -79,64 +79,68 @@ const FilterQuery = () => {
   //console.log(gen.next().value)
 
   return (
-    <div id="filter-queries">
+    <>
       <FetchOptions />
-      <label htmlFor="dropdown-language" id="label-language">
-        Language
-      </label>
+      <div id="filter-queries" className="disable-select">
+        <label htmlFor="dropdown-language" id="label-language">
+          Language
+        </label>
 
-      <select
-        id="dropdown-language"
-        name="dropdown-language"
-        defaultValue={filters.language}
-        onChange={(e) => sendtoReducer('language', e.target.value)}
-      >
-        {Object.entries(codelanguages)
-          .sort()
-          .map(([key, value, index]) => (
-            <option key={gen.next().value} value={value}>
-              {key}
-            </option>
-          ))}
-      </select>
+        <select
+          id="dropdown-language"
+          name="dropdown-language"
+          defaultValue={filters.language}
+          onChange={(e) => sendtoReducer('language', e.target.value)}
+        >
+          {Object.entries(codelanguages)
+            .sort()
+            .map(([key, value, index]) => (
+              <option key={gen.next().value} value={value}>
+                {key}
+              </option>
+            ))}
+        </select>
 
-      <label htmlFor="dropdown-followers" id="label-followers">
-        Stars greater than:
-      </label>
+        <label htmlFor="dropdown-followers" id="label-followers">
+          Stars greater than:
+        </label>
 
-      <select
-        id="dropdown-followers"
-        defaultValue={filters.stars}
-        onChange={(e) => sendtoReducer('stars', e.target.value)}
-      >
-        {Object.entries(starValues)
-          .sort((a, b) => a[1] - b[1])
-          .map(([key, value, index]) => (
-            <option key={gen.next().value} value={value}>
-              {key}
-            </option>
-          ))}
-      </select>
+        <select
+          id="dropdown-followers"
+          defaultValue={filters.stars}
+          onChange={(e) => sendtoReducer('stars', e.target.value)}
+        >
+          {Object.entries(starValues)
+            .sort((a, b) => a[1] - b[1])
+            .map(([key, value, index]) => (
+              <option key={gen.next().value} value={value}>
+                {key}
+              </option>
+            ))}
+        </select>
 
-      <label htmlFor="input-keyword" id="label-keyword">
-        Search Keyword
-      </label>
+        <label htmlFor="input-keyword" id="label-keyword">
+          Search Keyword
+        </label>
 
-      <input
-        type="text"
-        id="input-keyword"
-        defaultValue={filters.keyword}
-        onChange={handleTextKeyChange}
-        onKeyPress={(e) =>
-          e.which === 13 ? sendtoReducer('keyword', keyword) : null
-        }
-      >
-        {/*console.log(keyword)*/}
-      </input>
+        <input
+          type="text"
+          id="input-keyword"
+          defaultValue={filters.keyword}
+          onChange={handleTextKeyChange}
+          onKeyPress={(e) =>
+            e.which === 13 ? sendtoReducer('keyword', keyword) : null
+          }
+        >
+          {/*console.log(keyword)*/}
+        </input>
 
-      <button onClick={() => sendtoReducer('keyword', keyword)}>Submit</button>
-      <button onClick={() => resetFilters()}>Reset Filters</button>
-    </div>
+        <button onClick={() => sendtoReducer('keyword', keyword)}>
+          Submit Keyword
+        </button>
+        <button onClick={() => resetFilters()}>Reset Filters</button>
+      </div>
+    </>
   );
 };
 

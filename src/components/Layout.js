@@ -14,6 +14,7 @@ import {
   useHistory,
   Redirect,
 } from 'react-router-dom';
+import TextArea from './styledComponents/textarea';
 
 export default function Layout() {
   const { filters } = useContext(AppContext);
@@ -126,6 +127,10 @@ export default function Layout() {
         </nav>
 
         <section id="center-section">
+          <div
+            className="animate"
+            style={{ width: '100px', height: '100px' }}
+          ></div>
           {currentLocation}
 
           {currentLocation === '/login' ? (
@@ -154,8 +159,11 @@ export default function Layout() {
           <p>Language: {filters.language}</p>
           <p>Stars: {filters.stars}</p>
           <p>Keyword: {filters.keyword}</p>
-          <p>Api address:</p>
-          <textarea id="url-textarea" value={filters.url} readOnly></textarea>
+
+          <fieldset className="animate">
+            <legend htmlFor="url-textarea">Api address</legend>
+            <TextArea id="url-textarea" value={filters.url} readOnly={true} />
+          </fieldset>
         </nav>
       </section>
 

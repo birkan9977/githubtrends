@@ -1,15 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Div = styled.div`
   display: flex;
   flex-direction: column;
   line-height: 1.5rem;
+  border: 1px solid gray;
+  border-radius: 5px;
 
   .changeOptions {
     display: flex;
     flex-direction: row;
     align-items: center;
+  }
+
+  .inputRadio {
+    margin-left: 10px;
+  }
+
+  .disableSelect {
+    user-select: none;
   }
 `;
 
@@ -31,7 +41,6 @@ const Label = styled.label`
 const Input = styled.input`
   padding: 0.5em;
   margin: 0.5em;
-  margin-bottom: -1px;
   color: ${(props) => props.inputColor || 'palevioletred'};
   border-radius: 3px;
   :hover {
@@ -41,14 +50,32 @@ const Input = styled.input`
 
 const Button = styled.button`
   display: block;
-  color: palevioletred;
+  color: hsl(340, 59%, 30%);
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
   border: 2px solid palevioletred;
   border-radius: 3px;
-  width: 80px;
+  width: auto;
   height: auto;
+`;
+
+const Options = styled.div`
+  display: ${Div};
+  :hover {
+    background: rgb(158, 112, 95);
+    background: radial-gradient(
+      circle,
+      rgba(158, 112, 95, 0.7) 0%,
+      rgba(150, 117, 131, 0.3) 100%
+    );
+    color: white;
+  }
+`;
+const Hover = styled.div`
+  :hover {
+    color: #fefefe;
+  }
 `;
 
 export default function FetchOptions() {
@@ -66,7 +93,7 @@ export default function FetchOptions() {
 
   return (
     <Div id="fetch-options">
-      <div className="changeOptions">
+      <div className="changeOptions disableSelect">
         <Input
           type="checkbox"
           id="fetch-data"
@@ -83,37 +110,37 @@ export default function FetchOptions() {
       </div>
 
       <OptionalVisibility visible={fetchVisible}>
-        <div className="changeOptions">
-          <Input
-            type="radio"
-            name="fetch"
-            id="FetchOnChange"
-            value="fetchonchange"
-            inputColor="rebeccapurple"
-            onClick={handleOptionChange}
-          />
+        <Options>
+          <div className="changeOptions inputRadio disableSelect">
+            <Input
+              type="radio"
+              name="fetch"
+              id="FetchOnChange"
+              value="fetchonchange"
+              inputColor="rebeccapurple"
+              onClick={handleOptionChange}
+            />
 
-          <a>
             <Label className="optionLabels" htmlFor="FetchOnChange">
-              Fetch Data on Change
+              <Hover>Fetch Data on Change</Hover>
             </Label>
-          </a>
-        </div>
+          </div>
 
-        <div className="changeOptions">
-          <Input
-            type="radio"
-            name="fetch"
-            id="manuel"
-            value="manuel"
-            onClick={handleOptionChange}
-            defaultChecked
-          />
+          <div className="changeOptions inputRadio disableSelect">
+            <Input
+              type="radio"
+              name="fetch"
+              id="manuel"
+              value="manuel"
+              onClick={handleOptionChange}
+              defaultChecked
+            />
 
-          <Label className="optionLabels" htmlFor="manuel">
-            Manuel Submit
-          </Label>
-        </div>
+            <Label className="optionLabels" htmlFor="manuel">
+              <Hover>Manuel Submit</Hover>
+            </Label>
+          </div>
+        </Options>
       </OptionalVisibility>
 
       <div
@@ -121,7 +148,7 @@ export default function FetchOptions() {
           fetchOption === 'manuel' ? { display: 'block' } : { display: 'none' }
         }
       >
-        <Button>Submit</Button>
+        <Button>Submit Filters</Button>
       </div>
     </Div>
   );
