@@ -24,11 +24,9 @@ export default function Layout() {
 
   const [login, setLogin] = useState(false);
   const [currentLocation, setCurrentLocation] = useState('');
-  const [display, setDisplay] = useState(false);
   const loggedin = users.user.loggedin;
   const username = users.user.info.firstname;
-  const manualSubmit = fetchOptions.manualSubmit;
-  const fetchOption = fetchOptions.fetchOption;
+  const display = fetchOptions.display;
 
   useEffect(() => {
     setLogin(false);
@@ -48,13 +46,6 @@ export default function Layout() {
       </div>
     );
   };
-
-  useEffect(() => {
-    const displayData =
-      fetchOption === 'fetchonchange' ||
-      (fetchOption === 'manuel' && manualSubmit);
-    setDisplay(displayData);
-  }, [fetchOptions]);
 
   const handleLoginChange = () => {
     setLogin(true);
@@ -137,10 +128,11 @@ export default function Layout() {
 
           {currentLocation === '/hot_repos' ? (
             <div id="data-section" style={{ display: 'block' }}>
-              <h3>
+              <h2>
                 <TopChart />
-              </h3>
+              </h2>
               {console.log('layout', fetchOptions)}
+
               {display ? <DataLoader /> : null}
             </div>
           ) : null}

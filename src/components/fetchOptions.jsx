@@ -82,18 +82,16 @@ const Hover = styled.div`
 
 export default function FetchOptions() {
   const [fetchVisible, setFetchVisible] = useState(true);
-  const [fetchOption, setFetchOption] = useState('manuel');
+  const [fetchOption, setFetchOption] = useState('manual');
   const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
 
   const handleFetchVisibility = () => {
     setFetchVisible(!fetchVisible);
-    //console.log(fetchVisible);
     sendHideOptionToReducer(fetchVisible);
   };
 
   const handleOptionChange = (e) => {
     setFetchOption(e.target.value);
-    //console.log(e.target.value);
     sendFetchOptionToReducer(e.target.value);
   };
 
@@ -111,22 +109,12 @@ export default function FetchOptions() {
       payload: selectedOption,
     };
     dispatchFetchOptions(action);
-    // reset manual submit
-    if (selectedOption === 'fetchonchange') resetSubmit();
   };
 
   const handleSubmitFilters = () => {
     const action = {
       type: actions.manualSubmit,
       payload: true,
-    };
-    dispatchFetchOptions(action);
-  };
-
-  const resetSubmit = () => {
-    const action = {
-      type: actions.manualSubmit,
-      payload: false,
     };
     dispatchFetchOptions(action);
   };
@@ -170,14 +158,14 @@ export default function FetchOptions() {
             <Input
               type="radio"
               name="fetch"
-              id="manuel"
-              value="manuel"
+              id="manual"
+              value="manual"
               onClick={handleOptionChange}
               defaultChecked
             />
 
-            <Label className="optionLabels" htmlFor="manuel">
-              <Hover>Manuel Submit</Hover>
+            <Label className="optionLabels" htmlFor="manual">
+              <Hover>Manual Submit</Hover>
             </Label>
           </div>
         </Options>
@@ -185,7 +173,7 @@ export default function FetchOptions() {
 
       <div
         style={
-          fetchOption === 'manuel' ? { display: 'block' } : { display: 'none' }
+          fetchOption === 'manual' ? { display: 'block' } : { display: 'none' }
         }
       >
         <Button onClick={handleSubmitFilters}>Submit Filters</Button>

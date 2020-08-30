@@ -11,7 +11,7 @@ export default function DataLoader() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const { filters, dispatch } = useContext(AppContext);
-  const { dispatchFetchOptions } = useContext(FetchContext);
+  const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
 
   const setReadMoreEmpty = () => [];
 
@@ -49,6 +49,7 @@ export default function DataLoader() {
 
     ref.current = data;
     console.log('test');
+
     setReadMoreEmpty();
 
     setError(null);
@@ -82,6 +83,7 @@ export default function DataLoader() {
     };
 
     setSessionStorage();
+
     signal.addEventListener('abort', () => {
       console.log(`fetch request for ${filters.url} aborted!`);
     });

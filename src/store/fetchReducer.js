@@ -1,4 +1,5 @@
 import * as actions from './fetchActions';
+import Display from '../components/displayData';
 
 const FetchOptionsReducer = (state, action) => {
   const { payload } = action;
@@ -22,13 +23,21 @@ const FetchOptionsReducer = (state, action) => {
 };
 
 export function ManualSubmit(prevstate, payload) {
-  console.log('HideOptions: prevstate ', prevstate);
+  console.log('ManualSubmit: prevstate ', prevstate);
+
   let newState = {
     ...prevstate,
     manualSubmit: payload,
   };
 
-  console.log('HideOptions: newState ', newState);
+  const display = Display(newState);
+
+  newState = {
+    ...newState,
+    display: display,
+  };
+
+  console.log('ManualSubmit: newState ', newState);
   return newState;
 }
 
@@ -48,6 +57,13 @@ export function FetchOption(prevstate, payload) {
   let newState = {
     ...prevstate,
     fetchOption: payload,
+  };
+
+  const display = Display(newState);
+
+  newState = {
+    ...newState,
+    display: display,
   };
 
   console.log('FetchOption: newState ', newState);

@@ -1,19 +1,22 @@
 import React, { useState, useContext, useEffect } from 'react';
 import AppContext from '../app/context';
 import { changeFilter, defaultFilter } from '../store/reducerActions';
-import { idMaker } from '../extraFunctions/dataFunctions';
 import FetchOptions from './fetchOptions.jsx';
+import FetchContext from '../app/fetchContext';
+import * as actions from '../store/fetchActions';
 
 const FilterQuery = () => {
   const { filters, dispatch } = useContext(AppContext);
-  //console.log('filters',filters)
   const [keyword, setKeyword] = useState('');
+  const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
+  const { fetchOption } = fetchOptions;
 
   const handleTextKeyChange = (e) => {
     setKeyword(e.target.value);
   };
 
   const sendtoReducer = (filterName, filterValue) => {
+    if (fetchOption === 'manual') resetSubmit();
     const action = {
       type: changeFilter,
       payload: {
@@ -29,6 +32,14 @@ const FilterQuery = () => {
       type: defaultFilter,
     };
     dispatch(action);
+  };
+
+  const resetSubmit = () => {
+    const action = {
+      type: actions.manualSubmit,
+      payload: false,
+    };
+    dispatchFetchOptions(action);
   };
 
   useEffect(() => {
@@ -74,10 +85,6 @@ const FilterQuery = () => {
     '100k': 100000,
   };
 
-  const gen = idMaker();
-
-  //console.log(gen.next().value)
-
   return (
     <>
       <FetchOptions />
@@ -94,9 +101,9 @@ const FilterQuery = () => {
         >
           {Object.entries(codelanguages)
             .sort()
-            .map(([key, value, index]) => (
-              <option key={gen.next().value} value={value}>
-                {key}
+            .map(([language, value]) => (
+              <option key={`language-${value}`} value={value}>
+                {language}
               </option>
             ))}
         </select>
@@ -112,9 +119,9 @@ const FilterQuery = () => {
         >
           {Object.entries(starValues)
             .sort((a, b) => a[1] - b[1])
-            .map(([key, value, index]) => (
-              <option key={gen.next().value} value={value}>
-                {key}
+            .map(([stars, value]) => (
+              <option key={`followers-${value}`} value={value}>
+                {stars}
               </option>
             ))}
         </select>

@@ -1,9 +1,10 @@
 import { createContext } from 'react';
 
 export const InitialFetchOptions = {
-  fetchOption: 'manuel', //fetchonchange
+  fetchOption: 'manual', //fetchonchange
   hideOption: false,
   manualSubmit: false,
+  display: false,
 };
 
 const FetchContext = createContext(InitialFetchOptions);
