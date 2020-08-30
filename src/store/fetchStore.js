@@ -1,0 +1,17 @@
+import React, { useReducer } from 'react';
+import { FetchProvider, InitialFetchOptions } from '../app/fetchContext';
+import FetchOptionsReducer from './fetchReducer';
+
+const FetchStore = (props) => {
+  const [fetchOptions, dispatchFetchOptions] = useReducer(
+    FetchOptionsReducer,
+    InitialFetchOptions
+  );
+  return (
+    <FetchProvider value={{ fetchOptions, dispatchFetchOptions }}>
+      {props.children}
+    </FetchProvider>
+  );
+};
+
+export default FetchStore;

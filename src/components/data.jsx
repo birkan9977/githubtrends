@@ -3,12 +3,15 @@ import { TextMinimize, keyIndex } from '../extraFunctions/dataFunctions';
 
 import AppContext from '../app/context';
 import { changeFilter } from '../store/reducerActions';
-//import { idMaker } from '../extraFunctions/dataFunctions';
+import AbortController from 'abort-controller';
+import * as actions from '../store/fetchActions';
+import FetchContext from '../app/fetchContext';
 
 export default function DataLoader() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const { filters, dispatch } = useContext(AppContext);
+  const { dispatchFetchOptions } = useContext(FetchContext);
 
   const setReadMoreEmpty = () => [];
 
@@ -23,8 +26,6 @@ export default function DataLoader() {
     dispatch(action);
   };
 
-  //console.log(filters)
-
   const headers = {
     headers: {
       'user-agent': 'GitHub Trending Repositories via React Js -by birkan9977-',
@@ -34,33 +35,46 @@ export default function DataLoader() {
 
   const ref = useRef();
 
-  useEffect(() => {
-    ref.current = data;
+  const resetSubmit = () => {
+    const action = {
+      type: actions.manualSubmit,
+      payload: false,
+    };
+    dispatchFetchOptions(action);
+  };
 
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    ref.current = data;
+    console.log('test');
     setReadMoreEmpty();
 
     setError(null);
 
     sendtoReducer('loading', true);
 
-    fetch(filters.url, headers)
+    fetch(filters.url, headers, { signal: signal })
       .then((response) => response.json())
 
       .then((data) => {
         setData(data.items);
 
         //global
-        if (data.items) sendtoReducer('count', data.items.length);
-        sendtoReducer('loading', false);
+        if (data.items) {
+          sendtoReducer('count', data.items.length);
+          sendtoReducer('loading', false);
+        }
       })
       .catch((err) => {
+        if (error.name === 'AbortError') return;
         setError(err);
         console.log('error', err);
         sendtoReducer('loading', false);
       });
 
     //set to session storage at every mutation
-
     const setSessionStorage = () => {
       sessionStorage.setItem('language', filters.language);
       sessionStorage.setItem('stars', filters.stars);
@@ -68,9 +82,16 @@ export default function DataLoader() {
     };
 
     setSessionStorage();
+    signal.addEventListener('abort', () => {
+      console.log(`fetch request for ${filters.url} aborted!`);
+    });
 
     //clean up after unmount
     return () => {
+      controller.abort();
+
+      // reset manual submit
+      resetSubmit();
       setData(null);
       setSessionStorage();
     };
@@ -94,7 +115,6 @@ export default function DataLoader() {
     return displaytext;
   }
 
-  //console.log(readMore)
   function textMin(text, keyNo) {
     return (
       <TextMinimize keyNo={keyNo} text={text} setEmpty={setReadMoreEmpty} />
@@ -107,9 +127,7 @@ export default function DataLoader() {
       counter += 1;
       return counter;
     };
-  })(); //closure with self invoked function:)
-
-  //const genid = idMaker();
+  })();
 
   return (
     <div>
@@ -123,8 +141,6 @@ export default function DataLoader() {
                 <div id="repo-items">
                   <div id="repo-list-items">
                     <div id="order-number">{ItemIncrement()}</div>
-
-                    {/*console.log(genid.next().value)*/}
 
                     <li
                       id="repo-list-items-name"

@@ -23,7 +23,20 @@ export function LogoutUser() {
 export function ChangeUser(prevstate, newUser) {
   console.log('previous state', prevstate);
   console.log('newuser', newUser);
+  let n = { ...prevstate };
+  console.log('test', n);
 
+  //eureka!!!! updates parent!!!!
+  let newState = {
+    ...prevstate,
+    user: {
+      info: newUser,
+      loggedin: true,
+    },
+  };
+
+  /*
+  below code does not update parent comp!!!
   let newState = prevstate;
 
   newState.user.userid = newUser.user_id;
@@ -37,7 +50,7 @@ export function ChangeUser(prevstate, newUser) {
   //newState.user.info = {...newUser[1]}
 
   newState.user.loggedin = true;
-
+*/
   console.log('newstate', newState);
 
   return newState;

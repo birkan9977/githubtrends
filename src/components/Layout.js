@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import FilterQuery from './filter';
 import AppContext from '../app/context';
 import '../styles/mainOutput.css';
@@ -15,26 +15,26 @@ import {
   Redirect,
 } from 'react-router-dom';
 import TextArea from './styledComponents/textarea';
+import FetchContext from '../app/fetchContext';
 
 export default function Layout() {
   const { filters } = useContext(AppContext);
-
   const { users } = useContext(userContext);
-  const loggedin = users.user.loggedin;
-  const username = users.user.info.firstname;
+  const { fetchOptions } = useContext(FetchContext);
 
   const [login, setLogin] = useState(false);
-  const [pageIndex, setPageIndex] = useState(0);
-  const [HOME, HOT_REPOS, CONTACTS, REFERENCES] = [1, 2, 4, 8];
   const [currentLocation, setCurrentLocation] = useState('');
+  const [display, setDisplay] = useState(false);
+  const loggedin = users.user.loggedin;
+  const username = users.user.info.firstname;
+  const manualSubmit = fetchOptions.manualSubmit;
+  const fetchOption = fetchOptions.fetchOption;
 
   useEffect(() => {
     setLogin(false);
   }, [login]);
 
   function handleCurrentLocation(e) {
-    //console.log('current path',e)
-
     setCurrentLocation(e);
   }
 
@@ -49,21 +49,18 @@ export default function Layout() {
     );
   };
 
+  useEffect(() => {
+    const displayData =
+      fetchOption === 'fetchonchange' ||
+      (fetchOption === 'manuel' && manualSubmit);
+    setDisplay(displayData);
+  }, [fetchOptions]);
+
   const handleLoginChange = () => {
     setLogin(true);
-
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
-
-  const handlePageChange = (pageindex) => {
-    setPageIndex(pageindex);
-    //console.log(pageindex)
-  };
-
-  const bitwise = HOME & HOT_REPOS & CONTACTS & REFERENCES;
-  //console.log(bitwise)
-  //00001111
 
   return (
     <main id="main">
@@ -127,10 +124,6 @@ export default function Layout() {
         </nav>
 
         <section id="center-section">
-          <div
-            className="animate"
-            style={{ width: '100px', height: '100px' }}
-          ></div>
           {currentLocation}
 
           {currentLocation === '/login' ? (
@@ -147,8 +140,8 @@ export default function Layout() {
               <h3>
                 <TopChart />
               </h3>
-
-              <DataLoader />
+              {console.log('layout', fetchOptions)}
+              {display ? <DataLoader /> : null}
             </div>
           ) : null}
         </section>

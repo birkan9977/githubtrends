@@ -1,12 +1,14 @@
 import React from 'react';
 import Store from './store/store';
 import Layout from './components/Layout';
-
+import FetchStore from './store/fetchStore';
 const App = () => {
   return (
-    <Store>
-      <Layout />
-    </Store>
+    <FetchStore>
+      <Store>
+        <Layout />
+      </Store>
+    </FetchStore>
   );
 };
 

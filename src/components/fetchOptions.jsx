@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
+import * as actions from '../store/fetchActions';
+import FetchContext from '../app/fetchContext';
 
 const Div = styled.div`
   display: flex;
@@ -81,14 +83,52 @@ const Hover = styled.div`
 export default function FetchOptions() {
   const [fetchVisible, setFetchVisible] = useState(true);
   const [fetchOption, setFetchOption] = useState('manuel');
+  const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
 
   const handleFetchVisibility = () => {
     setFetchVisible(!fetchVisible);
+    //console.log(fetchVisible);
+    sendHideOptionToReducer(fetchVisible);
   };
 
   const handleOptionChange = (e) => {
     setFetchOption(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
+    sendFetchOptionToReducer(e.target.value);
+  };
+
+  const sendFetchOptionToReducer = (selectedOption) => {
+    const action = {
+      type: actions.fetchOption,
+      payload: selectedOption,
+    };
+    dispatchFetchOptions(action);
+  };
+
+  const sendHideOptionToReducer = (selectedOption) => {
+    const action = {
+      type: actions.hideOptions,
+      payload: selectedOption,
+    };
+    dispatchFetchOptions(action);
+    // reset manual submit
+    if (selectedOption === 'fetchonchange') resetSubmit();
+  };
+
+  const handleSubmitFilters = () => {
+    const action = {
+      type: actions.manualSubmit,
+      payload: true,
+    };
+    dispatchFetchOptions(action);
+  };
+
+  const resetSubmit = () => {
+    const action = {
+      type: actions.manualSubmit,
+      payload: false,
+    };
+    dispatchFetchOptions(action);
   };
 
   return (
@@ -148,7 +188,7 @@ export default function FetchOptions() {
           fetchOption === 'manuel' ? { display: 'block' } : { display: 'none' }
         }
       >
-        <Button>Submit Filters</Button>
+        <Button onClick={handleSubmitFilters}>Submit Filters</Button>
       </div>
     </Div>
   );

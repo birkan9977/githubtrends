@@ -267,7 +267,6 @@ footer h4 {
   padding-bottom: 5px;
   padding-top: 15px;
   font-size: 0.8rem;
-  
 }
 
 #right-nav-bar {
@@ -279,21 +278,20 @@ footer h4 {
   height: 100px;
 }
 
-.disable-select{
-  user-select:none;
-  -moz-user-select:none;
-  -webkit-user-select:none;
-  -ms-user-select:none;
-  -webkit-touch-callout:none;
+.disable-select {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 #filter-queries {
-  border:1px solid gray;
+  border: 1px solid gray;
   border-radius: 5px;
-  padding:1rem;
-  padding-top:0;
-  margin-top:15px;
-  
+  padding: 1rem;
+  padding-top: 0;
+  margin-top: 15px;
 }
 
 #filter-queries label {
@@ -359,22 +357,33 @@ button {
 }
 
 // not supported!
-//  @return linear-gradient($ang, rgba(68,110,153,0.5) 20%, rgba(171,156,153,0.5) 40%, rgba(81,184,203,0.5) 60%, rgba(109,95,101,0.5) 80%);  
+//https://css-tricks.com/the-state-of-changing-gradients-with-css-transitions-and-animations/
 
 @function grad($ang: 1turn) {
-  @return linear-gradient($ang, rgba(68,110,153,0.5) 20%,rgba(171,156,153,0.5) 40%,rgba(81,184,203,0.5) 60%, rgba(109,95,101,0.5) 80%);  
+  @return linear-gradient(
+    $ang,
+    rgba(68, 110, 153, 0.5) 20%,
+    rgba(171, 156, 153, 0.5) 40%,
+    rgba(81, 184, 203, 0.5) 60%,
+    rgba(109, 95, 101, 0.5) 80%
+  );
 }
 
-
-@keyframes rot { to { --ang: 1turn; } }
-@keyframes rot-alt { to { background-image: grad(); } }
+@keyframes rot {
+  to {
+    --ang: 1turn;
+  }
+}
+@keyframes rot-alt {
+  to {
+    background-image: grad();
+  }
+}
 .animate {
   background: grad(var(--ang, 0deg));
-  animation: rot 3s cubic-bezier(.68, -.57, .26, 1.65) infinite;
+  animation: rot 3s cubic-bezier(0.68, -0.57, 0.26, 1.65) 1;
   @supports (-ms-user-select: none) {
     background-image: grad(0turn);
     animation-name: rot-alt;
   }
-  
-
 }
