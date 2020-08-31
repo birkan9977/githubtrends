@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import FilterQuery from './filter';
 import AppContext from '../app/context';
 import '../styles/mainOutput.css';
@@ -131,7 +131,7 @@ export default function Layout() {
               <h2>
                 <TopChart />
               </h2>
-              {console.log('layout', fetchOptions)}
+              {/*console.log('layout', fetchOptions)*/}
 
               {display ? <DataLoader /> : null}
             </div>
@@ -163,7 +163,7 @@ function GetLocation(props) {
   let history = useHistory();
   let currentPath = history ? history.location.pathname : null;
 
-  console.log(currentPath);
+  //console.log(currentPath);
   useEffect(() => {
     props.currentPath(currentPath);
   }, [props]);

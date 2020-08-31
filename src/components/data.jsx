@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { TextMinimize, keyIndex } from '../extraFunctions/dataFunctions';
+import { TextMinimize } from '../extraFunctions/dataFunctions';
 
 import AppContext from '../app/context';
 import { changeFilter } from '../store/reducerActions';
@@ -11,7 +11,7 @@ export default function DataLoader() {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const { filters, dispatch } = useContext(AppContext);
-  const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
+  const { dispatchFetchOptions } = useContext(FetchContext);
 
   const setReadMoreEmpty = () => [];
 
@@ -33,58 +33,77 @@ export default function DataLoader() {
     },
   };
 
-  const ref = useRef();
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const resetSubmit = () => {
+    const action = {
+      type: actions.manualSubmit,
+      payload: false,
+    };
+    dispatchFetchOptions(action);
+  };
+
+  const prevUrl = usePrevious(filters.url);
+  let setSessionStorage = {};
 
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    ref.current = data;
-    console.log('test');
+    console.log(prevUrl, filters.url);
 
-    setReadMoreEmpty();
+    if (prevUrl !== filters.url) {
+      setReadMoreEmpty();
+      console.log('test');
 
-    setError(null);
+      setError(null);
 
-    sendtoReducer('loading', true);
+      sendtoReducer('loading', true);
 
-    fetch(filters.url, headers, { signal: signal })
-      .then((response) => response.json())
+      fetch(filters.url, headers, { signal: signal })
+        .then((response) => response.json())
 
-      .then((data) => {
-        setData(data.items);
+        .then((data) => {
+          setData(data.items);
 
-        //global
-        if (data.items) {
-          sendtoReducer('count', data.items.length);
+          //global
+          if (data.items) {
+            sendtoReducer('count', data.items.length);
+            sendtoReducer('loading', false);
+          }
+        })
+        .catch((err) => {
+          if (error.name === 'AbortError') return;
+          setError(err);
+          console.log('error', err);
           sendtoReducer('loading', false);
-        }
-      })
-      .catch((err) => {
-        if (error.name === 'AbortError') return;
-        setError(err);
-        console.log('error', err);
-        sendtoReducer('loading', false);
+        });
+
+      //set to session storage at every mutation
+      setSessionStorage = () => {
+        sessionStorage.setItem('language', filters.language);
+        sessionStorage.setItem('stars', filters.stars);
+        sessionStorage.setItem('keyword', filters.keyword);
+      };
+
+      setSessionStorage();
+
+      signal.addEventListener('abort', () => {
+        console.log(`fetch request for ${filters.url} aborted!`);
       });
-
-    //set to session storage at every mutation
-    const setSessionStorage = () => {
-      sessionStorage.setItem('language', filters.language);
-      sessionStorage.setItem('stars', filters.stars);
-      sessionStorage.setItem('keyword', filters.keyword);
-    };
-
-    setSessionStorage();
-
-    signal.addEventListener('abort', () => {
-      console.log(`fetch request for ${filters.url} aborted!`);
-    });
-
+    }
     //clean up after unmount
     return () => {
       controller.abort();
       setData(null);
       setSessionStorage();
+      resetSubmit();
     };
   }, [filters.url]);
 
@@ -126,7 +145,7 @@ export default function DataLoader() {
       <p>{error ? `Error: ${error}` : displayresults()}</p>
 
       <ul>
-        {data && ref.current !== data
+        {data
           ? data.map((item, index) => (
               <>
                 <div id="repo-items">

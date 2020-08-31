@@ -21,6 +21,7 @@ const reducer = (state, action) => {
 
 export function manualFilters(state, filters) {
   const { language, stars, keyword } = filters.manualfilters;
+  console.log('state', state);
 
   let newState = {
     ...state,
@@ -35,7 +36,7 @@ export function manualFilters(state, filters) {
     ...newState,
     url: url,
   };
-
+  console.log('newState', newState);
   return newState;
 }
 

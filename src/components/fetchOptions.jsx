@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import * as actions from '../store/fetchActions';
 import FetchContext from '../app/fetchContext';
@@ -84,9 +84,36 @@ const Hover = styled.div`
 
 export default function FetchOptions(props) {
   const [fetchVisible, setFetchVisible] = useState(true);
-  const [fetchOption, setFetchOption] = useState('manual');
+  const [localFetchOption, setFetchOption] = useState('manual');
   const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
   const { filters, dispatch } = useContext(AppContext);
+  const { fetchOption } = fetchOptions;
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const fetchonchange = fetchOption === 'fetchonchange';
+  const manual = fetchOption === 'manual';
+
+  const prevFetchOption = usePrevious(fetchOption);
+
+  useEffect(() => {
+    console.log(prevFetchOption, fetchOption);
+    if (prevFetchOption === fetchOption && manual) {
+      console.log('work once send data!!!', props.manualFilters);
+
+      sendToFiltersReducer(props.manualFilters);
+      sendFetchOptionToReducer('fetchonchange');
+    } else {
+      sendFetchOptionToReducer(localFetchOption);
+      console.log(fetchOption);
+    }
+  }, [localFetchOption]);
 
   const sendToFiltersReducer = (manualfilters) => {
     const action = {
@@ -103,7 +130,7 @@ export default function FetchOptions(props) {
 
   const handleOptionChange = (e) => {
     setFetchOption(e.target.value);
-    sendFetchOptionToReducer(e.target.value);
+    console.log(e.target.value);
   };
 
   const sendFetchOptionToReducer = (selectedOption) => {
@@ -189,7 +216,9 @@ export default function FetchOptions(props) {
 
       <div
         style={
-          fetchOption === 'manual' ? { display: 'block' } : { display: 'none' }
+          localFetchOption === 'manual'
+            ? { display: 'block' }
+            : { display: 'none' }
         }
       >
         <Button onClick={handleSubmitFilters}>Submit Filters</Button>

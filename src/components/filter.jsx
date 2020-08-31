@@ -1,23 +1,44 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import AppContext from '../app/context';
 import { changeFilter, defaultFilter } from '../store/reducerActions';
 import FetchOptions from './fetchOptions.jsx';
 import FetchContext from '../app/fetchContext';
 import InitialFilters from '../app/context';
+import * as actions from '../store/fetchActions';
 
 const FilterQuery = () => {
   const { filters, dispatch } = useContext(AppContext);
   const [keyword, setKeyword] = useState('');
   const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
-  const { fetchOption } = fetchOptions;
-
-  const manual = fetchOption === 'manual';
-
+  const { fetchOption, manualSubmit } = fetchOptions;
   const [state, setState] = useState({
     stars: filters.stars,
     language: filters.language,
     keyword: filters.keyword,
   });
+  const manual = fetchOption === 'manual';
+  const fetchonchange = fetchOption === 'fetchonchange';
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const prevFetchOption = usePrevious(fetchOption);
+
+  const handleMenu = (filterValues) => {
+    let elemLanguage = document.getElementById('dropdown-language');
+    elemLanguage.value = filterValues.language;
+
+    let elemStars = document.getElementById('dropdown-followers');
+    elemStars.value = filterValues.stars;
+
+    let elemKeyword = document.getElementById('input-keyword');
+    elemKeyword.value = filterValues.keyword;
+  };
 
   const handleManualReset = () => {
     let initialFilters = {
@@ -27,15 +48,7 @@ const FilterQuery = () => {
     };
 
     setState(initialFilters);
-
-    let elemLanguage = document.getElementById('dropdown-language');
-    elemLanguage.value = initialFilters.language;
-
-    let elemStars = document.getElementById('dropdown-followers');
-    elemStars.value = initialFilters.stars;
-
-    let elemKeyword = document.getElementById('input-keyword');
-    elemKeyword.value = initialFilters.keyword;
+    handleMenu(initialFilters);
   };
 
   const handleManualFilters = (filterName, filterValue) => {
@@ -45,6 +58,7 @@ const FilterQuery = () => {
     };
     setState(newState);
     console.log('filtersManual:', newState);
+    if (manualSubmit) resetSubmit();
   };
 
   const handleTextKeyChange = (e) => {
@@ -52,17 +66,26 @@ const FilterQuery = () => {
   };
 
   const sendtoReducer = (filterName, filterValue) => {
-    //if (fetchOption === 'manual') resetSubmit();
-    const action = {
-      type: changeFilter,
-      payload: {
-        filterName: filterName,
-        filterValue: filterValue,
-      },
-    };
-    dispatch(action);
+    if (prevFetchOption === fetchOption && fetchonchange) {
+      console.log('sendToReducerOnChange');
+      const action = {
+        type: changeFilter,
+        payload: {
+          filterName: filterName,
+          filterValue: filterValue,
+        },
+      };
+      dispatch(action);
+    }
   };
 
+  const resetSubmit = () => {
+    const action = {
+      type: actions.manualSubmit,
+      payload: false,
+    };
+    dispatchFetchOptions(action);
+  };
   const resetFilters = () => {
     const action = {
       type: defaultFilter,
@@ -71,14 +94,8 @@ const FilterQuery = () => {
   };
 
   useEffect(() => {
-    let elemLanguage = document.getElementById('dropdown-language');
-    elemLanguage.value = filters.language;
-
-    let elemStars = document.getElementById('dropdown-followers');
-    elemStars.value = filters.stars;
-
-    let elemKeyword = document.getElementById('input-keyword');
-    elemKeyword.value = filters.keyword;
+    console.log(filters);
+    handleMenu(filters);
   }, [filters]);
 
   const codelanguages = {
@@ -178,9 +195,7 @@ const FilterQuery = () => {
                 : sendtoReducer('keyword', keyword)
               : null
           }
-        >
-          {/*console.log(keyword)*/}
-        </input>
+        ></input>
 
         <button
           onClick={() =>
