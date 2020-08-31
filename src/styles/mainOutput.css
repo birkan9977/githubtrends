@@ -17,10 +17,7 @@ body {
 }
 
 /* This CSS will print because %message-shared is extended. */
-.warning,
-.error,
-.success,
-.message {
+.warning, .error, .success, .message {
   border: 1px solid #ccc;
   padding: 10px;
   color: #333;
@@ -44,7 +41,7 @@ body {
   display: flex;
   flex-direction: column;
   font-size: 62.5%;
-  background-image: url('../resources/Software-Development.jpg');
+  background-image: url("../resources/Software-Development.jpg");
   background-repeat: repeat-y;
   background-size: 100%;
 }
@@ -87,22 +84,7 @@ body {
   cursor: pointer;
 }
 #main #middle-section {
-  background: radial-gradient(
-      circle at 20% 0,
-      rgba(143, 107, 107, 0.5),
-      rgba(77, 37, 37, 0.5) 70.71%
-    ),
-    radial-gradient(
-      circle at 6.7% 75%,
-      rgba(219, 213, 193, 0.5),
-      rgba(191, 191, 223, 0.5) 70.71%
-    ),
-    radial-gradient(
-        circle at 93.3% 75%,
-        rgba(182, 180, 202, 0.5),
-        rgba(247, 242, 242, 0.5) 10.71%
-      )
-      rgba(233, 233, 206, 0.5);
+  background: radial-gradient(circle at 20% 0, rgba(143, 107, 107, 0.5), rgba(77, 37, 37, 0.5) 70.71%), radial-gradient(circle at 6.7% 75%, rgba(219, 213, 193, 0.5), rgba(191, 191, 223, 0.5) 70.71%), radial-gradient(circle at 93.3% 75%, rgba(182, 180, 202, 0.5), rgba(247, 242, 242, 0.5) 10.71%) rgba(233, 233, 206, 0.5);
   font-size: 1rem;
   color: #333;
 }
@@ -174,12 +156,7 @@ body {
   margin-bottom: 5px;
   text-align: left;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-list-items
-  #repo-list-items-name {
+#main #middle-section section #repo-items #repo-list-items #repo-list-items-name {
   font-size: 1.2rem;
   color: #664444;
   background: rgba(211, 175, 175, 0.2);
@@ -189,80 +166,39 @@ body {
   text-align: center;
   margin-bottom: 15px;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-list-items
-  #repo-list-items-description {
+#main #middle-section section #repo-items #repo-list-items #repo-list-items-description {
   text-align: left;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-list-items
-  #repo-list-items-url {
+#main #middle-section section #repo-items #repo-list-items #repo-list-items-url {
   margin: 0;
   text-align: left;
 }
 #main #middle-section section #repo-items #repo-user-items {
   flex: 1;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-user-items
-  #repo-list-items-img {
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img {
   display: flex;
   flex-direction: column;
   align-content: flex-end;
   height: 100%;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-user-items
-  #repo-list-items-img
-  #repo-list-items-img-list {
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-list-items-img-list {
   flex: 3;
   text-align: right;
   margin-top: 0;
   margin-right: 15px;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-user-items
-  #repo-list-items-img
-  #repo-list-items-img-list
-  p {
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-list-items-img-list p {
   line-height: 1rem;
   margin-top: 10px;
   font-size: 0.8rem;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-user-items
-  #repo-list-items-img
-  #repo-img-figure {
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-img-figure {
   flex: 1;
   text-align: right;
   margin: 10px;
 }
-#main
-  #middle-section
-  section
-  #repo-items
-  #repo-user-items
-  #repo-list-items-img
-  #repo-img-figure
-  #repo-img-caption {
+#main #middle-section section #repo-items #repo-user-items #repo-list-items-img #repo-img-figure #repo-img-caption {
   font-size: 0.7rem;
 }
 
@@ -345,11 +281,11 @@ footer h4 {
   font-size: 0.8rem;
 }
 
-ul:nth-child(3n + 1) {
+ul:nth-child(3n+1) {
   background-color: rgba(231, 229, 229, 0.3);
 }
 
-ul:nth-child(3n + 2) {
+ul:nth-child(3n+2) {
   background-color: rgba(243, 243, 243, 0.3);
 }
 
@@ -407,34 +343,16 @@ button:disabled {
 }
 @keyframes rot-alt {
   to {
-    background-image: linear-gradient(
-      1turn,
-      rgba(68, 110, 153, 0.5) 20%,
-      rgba(171, 156, 153, 0.5) 40%,
-      rgba(81, 184, 203, 0.5) 60%,
-      rgba(109, 95, 101, 0.5) 80%
-    );
+    background-image: linear-gradient(1turn, rgba(68, 110, 153, 0.5) 20%, rgba(171, 156, 153, 0.5) 40%, rgba(81, 184, 203, 0.5) 60%, rgba(109, 95, 101, 0.5) 80%);
   }
 }
 .animate {
-  background: linear-gradient(
-    var(--ang, 0deg),
-    rgba(68, 110, 153, 0.5) 20%,
-    rgba(171, 156, 153, 0.5) 40%,
-    rgba(81, 184, 203, 0.5) 60%,
-    rgba(109, 95, 101, 0.5) 80%
-  );
+  background: linear-gradient(var(--ang, 0deg), rgba(68, 110, 153, 0.5) 20%, rgba(171, 156, 153, 0.5) 40%, rgba(81, 184, 203, 0.5) 60%, rgba(109, 95, 101, 0.5) 80%);
   animation: rot 3s cubic-bezier(0.68, -0.57, 0.26, 1.65) 1;
 }
 @supports (-ms-user-select: none) {
   .animate {
-    background-image: linear-gradient(
-      0turn,
-      rgba(68, 110, 153, 0.5) 20%,
-      rgba(171, 156, 153, 0.5) 40%,
-      rgba(81, 184, 203, 0.5) 60%,
-      rgba(109, 95, 101, 0.5) 80%
-    );
+    background-image: linear-gradient(0turn, rgba(68, 110, 153, 0.5) 20%, rgba(171, 156, 153, 0.5) 40%, rgba(81, 184, 203, 0.5) 60%, rgba(109, 95, 101, 0.5) 80%);
     animation-name: rot-alt;
   }
 }
