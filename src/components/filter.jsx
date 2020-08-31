@@ -187,17 +187,25 @@ const FilterQuery = () => {
           type="text"
           id="input-keyword"
           defaultValue={filters.keyword}
-          onChange={handleTextKeyChange}
-          onKeyPress={(e) =>
-            e.which === 13
-              ? manual
-                ? handleManualFilters('keyword', keyword)
-                : sendtoReducer('keyword', keyword)
+          onChange={
+            manual
+              ? (e) => handleManualFilters('keyword', e.target.value)
+              : handleTextKeyChange
+          }
+          onKeyPress={
+            fetchonchange
+              ? (e) =>
+                  e.which === 13
+                    ? manual
+                      ? handleManualFilters('keyword', keyword)
+                      : sendtoReducer('keyword', keyword)
+                    : null
               : null
           }
         ></input>
 
         <button
+          style={manual ? { display: 'none' } : { display: 'block' }}
           onClick={() =>
             manual
               ? handleManualFilters('keyword', keyword)
