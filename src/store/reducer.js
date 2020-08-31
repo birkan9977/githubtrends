@@ -11,10 +11,33 @@ const reducer = (state, action) => {
     case actions.defaultFilter:
       return resetFilters();
 
+    case actions.manualFilter:
+      return manualFilters(state, payload);
+
     default:
       return state;
   }
 };
+
+export function manualFilters(state, filters) {
+  const { language, stars, keyword } = filters.manualfilters;
+
+  let newState = {
+    ...state,
+    language: language,
+    stars: stars,
+    keyword: keyword,
+  };
+
+  const url = urlMaker(newState);
+
+  newState = {
+    ...newState,
+    url: url,
+  };
+
+  return newState;
+}
 
 export function resetFilters() {
   sessionStorage.clear();
@@ -22,8 +45,6 @@ export function resetFilters() {
 }
 
 export function ChangeFilter(state, filterName, filterValue) {
-  //console.log('state:',state,'filterName:',filterName,'filterValue',filterValue )
-
   let newState = {
     ...state,
     [filterName]: filterValue,
@@ -34,8 +55,6 @@ export function ChangeFilter(state, filterName, filterValue) {
     ...newState,
     url: url,
   };
-
-  //console.log('reducer',newState)
 
   return newState;
 }

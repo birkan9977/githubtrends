@@ -2,6 +2,8 @@ import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import * as actions from '../store/fetchActions';
 import FetchContext from '../app/fetchContext';
+import AppContext from '../app/context';
+import { manualFilter } from '../store/reducerActions';
 
 const Div = styled.div`
   display: flex;
@@ -80,10 +82,19 @@ const Hover = styled.div`
   }
 `;
 
-export default function FetchOptions() {
+export default function FetchOptions(props) {
   const [fetchVisible, setFetchVisible] = useState(true);
   const [fetchOption, setFetchOption] = useState('manual');
   const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
+  const { filters, dispatch } = useContext(AppContext);
+
+  const sendToFiltersReducer = (manualfilters) => {
+    const action = {
+      type: manualFilter,
+      payload: { manualfilters },
+    };
+    dispatch(action);
+  };
 
   const handleFetchVisibility = () => {
     setFetchVisible(!fetchVisible);
@@ -112,6 +123,11 @@ export default function FetchOptions() {
   };
 
   const handleSubmitFilters = () => {
+    sendToFiltersReducer(props.manualFilters);
+    manualSubmit();
+  };
+
+  const manualSubmit = () => {
     const action = {
       type: actions.manualSubmit,
       payload: true,

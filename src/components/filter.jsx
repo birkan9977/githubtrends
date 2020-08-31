@@ -3,7 +3,7 @@ import AppContext from '../app/context';
 import { changeFilter, defaultFilter } from '../store/reducerActions';
 import FetchOptions from './fetchOptions.jsx';
 import FetchContext from '../app/fetchContext';
-import * as actions from '../store/fetchActions';
+import InitialFilters from '../app/context';
 
 const FilterQuery = () => {
   const { filters, dispatch } = useContext(AppContext);
@@ -11,12 +11,48 @@ const FilterQuery = () => {
   const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
   const { fetchOption } = fetchOptions;
 
+  const manual = fetchOption === 'manual';
+
+  const [state, setState] = useState({
+    stars: filters.stars,
+    language: filters.language,
+    keyword: filters.keyword,
+  });
+
+  const handleManualReset = () => {
+    let initialFilters = {
+      stars: InitialFilters._currentValue.stars,
+      language: InitialFilters._currentValue.language,
+      keyword: InitialFilters._currentValue.keyword,
+    };
+
+    setState(initialFilters);
+
+    let elemLanguage = document.getElementById('dropdown-language');
+    elemLanguage.value = initialFilters.language;
+
+    let elemStars = document.getElementById('dropdown-followers');
+    elemStars.value = initialFilters.stars;
+
+    let elemKeyword = document.getElementById('input-keyword');
+    elemKeyword.value = initialFilters.keyword;
+  };
+
+  const handleManualFilters = (filterName, filterValue) => {
+    let newState = {
+      ...state,
+      [filterName]: filterValue,
+    };
+    setState(newState);
+    console.log('filtersManual:', newState);
+  };
+
   const handleTextKeyChange = (e) => {
     setKeyword(e.target.value);
   };
 
   const sendtoReducer = (filterName, filterValue) => {
-    if (fetchOption === 'manual') resetSubmit();
+    //if (fetchOption === 'manual') resetSubmit();
     const action = {
       type: changeFilter,
       payload: {
@@ -32,14 +68,6 @@ const FilterQuery = () => {
       type: defaultFilter,
     };
     dispatch(action);
-  };
-
-  const resetSubmit = () => {
-    const action = {
-      type: actions.manualSubmit,
-      payload: false,
-    };
-    dispatchFetchOptions(action);
   };
 
   useEffect(() => {
@@ -87,7 +115,7 @@ const FilterQuery = () => {
 
   return (
     <>
-      <FetchOptions />
+      <FetchOptions manualFilters={state} />
       <div id="filter-queries" className="disable-select">
         <label htmlFor="dropdown-language" id="label-language">
           Language
@@ -97,7 +125,11 @@ const FilterQuery = () => {
           id="dropdown-language"
           name="dropdown-language"
           defaultValue={filters.language}
-          onChange={(e) => sendtoReducer('language', e.target.value)}
+          onChange={(e) =>
+            manual
+              ? handleManualFilters('language', e.target.value)
+              : sendtoReducer('language', e.target.value)
+          }
         >
           {Object.entries(codelanguages)
             .sort()
@@ -115,7 +147,11 @@ const FilterQuery = () => {
         <select
           id="dropdown-followers"
           defaultValue={filters.stars}
-          onChange={(e) => sendtoReducer('stars', e.target.value)}
+          onChange={(e) =>
+            manual
+              ? handleManualFilters('stars', e.target.value)
+              : sendtoReducer('stars', e.target.value)
+          }
         >
           {Object.entries(starValues)
             .sort((a, b) => a[1] - b[1])
@@ -136,16 +172,28 @@ const FilterQuery = () => {
           defaultValue={filters.keyword}
           onChange={handleTextKeyChange}
           onKeyPress={(e) =>
-            e.which === 13 ? sendtoReducer('keyword', keyword) : null
+            e.which === 13
+              ? manual
+                ? handleManualFilters('keyword', keyword)
+                : sendtoReducer('keyword', keyword)
+              : null
           }
         >
           {/*console.log(keyword)*/}
         </input>
 
-        <button onClick={() => sendtoReducer('keyword', keyword)}>
+        <button
+          onClick={() =>
+            manual
+              ? handleManualFilters('keyword', keyword)
+              : sendtoReducer('keyword', keyword)
+          }
+        >
           Submit Keyword
         </button>
-        <button onClick={() => resetFilters()}>Reset Filters</button>
+        <button onClick={() => (manual ? handleManualReset() : resetFilters())}>
+          Reset Filters
+        </button>
       </div>
     </>
   );

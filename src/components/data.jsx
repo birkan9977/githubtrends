@@ -35,14 +35,6 @@ export default function DataLoader() {
 
   const ref = useRef();
 
-  const resetSubmit = () => {
-    const action = {
-      type: actions.manualSubmit,
-      payload: false,
-    };
-    dispatchFetchOptions(action);
-  };
-
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -91,9 +83,6 @@ export default function DataLoader() {
     //clean up after unmount
     return () => {
       controller.abort();
-
-      // reset manual submit
-      resetSubmit();
       setData(null);
       setSessionStorage();
     };
