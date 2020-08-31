@@ -66,8 +66,8 @@ export default function Layout() {
       </header>
 
       <nav id="topics-nav-bar">
-        <ul>
-          <Router>
+        <Router>
+          <ul>
             <Link to="/">
               <li>Home</li>
             </Link>
@@ -103,8 +103,8 @@ export default function Layout() {
             </Switch>
 
             {login ? <Redirect to="/hot_repos" /> : null}
-          </Router>
-        </ul>
+          </ul>
+        </Router>
       </nav>
 
       <section id="middle-section">

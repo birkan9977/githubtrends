@@ -58,7 +58,6 @@ const FilterQuery = () => {
       [filterName]: filterValue,
     };
     setState(newState);
-    console.log('filtersManual:', newState);
     if (manualSubmit) resetSubmit();
   };
 
@@ -67,8 +66,7 @@ const FilterQuery = () => {
   };
 
   const sendtoReducer = (filterName, filterValue) => {
-    if (prevFetchOption === fetchOption && fetchonchange) {
-      console.log('sendToReducerOnChange');
+    if (fetchonchange) {
       const action = {
         type: changeFilter,
         payload: {
@@ -95,7 +93,7 @@ const FilterQuery = () => {
   };
 
   useEffect(() => {
-    console.log(filters);
+    //console.log(filters);
     handleMenu(filters);
   }, [filters]);
 

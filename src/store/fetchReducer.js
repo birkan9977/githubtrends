@@ -6,15 +6,12 @@ const FetchOptionsReducer = (state, action) => {
 
   switch (action.type) {
     case actions.hideOptions:
-      console.log('reducer,hideOptions', payload);
       return HideOptions(state, payload);
 
     case actions.fetchOption:
-      console.log('reducer,fetchOption', payload);
       return FetchOption(state, payload);
 
     case actions.manualSubmit:
-      console.log('reducer,manualSubmit', payload);
       return ManualSubmit(state, payload);
 
     default:
@@ -23,8 +20,6 @@ const FetchOptionsReducer = (state, action) => {
 };
 
 export function ManualSubmit(prevstate, payload) {
-  //console.log('ManualSubmit: prevstate ', prevstate);
-
   let newState = {
     ...prevstate,
     manualSubmit: payload,
@@ -37,23 +32,19 @@ export function ManualSubmit(prevstate, payload) {
     display: display,
   };
 
-  //console.log('ManualSubmit: newState ', newState);
   return newState;
 }
 
 export function HideOptions(prevstate, payload) {
-  //console.log('HideOptions: prevstate ', prevstate);
   let newState = {
     ...prevstate,
     hideOption: payload,
   };
 
-  //console.log('HideOptions: newState ', newState);
   return newState;
 }
 
 export function FetchOption(prevstate, payload) {
-  //console.log('FetchOption: prevstate ', prevstate);
   let newState = {
     ...prevstate,
     fetchOption: payload,
@@ -66,7 +57,6 @@ export function FetchOption(prevstate, payload) {
     display: display,
   };
 
-  //console.log('FetchOption: newState ', newState);
   return newState;
 }
 

@@ -50,17 +50,21 @@ export default function DataLoader() {
   };
 
   const prevUrl = usePrevious(filters.url);
-  let setSessionStorage = {};
+
+  let setSessionStorage = () => {
+    sessionStorage.setItem('language', filters.language);
+    sessionStorage.setItem('stars', filters.stars);
+    sessionStorage.setItem('keyword', filters.keyword);
+  };
 
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    console.log(prevUrl, filters.url);
+    //console.log(prevUrl, filters.url);
 
     if (prevUrl !== filters.url) {
       setReadMoreEmpty();
-      console.log('test');
 
       setError(null);
 
@@ -85,17 +89,10 @@ export default function DataLoader() {
           sendtoReducer('loading', false);
         });
 
-      //set to session storage at every mutation
-      setSessionStorage = () => {
-        sessionStorage.setItem('language', filters.language);
-        sessionStorage.setItem('stars', filters.stars);
-        sessionStorage.setItem('keyword', filters.keyword);
-      };
-
       setSessionStorage();
 
       signal.addEventListener('abort', () => {
-        console.log(`fetch request for ${filters.url} aborted!`);
+        //console.log(`fetch request for ${filters.url} aborted!`);
       });
     }
     //clean up after unmount
@@ -152,43 +149,26 @@ export default function DataLoader() {
                   <div id="repo-list-items">
                     <div id="order-number">{ItemIncrement()}</div>
 
-                    <li
-                      id="repo-list-items-name"
-                      key={`repo-list-items-name-${index}`}
-                    >
-                      {item.name}
-                    </li>
+                    <li id="repo-list-items-name">{item.name}</li>
 
-                    <li
-                      id="repo-list-items-description"
-                      key={`repo-list-items-description-${index}`}
-                    >
+                    <li id="repo-list-items-description">
                       {textMin(item.description, index + 1)}
                     </li>
 
-                    <li
-                      id="repo-list-items-url"
-                      key={`repo-list-items-url-${index}`}
-                    >
+                    <li id="repo-list-items-url">
                       <a href={item.html_url} target="_blank" rel="noopener">
                         GitHub Link
                       </a>
                     </li>
 
-                    <li
-                      id="repo-list-items-stars"
-                      key={`repo-list-items-stars-${index}`}
-                    >
+                    <li id="repo-list-items-stars">
                       {item.stargazers_count} Stars
                     </li>
                   </div>
 
                   <div id="repo-user-items">
                     <div id="repo-list-items-img">
-                      <li
-                        id="repo-list-items-img-list"
-                        key={`repo-list-items-img-list-${index}`}
-                      >
+                      <li id="repo-list-items-img-list">
                         {item.language ? item.language : null}
                       </li>
 

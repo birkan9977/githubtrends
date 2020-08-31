@@ -1,14 +1,22 @@
 export default function urlMaker(filters) {
   function languageCorrect() {
     let filterLanguage = '';
-    if (filters.language === 'C++') {
-      filterLanguage = 'language:C%2B%2B';
-    } else if (filters.language === 'C#') {
-      filterLanguage = 'language:C%23';
-    } else if (filters.language === 'All') {
-      filterLanguage = '';
-    } else {
-      filterLanguage = `language:${filters.language}`;
+
+    switch (filters.language) {
+      case 'C++':
+        filterLanguage = 'language:C%2B%2B';
+        break;
+      case 'C#':
+        filterLanguage = 'language:C%23';
+        break;
+      case 'All':
+        filterLanguage = '';
+        break;
+      case 'C#':
+        filterLanguage = 'language:C%23';
+        break;
+      default:
+        filterLanguage = `language:${filters.language}`;
     }
 
     return filterLanguage;
@@ -18,6 +26,5 @@ export default function urlMaker(filters) {
     filters.keyword
   } stars:>=${filters.stars} ${languageCorrect()} sort:stars`;
 
-  //console.log('urlMaker',url)
   return url;
 }

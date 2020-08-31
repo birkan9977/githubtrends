@@ -83,11 +83,12 @@ const Hover = styled.div`
 `;
 
 export default function FetchOptions(props) {
-  const [fetchVisible, setFetchVisible] = useState(true);
-  const [localFetchOption, setFetchOption] = useState('manual');
   const { fetchOptions, dispatchFetchOptions } = useContext(FetchContext);
-  const { filters, dispatch } = useContext(AppContext);
-  const { fetchOption } = fetchOptions;
+  const { dispatch } = useContext(AppContext);
+  const { fetchOption, hideOption } = fetchOptions;
+
+  const [fetchVisible, setFetchVisible] = useState(!hideOption);
+  const [localFetchOption, setFetchOption] = useState(fetchOption);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -102,16 +103,19 @@ export default function FetchOptions(props) {
 
   const prevFetchOption = usePrevious(fetchOption);
 
+  let setSessionStorage = (key, value) => {
+    sessionStorage.setItem(key, value);
+  };
+
   useEffect(() => {
-    console.log(prevFetchOption, fetchOption);
     if (prevFetchOption === fetchOption && manual) {
-      console.log('work once send data!!!', props.manualFilters);
+      //console.log('work once send data!!!', props.manualFilters);
 
       sendToFiltersReducer(props.manualFilters);
       sendFetchOptionToReducer('fetchonchange');
     } else {
       sendFetchOptionToReducer(localFetchOption);
-      console.log(fetchOption);
+      //console.log(fetchOption);
     }
   }, [localFetchOption]);
 
@@ -130,7 +134,6 @@ export default function FetchOptions(props) {
 
   const handleOptionChange = (e) => {
     setFetchOption(e.target.value);
-    console.log(e.target.value);
   };
 
   const sendFetchOptionToReducer = (selectedOption) => {
@@ -139,6 +142,8 @@ export default function FetchOptions(props) {
       payload: selectedOption,
     };
     dispatchFetchOptions(action);
+
+    setSessionStorage('fetchOption', selectedOption);
   };
 
   const sendHideOptionToReducer = (selectedOption) => {
@@ -147,6 +152,20 @@ export default function FetchOptions(props) {
       payload: selectedOption,
     };
     dispatchFetchOptions(action);
+
+    //session storage accepts only string values
+    let selectedHideOption = '';
+    switch (true) {
+      case selectedOption:
+        selectedHideOption = 'true';
+        console.log(hideOption);
+        break;
+      case !selectedOption:
+        selectedHideOption = 'false';
+        break;
+    }
+    console.log('test1');
+    setSessionStorage('hideOption', selectedHideOption);
   };
 
   const handleSubmitFilters = () => {
@@ -190,6 +209,7 @@ export default function FetchOptions(props) {
               value="fetchonchange"
               inputColor="rebeccapurple"
               onClick={handleOptionChange}
+              defaultChecked={fetchonchange}
             />
 
             <Label className="optionLabels" htmlFor="FetchOnChange">
@@ -204,7 +224,7 @@ export default function FetchOptions(props) {
               id="manual"
               value="manual"
               onClick={handleOptionChange}
-              defaultChecked
+              defaultChecked={manual}
             />
 
             <Label className="optionLabels" htmlFor="manual">
