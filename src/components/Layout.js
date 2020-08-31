@@ -131,8 +131,6 @@ export default function Layout() {
               <h2>
                 <TopChart />
               </h2>
-              {/*console.log('layout', fetchOptions)*/}
-
               {display ? <DataLoader /> : null}
             </div>
           ) : null}

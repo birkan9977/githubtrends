@@ -49,6 +49,7 @@ const FilterQuery = () => {
 
     setState(initialFilters);
     handleMenu(initialFilters);
+    if (manualSubmit) resetSubmit();
   };
 
   const handleManualFilters = (filterName, filterValue) => {
