@@ -1,10 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { Suspense, lazy, useContext, useState, useEffect } from 'react';
 import FilterQuery from './filter';
 import AppContext from '../app/context';
 import '../styles/mainOutput.css';
-import DataLoader from './data';
-import UserLoginScreen from './userLoginScreen';
-import UserInfo from './userinfo';
 import userContext from '../app/usercontext';
 import {
   BrowserRouter as Router,
@@ -14,8 +11,27 @@ import {
   useHistory,
   Redirect,
 } from 'react-router-dom';
-import TextArea from './styledComponents/textarea';
 import FetchContext from '../app/fetchContext';
+import Loadable from 'react-loadable';
+import Loading from './loading-component';
+
+//react-loadable third-party plugin
+const DataLoader = Loadable({
+  loader: () => import('./data'),
+  loading: Loading,
+});
+const UserLoginScreen = Loadable({
+  loader: () => import('./userLoginScreen'),
+  loading: Loading,
+});
+const UserInfo = Loadable({
+  loader: () => import('./userinfo'),
+  loading: Loading,
+});
+const TextArea = Loadable({
+  loader: () => import('./styledComponents/textarea'),
+  loading: Loading,
+});
 
 export default function Layout() {
   const { filters } = useContext(AppContext);
@@ -131,7 +147,11 @@ export default function Layout() {
               <h2>
                 <TopChart />
               </h2>
-              {display ? <DataLoader /> : null}
+              {display ? (
+                <div>
+                  <DataLoader />
+                </div>
+              ) : null}
             </div>
           ) : null}
         </section>
@@ -161,11 +181,9 @@ function GetLocation(props) {
   let history = useHistory();
   let currentPath = history ? history.location.pathname : null;
 
-  //console.log(currentPath);
   useEffect(() => {
     props.currentPath(currentPath);
   }, [props]);
 
   return <></>;
-  //return currentPath
 }

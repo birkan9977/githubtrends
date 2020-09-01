@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Backend from './backend';
 import customData from '../database/data.json';
+import Loadable from 'react-loadable';
+import Loading from './loading-component';
+
+
+const Backend = Loadable({
+  loader: () => import('./backend'),
+  loading: Loading,
+});
 
 const UserLoginScreen = (props) => {
   const userlist = customData;
@@ -136,12 +143,13 @@ const UserLoginScreen = (props) => {
     //works after 'useEffect' to hide password in whole
     return setTimeout(() => setHidePassword(true), timerMiliseconds);
   };
+  
 
   useEffect(() => {
     setHidePassword(false);
 
     let user = userlist.find((user) => user.email === loginInput);
-
+    
     if (user) {
       // example of object destructuring
       let userInfo = {
